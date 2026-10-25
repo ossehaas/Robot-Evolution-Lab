@@ -1,0 +1,32 @@
+{
+  "name": "terrier",
+  "kind": "dog",
+  "style": "terrier",
+  "body": {
+    "length": 0.21,
+    "width": 0.095,
+    "height": 0.075
+  },
+  "legs": {
+    "hip_x": 0.075,
+    "upper": 0.105,
+    "lower": 0.11,
+    "rest_depth": 0.85,
+    "paw_radius": 0.015,
+    "thickness": 1.0
+  },
+  "head": {
+    "length": 0.09,
+    "width": 0.098,
+    "height": 0.088,
+    "snout": 0.055,
+    "ear_length": 0.05,
+    "ear_style": "up",
+    "neck": 0.035
+  },
+  "tail": {
+    "length": 0.085
+  },
+  "servo": "STS3215_12V",
+  "lineage": []
+}

@@ -1,0 +1,119 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.0"
+    }
+    defaultPrim = "simple_leg"
+    doc = """Generated from Composed Stage of root layer <temp>\\simple_leg.usdc
+
+
+Generated from Composed Stage of root layer prototypes\\simple_leg\\sim\\usdex\\simple_leg.usdc
+
+
+Generated from Composed Stage of root layer prototypes\\simple_leg\\sim\\temp\\simple_leg.usd
+
+
+Generated from Composed Stage of root layer prototypes\\simple_leg\\sim\\simple_leg\\payloads\\base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+over "simple_leg"
+{
+    over "Geometry"
+    {
+        over "base_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsArticulationRootAPI", "NewtonArticulationRootAPI", "PhysicsMassAPI"]
+        )
+        {
+            bool newton:selfCollisionEnabled = 0
+            float3 physics:diagonalInertia = (0.001, 0.001, 0.001)
+            float physics:mass = 0.2
+            quatf physics:principalAxes = (1, 0, 0, 0)
+
+            over "thigh_link" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                point3f physics:centerOfMass = (0, 0, -0.05)
+                float3 physics:diagonalInertia = (0.0001, 0.0005, 0.0005)
+                float physics:mass = 0.1
+                quatf physics:principalAxes = (0.5, 0.5, 0.5, 0.5)
+
+                over "calf_link" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    point3f physics:centerOfMass = (0, 0, -0.05)
+                    float3 physics:diagonalInertia = (0.0001, 0.0005, 0.0005)
+                    float physics:mass = 0.1
+                    quatf physics:principalAxes = (0.5, 0.5, 0.5, 0.5)
+
+                    over "cylinder_1" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+
+                over "cylinder_1" (
+                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                )
+                {
+                }
+            }
+
+            over "box_1" (
+                prepend apiSchemas = ["NewtonCollisionAPI"]
+            )
+            {
+            }
+        }
+    }
+
+    over "Physics"
+    {
+        def PhysicsRevoluteJoint "hip_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            float drive:angular:physics:maxForce = 1
+            uniform token physics:axis = "Y"
+            custom rel physics:body0
+            prepend rel physics:body0 = </simple_leg/Geometry/base_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </simple_leg/Geometry/base_link/thigh_link>
+            point3f physics:localPos0 = (0, 0, -0.025)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -89.95438
+            float physics:upperLimit = 89.95438
+            custom float urdf:limit:effort = 1
+            custom float urdf:limit:velocity = 10
+        }
+
+        def PhysicsRevoluteJoint "knee_joint" (
+            prepend apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+            float drive:angular:physics:maxForce = 1
+            uniform token physics:axis = "Y"
+            custom rel physics:body0
+            prepend rel physics:body0 = </simple_leg/Geometry/base_link/thigh_link>
+            custom rel physics:body1
+            prepend rel physics:body1 = </simple_leg/Geometry/base_link/thigh_link/calf_link>
+            point3f physics:localPos0 = (0, 0, -0.1)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -89.95438
+            float physics:upperLimit = 89.95438
+            custom float urdf:limit:effort = 1
+            custom float urdf:limit:velocity = 10
+        }
+    }
+}
+

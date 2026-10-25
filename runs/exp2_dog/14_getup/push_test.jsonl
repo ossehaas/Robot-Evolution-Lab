@@ -1,0 +1,5 @@
+{"run": "runs/exp2_dog/11_imitation/amp_w6m_slow_s1", "walking_m_s": 0.2, "fell_before_push": 0.0, "fall_rate_by_push_m_s": {"0.2": 0.0, "0.3": 0.007, "0.4": 0.027, "0.5": 0.089, "0.6": 0.199, "0.8": 0.397, "1.0": 0.589}}
+{"run": "runs/exp2_dog/13_stairs/base_s1", "walking_m_s": 0.2, "fell_before_push": 0.0, "fall_rate_by_push_m_s": {"0.2": 0.0, "0.3": 0.0, "0.4": 0.068, "0.5": 0.151, "0.6": 0.226, "0.8": 0.411, "1.0": 0.644}}
+{"run": "runs/exp2_dog/13_stairs/stairs_s2", "walking_m_s": 0.2, "fell_before_push": 0.0, "fall_rate_by_push_m_s": {"0.2": 0.0, "0.3": 0.0, "0.4": 0.014, "0.5": 0.0, "0.6": 0.082, "0.8": 0.103, "1.0": 0.178}}
+{"run": "runs/exp2_dog/13_stairs/support_s2", "walking_m_s": 0.2, "fell_before_push": 0.002, "fall_rate_by_push_m_s": {"0.2": 0.014, "0.3": 0.041, "0.4": 0.096, "0.5": 0.144, "0.6": 0.199, "0.8": 0.253, "1.0": 0.389}}
+{"run": "runs/exp2_dog/13_stairs/student", "walking_m_s": 0.2, "fell_before_push": 0.0, "fall_rate_by_push_m_s": {"0.2": 0.0, "0.3": 0.0, "0.4": 0.007, "0.5": 0.014, "0.6": 0.055, "0.8": 0.082, "1.0": 0.226}}

@@ -1,0 +1,43 @@
+{
+  "name": "puppy_roll_k4",
+  "kind": "dog",
+  "style": "puppy",
+  "body": {
+    "length": 0.2,
+    "width": 0.11,
+    "height": 0.095
+  },
+  "legs": {
+    "hip_x": 0.08,
+    "upper": 0.08,
+    "lower": 0.085,
+    "rest_depth": 0.88,
+    "paw_radius": 0.018,
+    "thickness": 1.0
+  },
+  "head": {
+    "length": 0.1,
+    "width": 0.125,
+    "height": 0.105,
+    "snout": 0.032,
+    "ear_length": 0.055,
+    "ear_style": "floppy",
+    "neck": 0.045
+  },
+  "tail": {
+    "length": 0.07
+  },
+  "servo": "STS3215_12V",
+  "lineage": [],
+  "spine": {
+    "axes": [
+      "roll"
+    ],
+    "roll_stiffness": 4.0,
+    "pitch_stiffness": 4.0,
+    "damping": 0.15,
+    "roll_limit": 0.35,
+    "pitch_limit": 0.3,
+    "split_x": 0.0
+  }
+}

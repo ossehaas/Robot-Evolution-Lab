@@ -1,0 +1,79 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.0"
+    }
+    defaultPrim = "simple_leg"
+    doc = """Generated from Composed Stage of root layer <temp>\\simple_leg.usdc
+
+
+Generated from Composed Stage of root layer prototypes\\simple_leg\\sim\\usdex\\simple_leg.usdc
+
+
+Generated from Composed Stage of root layer prototypes\\simple_leg\\sim\\temp\\simple_leg.usd
+
+
+Generated from Composed Stage of root layer prototypes\\simple_leg\\sim\\simple_leg\\payloads\\base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+over "simple_leg" (
+    prepend apiSchemas = ["IsaacRobotAPI", "IsaacLinkAPI"]
+)
+{
+    custom rel isaac:physics:robotJoints
+    prepend rel isaac:physics:robotJoints = [
+        </simple_leg/Physics/hip_joint>,
+        </simple_leg/Physics/knee_joint>,
+    ]
+    custom rel isaac:physics:robotLinks
+    prepend rel isaac:physics:robotLinks = [
+        </simple_leg/Geometry/base_link>,
+        </simple_leg/Geometry/base_link/thigh_link>,
+        </simple_leg/Geometry/base_link/thigh_link/calf_link>,
+    ]
+
+    over "Physics"
+    {
+        over "hip_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "root_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "knee_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+    }
+
+    over "Geometry"
+    {
+        over "base_link" (
+            prepend apiSchemas = ["IsaacLinkAPI"]
+        )
+        {
+            over "thigh_link" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
+                over "calf_link" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,130 @@
+[
+  {
+    "command": "forward 0.10",
+    "target": 0.1,
+    "achieved": 0.09882793575525284,
+    "ratio": 0.9882793575525284,
+    "cross_axis": 0.003572797169908881,
+    "survived": 0.96875
+  },
+  {
+    "command": "backward 0.10",
+    "target": -0.1,
+    "achieved": -0.15205493569374084,
+    "ratio": 1.5205493569374084,
+    "cross_axis": 0.0010262589203193784,
+    "survived": 1.0
+  },
+  {
+    "command": "left 0.10",
+    "target": 0.1,
+    "achieved": 0.12194078415632248,
+    "ratio": 1.2194078415632248,
+    "cross_axis": 0.025681449100375175,
+    "survived": 1.0
+  },
+  {
+    "command": "right 0.10",
+    "target": -0.1,
+    "achieved": -0.1352522075176239,
+    "ratio": 1.352522075176239,
+    "cross_axis": 0.03081461787223816,
+    "survived": 1.0
+  },
+  {
+    "command": "forward 0.20",
+    "target": 0.2,
+    "achieved": 0.2252991795539856,
+    "ratio": 1.126495897769928,
+    "cross_axis": 0.002771686064079404,
+    "survived": 1.0
+  },
+  {
+    "command": "backward 0.20",
+    "target": -0.2,
+    "achieved": -0.28615692257881165,
+    "ratio": 1.4307846128940582,
+    "cross_axis": 0.0030445002485066652,
+    "survived": 1.0
+  },
+  {
+    "command": "left 0.20",
+    "target": 0.2,
+    "achieved": 0.21095453202724457,
+    "ratio": 1.0547726601362228,
+    "cross_axis": 0.02350994572043419,
+    "survived": 1.0
+  },
+  {
+    "command": "right 0.20",
+    "target": -0.2,
+    "achieved": -0.21469005942344666,
+    "ratio": 1.0734502971172333,
+    "cross_axis": 0.02994205430150032,
+    "survived": 1.0
+  },
+  {
+    "command": "forward 0.30",
+    "target": 0.3,
+    "achieved": 0.2846853733062744,
+    "ratio": 0.948951244354248,
+    "cross_axis": 7.099151844158769e-05,
+    "survived": 1.0
+  },
+  {
+    "command": "backward 0.30",
+    "target": -0.3,
+    "achieved": -0.3708364963531494,
+    "ratio": 1.236121654510498,
+    "cross_axis": 0.006302587687969208,
+    "survived": 1.0
+  },
+  {
+    "command": "left 0.30",
+    "target": 0.3,
+    "achieved": 0.2818077802658081,
+    "ratio": 0.9393592675526937,
+    "cross_axis": 0.012193478643894196,
+    "survived": 1.0
+  },
+  {
+    "command": "right 0.30",
+    "target": -0.3,
+    "achieved": -0.27604883909225464,
+    "ratio": 0.9201627969741821,
+    "cross_axis": 0.009075735695660114,
+    "survived": 1.0
+  },
+  {
+    "command": "turn left 0.6",
+    "target": 0.6,
+    "achieved": 0.6330559849739075,
+    "ratio": 1.055093308289846,
+    "cross_axis": 0.023738019168376923,
+    "survived": 1.0
+  },
+  {
+    "command": "turn right 0.6",
+    "target": -0.6,
+    "achieved": -0.6233618259429932,
+    "ratio": 1.0389363765716553,
+    "cross_axis": 0.02188897132873535,
+    "survived": 1.0
+  },
+  {
+    "command": "turn left 1.2",
+    "target": 1.2,
+    "achieved": 1.2425955533981323,
+    "ratio": 1.0354962944984436,
+    "cross_axis": 0.02278328873217106,
+    "survived": 1.0
+  },
+  {
+    "command": "turn right 1.2",
+    "target": -1.2,
+    "achieved": -1.2497130632400513,
+    "ratio": 1.0414275527000427,
+    "cross_axis": 0.02440810762345791,
+    "survived": 1.0
+  }
+]

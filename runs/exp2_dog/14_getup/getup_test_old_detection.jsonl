@@ -1,0 +1,1 @@
+{"run": "runs/exp2_dog/11_imitation/amp_w6m_slow_s1", "seconds": 8.0, "standing": {"success": 0.008, "median_s": 1.6, "standing_at_end": 0.016}, "dropped upright": {"success": 0.012, "median_s": 1.68, "standing_at_end": 0.0}, "on its side": {"success": 0.0, "median_s": null, "standing_at_end": 0.0}, "on its back": {"success": 0.0, "median_s": null, "standing_at_end": 0.0}}

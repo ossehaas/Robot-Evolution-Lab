@@ -1,0 +1,114 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.0"
+    }
+    defaultPrim = "simple_leg"
+    doc = """Generated from Composed Stage of root layer <temp>\\simple_leg.usdc
+
+
+Generated from Composed Stage of root layer prototypes\\simple_leg\\sim\\usdex\\simple_leg.usdc
+
+
+Generated from Composed Stage of root layer prototypes\\simple_leg\\sim\\temp\\simple_leg.usd
+
+
+Generated from Composed Stage of root layer prototypes\\simple_leg\\sim\\simple_leg\\payloads\\base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    subLayers = [
+        @./physics.usda@
+    ]
+    upAxis = "Z"
+)
+
+over "simple_leg"
+{
+    over "Physics"
+    {
+        def MjcActuator "hip_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 1
+            uniform double mjc:forceRange:min = -1
+            custom rel mjc:target
+            prepend rel mjc:target = </simple_leg/Physics/hip_joint>
+        }
+
+        def MjcActuator "knee_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = 1
+            uniform double mjc:forceRange:min = -1
+            custom rel mjc:target
+            prepend rel mjc:target = </simple_leg/Physics/knee_joint>
+        }
+
+        over "hip_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "root_joint"
+        {
+        }
+
+        over "knee_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+    }
+
+    over "Geometry"
+    {
+        over "base_link"
+        {
+            over "thigh_link"
+            {
+                over "calf_link"
+                {
+                    over "cylinder"
+                    {
+                    }
+
+                    over "cylinder_1"
+                    {
+                    }
+                }
+
+                over "cylinder"
+                {
+                }
+
+                over "cylinder_1"
+                {
+                }
+            }
+
+            over "box"
+            {
+            }
+
+            over "box_1"
+            {
+            }
+        }
+    }
+
+    over "Materials"
+    {
+        over "blue"
+        {
+        }
+
+        over "red"
+        {
+        }
+
+        over "green"
+        {
+        }
+    }
+}
+

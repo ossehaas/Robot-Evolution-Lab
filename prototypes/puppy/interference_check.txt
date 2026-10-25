@@ -1,0 +1,61 @@
+Interference check: prototypes/puppy/genome.json (all knees backwards, spring ankles, soft paws), 2026-10-11
+lab -m core.morphology.dog_check prototypes/puppy/genome.json
+
+rest pose: 0 overlaps
+L0_j0    +-  29 deg: 0 overlaps
+L0_j1    +-  69 deg: 3 overlaps
+L0_j2    +-  57 deg: 0 overlaps
+L1_j0    +-  29 deg: 0 overlaps
+L1_j1    +-  69 deg: 13 overlaps
+L1_j2    +-  57 deg: 0 overlaps
+neck_j0  +-  34 deg: 0 overlaps
+head_j1  +-  29 deg: 0 overlaps
+tail_j0  +-  46 deg: 0 overlaps
+L0_ja    +-  23 deg: 0 overlaps
+L1_ja    +-  23 deg: 0 overlaps
+
+16 interferences (> 2.0 mm^3):
+  L1_j1    paw_rear_L                   x shin_front_L                   11601.3 mm3  at  -51.6 deg
+  L1_j1    paw_rear_L                   x servo L0_j2                     6485.6 mm3  at  -68.8 deg
+  L0_j1    paw_front_L                  x thigh_rear_L                     905.5 mm3  at   68.8 deg
+  L1_j1    paw_rear_L                   x thigh_front_L                    852.0 mm3  at  -68.8 deg
+  L1_j1    ankle_spring_rear_L (lower)  x shin_front_L                     845.9 mm3  at  -51.6 deg
+  L1_j1    ankle_spring_rear_L (upper)  x thigh_front_L                    835.9 mm3  at  -68.8 deg
+  L1_j1    sole_rear_L                  x shin_front_L                     652.4 mm3  at  -51.6 deg
+  L1_j1    shin_rear_L                  x thigh_front_L                    639.0 mm3  at  -68.8 deg
+  L1_j1    ankle_spring_rear_L (lower)  x thigh_front_L                    589.6 mm3  at  -68.8 deg
+  L1_j1    paw_rear_L                   x pushrod_front_L                  399.2 mm3  at  -68.8 deg
+  L1_j1    shin_rear_L                  x thigh_cover_out_front_L          268.3 mm3  at  -68.8 deg
+  L0_j1    ankle_spring_front_L (lower) x thigh_rear_L                     198.1 mm3  at   68.8 deg
+  L1_j1    paw_rear_L                   x thigh_cover_out_front_L           90.5 mm3  at  -51.6 deg
+  L0_j1    paw_front_L                  x thigh_cover_out_rear_L            73.8 mm3  at   68.8 deg
+  L1_j1    sole_rear_L                  x servo L0_j2                       42.9 mm3  at  -68.8 deg
+  L1_j1    sole_rear_L                  x thigh_front_L                      7.2 mm3  at  -68.8 deg
+
+First contact between the front and rear leg (lab -m tools.dog.leg_clearance):
+puppy: knees back_back, hip limit 69 deg
+  front hip swings back (rear at rest): first contact at 64 deg: paw_front_L x thigh_rear_L (34 mm3)
+  rear hip swings forward (front at rest): first contact at 42 deg: shin_front_L x paw_rear_L (2 mm3)
+  both swing towards each other: first contact at 24 deg: paw_front_L x paw_rear_L (494 mm3)
+
+Fallback, front knee backwards / rear knee forwards (knees = back_front, otherwise identical):
+puppy_back_front: knees back_front, hip limit 69 deg
+  front hip swings back (rear at rest): first contact at 46 deg: paw_front_L x shin_rear_L (193 mm3)
+  rear hip swings forward (front at rest): first contact at 42 deg: shin_front_L x paw_rear_L (2 mm3)
+  both swing towards each other: first contact at 24 deg: paw_front_L x paw_rear_L (494 mm3)
+
+dog_check, back_front:
+rest pose: 0 overlaps
+L0_j0    +-  29 deg: 0 overlaps
+L0_j1    +-  69 deg: 13 overlaps
+L0_j2    +-  57 deg: 0 overlaps
+L1_j0    +-  29 deg: 0 overlaps
+L1_j1    +-  69 deg: 13 overlaps
+L1_j2    +-  57 deg: 0 overlaps
+neck_j0  +-  34 deg: 0 overlaps
+head_j1  +-  29 deg: 0 overlaps
+tail_j0  +-  46 deg: 0 overlaps
+L0_ja    +-  23 deg: 0 overlaps
+L1_ja    +-  23 deg: 0 overlaps
+
+26 interferences (> 2.0 mm^3):

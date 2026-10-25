@@ -1,0 +1,93 @@
+[ISAACLAB] AppLauncher initialization complete
+[ISAACLAB] Kit version: 110.3.0+feature.371399.00c488ae.gl
+[ISAACLAB] Kit kernel:  210.3.2+release.14366.2926fc80.gl
+[ISAACLAB] Kit hash:    00c488ae
+Warp 1.16.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.1
+   Devices:
+     "cpu"      : "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel"
+     "cuda:0"   : "NVIDIA GeForce RTX 5080 Laptop GPU" (16 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     %USERPROFILE%\AppData\Local\NVIDIA\warp\Cache\1.16.0
+[INFO]: Base environment:
+	Environment device    : cuda:0
+	Environment seed      : None
+	Physics step-size     : 0.005
+	Rendering step-size   : 0.02
+	Environment step-size : 0.02
+[INFO]: libcarb.so unavailable — Fabric notice suspension disabled (Linux x86_64 only)
+[INFO]: Registered backend 'physx' for factory Articulation.
+[INFO]: Loading local copy of remote asset 'https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.1/Isaac/IsaacLab/Environments/Grid/default_ground_plane_checker_v1/default_ground_plane.usda' from '%USERPROFILE%\AppData\Local\Temp\https\omniverse-content-production.s3-us-west-2.amazonaws.com\Assets\Isaac\6.1\Isaac\IsaacLab\Environments\Grid\default_ground_plane_checker_v1\default_ground_plane.usda'.
+[INFO]: Loading local copy of remote asset 'https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.1/Isaac/IsaacLab/Environments/Grid/default_ground_plane_checker_v1/Materials/Textures/default_ground_plane_roughness.png' from '%USERPROFILE%\AppData\Local\Temp\https\omniverse-content-production.s3-us-west-2.amazonaws.com\Assets\Isaac\6.1\Isaac\IsaacLab\Environments\Grid\default_ground_plane_checker_v1\Materials\Textures\default_ground_plane_roughness.png'.
+[INFO]: Loading local copy of remote asset 'https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.1/Isaac/IsaacLab/Environments/Grid/default_ground_plane_checker_v1/Materials/Textures/default_ground_plane_albedo.png' from '%USERPROFILE%\AppData\Local\Temp\https\omniverse-content-production.s3-us-west-2.amazonaws.com\Assets\Isaac\6.1\Isaac\IsaacLab\Environments\Grid\default_ground_plane_checker_v1\Materials\Textures\default_ground_plane_albedo.png'.
+[INFO]: Physics scene prim path: /physicsScene
+[INFO]: Registered backend 'physx' for factory RayCaster.
+[INFO]: Registered backend 'physx' for factory Imu.
+[INFO]: Registered backend 'physx' for factory ContactSensor.
+[INFO]: Time taken for scene creation Last: 2.135146 s, Mean: 2.135146 s, Std: 0.000000 s, N: 1
+[INFO]: Scene manager:  <class InteractiveScene>
+	Number of environments: 64
+	Environment spacing   : 0.5575
+	Source prim name      : /World/envs/env_0
+	Global prim paths     : ['/World/ground']
+	Replicate physics     : True
+[INFO]: Starting the simulation. This may take a few seconds. Please wait...
+[INFO]: Simulation parameters for joints in /World/envs/env_[^/]+/Robot:
++--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                            Simulation Joint Information (Prim path: /World/envs/env_[^/]+/Robot)                                             |
++-------+---------+-----------+---------+----------+-----------------+------------------+------------------+-----------------+-----------------+---------------+
+| Index | Name    | Stiffness | Damping | Armature | Static Friction | Dynamic Friction | Viscous Friction | Position Limits | Velocity Limits | Effort Limits |
++-------+---------+-----------+---------+----------+-----------------+------------------+------------------+-----------------+-----------------+---------------+
+|   0   | L0_j0   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.500, 0.500] |     5.9e+36     |     2.943     |
+|   1   | R0_j0   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.500, 0.500] |     5.9e+36     |     2.943     |
+|   2   | L1_j0   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.500, 0.500] |     5.9e+36     |     2.943     |
+|   3   | R1_j0   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.500, 0.500] |     5.9e+36     |     2.943     |
+|   4   | neck_j0 |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.600, 0.600] |     5.9e+36     |     2.943     |
+|   5   | tail_j0 |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.800, 0.800] |     5.9e+36     |     2.943     |
+|   6   | L0_j1   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.200, 1.200] |     5.9e+36     |     2.943     |
+|   7   | R0_j1   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.200, 1.200] |     5.9e+36     |     2.943     |
+|   8   | L1_j1   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.200, 1.200] |     5.9e+36     |     2.943     |
+|   9   | R1_j1   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.200, 1.200] |     5.9e+36     |     2.943     |
+|   10  | head_j1 |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.500, 0.500] |     5.9e+36     |     2.943     |
+|   11  | L0_j2   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.000, 1.000] |     5.9e+36     |     2.943     |
+|   12  | R0_j2   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.000, 1.000] |     5.9e+36     |     2.943     |
+|   13  | L1_j2   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.000, 1.000] |     5.9e+36     |     2.943     |
+|   14  | R1_j2   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.000, 1.000] |     5.9e+36     |     2.943     |
+|   15  | L0_ja   |   1.500   |  0.030  |  0.000   |      0.000      |      0.000       |      0.000       | [-0.400, 0.400] |      20.000     |     50.000    |
+|   16  | R0_ja   |   1.500   |  0.030  |  0.000   |      0.000      |      0.000       |      0.000       | [-0.400, 0.400] |      20.000     |     50.000    |
+|   17  | L1_ja   |   1.500   |  0.030  |  0.000   |      0.000      |      0.000       |      0.000       | [-0.400, 0.400] |      20.000     |     50.000    |
+|   18  | R1_ja   |   1.500   |  0.030  |  0.000   |      0.000      |      0.000       |      0.000       | [-0.400, 0.400] |      20.000     |     50.000    |
++-------+---------+-----------+---------+----------+-----------------+------------------+------------------+-----------------+-----------------+---------------+
+[INFO]: Created infinite plane mesh prim: /World/ground/terrain/GroundPlane/CollisionPlane.
+Loading user config located at: 'c:/projectshome/robots/evolution/isaaclab/.venv/lib/site-packages/isaacsim/kit/data/Kit/IsaacLab/3.0/user.config.json'
+2026-10-12T00:25:18Z [0ms] [Warning] [omni.usd_config.extension] Enable omni.materialx.libs extension to use MaterialX
+2026-10-12T00:25:20Z [1,861ms] [Warning] [isaaclab.envs.direct_rl_env] Seed not set for the environment. The environment creation may not be deterministic.
+2026-10-12T00:25:20Z [1,861ms] [Warning] [isaaclab.envs.common] env_cfg.viewer is deprecated. Set env_cfg.sim.default_visualizer_cfg = KitVisualizerCfg(eye=..., lookat=...) instead. The viewer values have been automatically forwarded for this run.
+2026-10-12T00:25:22Z [3,790ms] [Warning] [isaaclab.utils.assets] Serving remote assets from the local cache under '%USERPROFILE%\AppData\Local\Temp'. Each copy is checked against the server before use; delete the directory to force a full re-download.
+2026-10-12T00:25:23Z [4,308ms] [Warning] [usdrt.population.plugin] Last global time was not created. Did you call setEnableUsdNoticeHandling?
+2026-10-12T00:25:25Z [6,298ms] [Error] [omni.physx.tensors.plugin] CUDA driver shim call failed at C:\g\405278669\omni\ovruntime\source\omni.physx.tensors\plugins\gpu\GpuArticulationView.cpp:623
+2026-10-12T00:25:25Z [6,298ms] [Error] [omni.physx.tensors.plugin] CUDA error: operation would make the legacy stream depend on a capturing blocking stream: C:\g\405278669\omni\ovruntime\source\omni.physx.tensors\plugins\gpu\CudaKernels.cu: 534
+2026-10-12T00:25:25Z [6,298ms] [Error] [omni.physx.tensors.plugin] Failed to fetch DOF position attribute
+[INFO]: Time taken for simulation start Last: 0.645253 s, Mean: 0.645253 s, Std: 0.000000 s, N: 1
+[INFO]: Completed setting up the environment...
+[amp] 109242 expert transitions from data/mocap/puppy_dog_motion_slow.npz (2185 s)
+ speed achieved paws down     stance per paw (L0 R0 L1 R1)  paired strides/s   CoT   turn
+   (geometry: paws within 5 mm of the floor 2.81, per paw 0.90 0.90 0.50 0.51)
+  0.10    0.070      2.10              0.71 0.71 0.34 0.35     22%      2.18  2.35  -0.02
+   (geometry: paws within 5 mm of the floor 2.37, per paw 0.67 0.65 0.52 0.53)
+  0.20    0.241      1.86              0.56 0.55 0.37 0.39     29%      2.22  1.54  +0.01
+   (geometry: paws within 5 mm of the floor 2.27, per paw 0.54 0.57 0.59 0.57)
+  0.30    0.318      1.92              0.47 0.49 0.49 0.46     90%      2.22  1.61  -0.03
+   (geometry: paws within 5 mm of the floor 2.25, per paw 0.55 0.57 0.57 0.56)
+  0.45    0.466      1.92              0.49 0.50 0.47 0.45     90%      2.30  1.22  +0.01
+[INFO]: SimulationContext cleared
+2026-10-12T00:25:25Z [6,298ms] [Warning] [isaaclab_physx.assets.articulation.actuator_control] Host Newton-actuator CUDA graph capture failed; using eager execution: Failed to get DOF positions from backend
+2026-10-12T00:25:25Z [6,437ms] [Warning] [py.warnings] core\sim\locomotion_env.py:782: UserWarning: PhysX does not return a total contact force. This is a known limitation in PhysX and we are fixing it for the next release. Returning 'net_normal_forces_w'.
+  force = self.contact.data.net_forces_w.torch[:, self._chassis_sensor_id]
+
+2026-10-12T00:25:25Z [6,469ms] [Warning] [py.warnings] core\sim\locomotion_env.py:708: UserWarning: PhysX does not return a total contact force. This is a known limitation in PhysX and we are fixing it for the next release. Returning 'net_normal_forces_w'.
+  forces = self.contact.data.net_forces_w.torch
+
+2026-10-12T00:25:27Z [8,641ms] [Warning] [py.warnings] tools\dog\gait_check.py:64: UserWarning: PhysX does not return a total contact force. This is a known limitation in PhysX and we are fixing it for the next release. Returning 'net_normal_forces_w'.
+  f = torch.linalg.norm(env.contact.data.net_forces_w.torch[:, feet], dim=-1) > 1.0
+

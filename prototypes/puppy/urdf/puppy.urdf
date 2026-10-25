@@ -1,0 +1,818 @@
+<?xml version="1.0" ?>
+<robot name="puppy">
+  <material name="color0">
+    <color rgba="0.891 0.774 0.592 1"/>
+  </material>
+  <material name="color1">
+    <color rgba="0.47 0.164 0.038 1"/>
+  </material>
+  <material name="color2">
+    <color rgba="0.101 0.04 0.019 1"/>
+  </material>
+  <material name="color3">
+    <color rgba="0.694 0.038 0.038 1"/>
+  </material>
+  <material name="color4">
+    <color rgba="0.891 0.548 0.025 1"/>
+  </material>
+  <material name="color5">
+    <color rgba="0.009 0.007 0.007 1"/>
+  </material>
+  <material name="color6">
+    <color rgba="0.004 0.004 0.004 1"/>
+  </material>
+  <material name="color7">
+    <color rgba="1.0 1.0 1.0 1"/>
+  </material>
+  <link name="chassis">
+    <inertial>
+      <origin xyz="-0.000646 -0.000062 0.002349"/>
+      <mass value="0.842849"/>
+      <inertia ixx="0.001183566" ixy="0.000000593" ixz="-0.000051224" iyy="0.002978761" iyz="0.000001775" izz="0.003033087"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/chassis_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/chassis_color1.stl"/>
+      </geometry>
+      <material name="color1"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.200000 0.089120 0.074613"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.179120 0.110000 0.074613"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.179120 0.089120 0.095000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="L0_s0">
+    <inertial>
+      <origin xyz="-0.001511 0.044341 -0.003476"/>
+      <mass value="0.103167"/>
+      <inertia ixx="0.000044675" ixy="-0.000005067" ixz="-0.000001148" iyy="0.000029200" iyz="-0.000003250" izz="0.000036744"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L0_s0_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 0.044950 -0.003995" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.038000 0.048100 0.057510"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="L0_s1">
+    <inertial>
+      <origin xyz="-0.016368 -0.009334 -0.030607"/>
+      <mass value="0.145939"/>
+      <inertia ixx="0.000085914" ixy="-0.000001459" ixz="-0.000008519" iyy="0.000092781" iyz="-0.000003386" izz="0.000082454"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L0_s1_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.019581 -0.008000 -0.034880" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <cylinder radius="0.020000" length="0.040000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.009791 -0.008000 -0.017440" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <sphere radius="0.020000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.029372 -0.008000 -0.052319" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <sphere radius="0.020000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.019153 -0.012000 -0.025946" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.026000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="L0_s2">
+    <inertial>
+      <origin xyz="0.022362 -0.000135 -0.025372"/>
+      <mass value="0.034573"/>
+      <inertia ixx="0.000012019" ixy="-0.000000030" ixz="0.000007594" iyy="0.000018325" iyz="-0.000000020" izz="0.000010315"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L0_s2_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L0_s2_color2.stl"/>
+      </geometry>
+      <material name="color2"/>
+    </visual>
+    <collision>
+      <origin xyz="0.019581 0.000000 -0.020720" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <cylinder radius="0.014000" length="0.029018"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.009616 0.000000 -0.010175" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <sphere radius="0.014000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.029546 0.000000 -0.031266" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <sphere radius="0.014000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="R0_s0">
+    <inertial>
+      <origin xyz="-0.001511 -0.044341 -0.003476"/>
+      <mass value="0.103167"/>
+      <inertia ixx="0.000044675" ixy="0.000005067" ixz="-0.000001148" iyy="0.000029200" iyz="0.000003250" izz="0.000036744"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R0_s0_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 -0.044950 -0.003995" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.038000 0.048100 0.057510"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="R0_s1">
+    <inertial>
+      <origin xyz="-0.016368 0.009334 -0.030607"/>
+      <mass value="0.145939"/>
+      <inertia ixx="0.000085914" ixy="0.000001459" ixz="-0.000008519" iyy="0.000092781" iyz="0.000003386" izz="0.000082454"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R0_s1_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.019581 0.008000 -0.034880" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <cylinder radius="0.020000" length="0.040000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.009791 0.008000 -0.017440" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <sphere radius="0.020000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.029372 0.008000 -0.052319" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <sphere radius="0.020000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.019153 0.012000 -0.025946" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.026000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="R0_s2">
+    <inertial>
+      <origin xyz="0.022362 0.000135 -0.025372"/>
+      <mass value="0.034573"/>
+      <inertia ixx="0.000012019" ixy="0.000000030" ixz="0.000007594" iyy="0.000018325" iyz="0.000000020" izz="0.000010315"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R0_s2_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R0_s2_color2.stl"/>
+      </geometry>
+      <material name="color2"/>
+    </visual>
+    <collision>
+      <origin xyz="0.019581 0.000000 -0.020720" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <cylinder radius="0.014000" length="0.029018"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.009616 0.000000 -0.010175" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <sphere radius="0.014000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.029546 0.000000 -0.031266" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <sphere radius="0.014000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="L1_s0">
+    <inertial>
+      <origin xyz="0.001511 0.044341 -0.003476"/>
+      <mass value="0.103167"/>
+      <inertia ixx="0.000044675" ixy="0.000005067" ixz="0.000001148" iyy="0.000029200" iyz="-0.000003250" izz="0.000036744"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L1_s0_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 0.044950 -0.003995" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.038000 0.048100 0.057510"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="L1_s1">
+    <inertial>
+      <origin xyz="-0.016368 -0.009334 -0.030607"/>
+      <mass value="0.145939"/>
+      <inertia ixx="0.000085914" ixy="-0.000001459" ixz="-0.000008519" iyy="0.000092781" iyz="-0.000003386" izz="0.000082454"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L1_s1_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.019581 -0.008000 -0.034880" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <cylinder radius="0.020000" length="0.040000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.009791 -0.008000 -0.017440" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <sphere radius="0.020000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.029372 -0.008000 -0.052319" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <sphere radius="0.020000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.019153 -0.012000 -0.025946" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.026000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="L1_s2">
+    <inertial>
+      <origin xyz="0.022362 -0.000135 -0.025372"/>
+      <mass value="0.034573"/>
+      <inertia ixx="0.000012019" ixy="-0.000000030" ixz="0.000007594" iyy="0.000018325" iyz="-0.000000020" izz="0.000010315"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L1_s2_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L1_s2_color2.stl"/>
+      </geometry>
+      <material name="color2"/>
+    </visual>
+    <collision>
+      <origin xyz="0.019581 0.000000 -0.020720" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <cylinder radius="0.014000" length="0.029018"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.009616 0.000000 -0.010175" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <sphere radius="0.014000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.029546 0.000000 -0.031266" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <sphere radius="0.014000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="R1_s0">
+    <inertial>
+      <origin xyz="0.001511 -0.044341 -0.003476"/>
+      <mass value="0.103167"/>
+      <inertia ixx="0.000044675" ixy="-0.000005067" ixz="0.000001148" iyy="0.000029200" iyz="0.000003250" izz="0.000036744"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R1_s0_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 -0.044950 -0.003995" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.038000 0.048100 0.057510"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="R1_s1">
+    <inertial>
+      <origin xyz="-0.016368 0.009334 -0.030607"/>
+      <mass value="0.145939"/>
+      <inertia ixx="0.000085914" ixy="0.000001459" ixz="-0.000008519" iyy="0.000092781" iyz="0.000003386" izz="0.000082454"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R1_s1_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.019581 0.008000 -0.034880" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <cylinder radius="0.020000" length="0.040000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.009791 0.008000 -0.017440" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <sphere radius="0.020000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.029372 0.008000 -0.052319" rpy="-3.141593 0.511546 0.000000"/>
+      <geometry>
+        <sphere radius="0.020000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.019153 0.012000 -0.025946" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.026000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="R1_s2">
+    <inertial>
+      <origin xyz="0.022362 0.000135 -0.025372"/>
+      <mass value="0.034573"/>
+      <inertia ixx="0.000012019" ixy="0.000000030" ixz="0.000007594" iyy="0.000018325" iyz="0.000000020" izz="0.000010315"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R1_s2_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R1_s2_color2.stl"/>
+      </geometry>
+      <material name="color2"/>
+    </visual>
+    <collision>
+      <origin xyz="0.019581 0.000000 -0.020720" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <cylinder radius="0.014000" length="0.029018"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.009616 0.000000 -0.010175" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <sphere radius="0.014000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.029546 0.000000 -0.031266" rpy="3.141593 -0.757134 0.000000"/>
+      <geometry>
+        <sphere radius="0.014000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck">
+    <inertial>
+      <origin xyz="0.009857 0.000635 0.025144"/>
+      <mass value="0.054977"/>
+      <inertia ixx="0.000030567" ixy="0.000000472" ixz="-0.000002803" iyy="0.000030494" iyz="0.000000951" izz="0.000023972"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/neck_color3.stl"/>
+      </geometry>
+      <material name="color3"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/neck_color4.stl"/>
+      </geometry>
+      <material name="color4"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/neck_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <collision>
+      <origin xyz="0.011500 0.000000 0.022500" rpy="0.000000 0.472497 0.000000"/>
+      <geometry>
+        <cylinder radius="0.022000" length="0.006537"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.010012 0.000000 0.019590" rpy="0.000000 0.472497 0.000000"/>
+      <geometry>
+        <sphere radius="0.022000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.012988 0.000000 0.025410" rpy="0.000000 0.472497 0.000000"/>
+      <geometry>
+        <sphere radius="0.022000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="head">
+    <inertial>
+      <origin xyz="0.027756 -0.000001 0.032065"/>
+      <mass value="0.296114"/>
+      <inertia ixx="0.000585675" ixy="0.000000015" ixz="0.000008754" iyy="0.000484116" iyz="-0.000000004" izz="0.000604321"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/head_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/head_color5.stl"/>
+      </geometry>
+      <material name="color5"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/head_color1.stl"/>
+      </geometry>
+      <material name="color1"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/head_color6.stl"/>
+      </geometry>
+      <material name="color6"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/head_color7.stl"/>
+      </geometry>
+      <material name="color7"/>
+    </visual>
+    <collision>
+      <origin xyz="0.030000 0.000000 0.037000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.100000 0.103250 0.085512"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.030000 0.000000 0.037000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.078250 0.125000 0.085512"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.030000 0.000000 0.037000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.078250 0.103250 0.105000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.080000 0.000000 0.015000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <box size="0.048000 0.068750 0.044100"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="tail">
+    <inertial>
+      <origin xyz="-0.021557 -0.000000 0.036629"/>
+      <mass value="0.014281"/>
+      <inertia ixx="0.000006197" ixy="0.000000000" ixz="0.000003734" iyy="0.000008680" iyz="-0.000000000" izz="0.000003085"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/tail_color0.stl"/>
+      </geometry>
+      <material name="color0"/>
+    </visual>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/tail_color1.stl"/>
+      </geometry>
+      <material name="color1"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.020250 0.000000 0.034400" rpy="-0.000000 -0.579716 0.000000"/>
+      <geometry>
+        <cylinder radius="0.009000" length="0.052283"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.005930 0.000000 0.012530" rpy="-0.000000 -0.579716 0.000000"/>
+      <geometry>
+        <sphere radius="0.009000"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.034570 0.000000 0.056270" rpy="-0.000000 -0.579716 0.000000"/>
+      <geometry>
+        <sphere radius="0.009000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="L0_s3">
+    <inertial>
+      <origin xyz="0.003416 0.000004 -0.017696"/>
+      <mass value="0.026312"/>
+      <inertia ixx="0.000003499" ixy="0.000000001" ixz="-0.000000033" iyy="0.000004405" iyz="-0.000000001" izz="0.000004261"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L0_s3_color2.stl"/>
+      </geometry>
+      <material name="color2"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 0.000000 -0.018000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.018000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="R0_s3">
+    <inertial>
+      <origin xyz="0.003416 -0.000004 -0.017696"/>
+      <mass value="0.026312"/>
+      <inertia ixx="0.000003499" ixy="-0.000000001" ixz="-0.000000033" iyy="0.000004405" iyz="0.000000001" izz="0.000004261"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R0_s3_color2.stl"/>
+      </geometry>
+      <material name="color2"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 0.000000 -0.018000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.018000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="L1_s3">
+    <inertial>
+      <origin xyz="0.003416 0.000004 -0.017696"/>
+      <mass value="0.026312"/>
+      <inertia ixx="0.000003499" ixy="0.000000001" ixz="-0.000000033" iyy="0.000004405" iyz="-0.000000001" izz="0.000004261"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/L1_s3_color2.stl"/>
+      </geometry>
+      <material name="color2"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 0.000000 -0.018000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.018000"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="R1_s3">
+    <inertial>
+      <origin xyz="0.003416 -0.000004 -0.017696"/>
+      <mass value="0.026312"/>
+      <inertia ixx="0.000003499" ixy="-0.000000001" ixz="-0.000000033" iyy="0.000004405" iyz="0.000000001" izz="0.000004261"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.000000 0.000000 0.000000"/>
+      <geometry>
+        <mesh filename="meshes/R1_s3_color2.stl"/>
+      </geometry>
+      <material name="color2"/>
+    </visual>
+    <collision>
+      <origin xyz="0.000000 0.000000 -0.018000" rpy="0.000000 -0.000000 0.000000"/>
+      <geometry>
+        <sphere radius="0.018000"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="L0_j0" type="revolute">
+    <origin xyz="0.080000 0.033500 -0.010000"/>
+    <parent link="chassis"/>
+    <child link="L0_s0"/>
+    <axis xyz="1.000000 0.000000 0.000000"/>
+    <limit lower="-0.5000" upper="0.5000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="L0_j1" type="revolute">
+    <origin xyz="0.000000 0.069500 -0.013750"/>
+    <parent link="L0_s0"/>
+    <child link="L0_s1"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-1.2000" upper="1.2000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="L0_j2" type="revolute">
+    <origin xyz="-0.039162 -0.007000 -0.069759"/>
+    <parent link="L0_s1"/>
+    <child link="L0_s2"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-1.0000" upper="1.0000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="R0_j0" type="revolute">
+    <origin xyz="0.080000 -0.033500 -0.010000"/>
+    <parent link="chassis"/>
+    <child link="R0_s0"/>
+    <axis xyz="-1.000000 -0.000000 -0.000000"/>
+    <limit lower="-0.5000" upper="0.5000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="R0_j1" type="revolute">
+    <origin xyz="0.000000 -0.069500 -0.013750"/>
+    <parent link="R0_s0"/>
+    <child link="R0_s1"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-1.2000" upper="1.2000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="R0_j2" type="revolute">
+    <origin xyz="-0.039162 0.007000 -0.069759"/>
+    <parent link="R0_s1"/>
+    <child link="R0_s2"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-1.0000" upper="1.0000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="L1_j0" type="revolute">
+    <origin xyz="-0.080000 0.033500 -0.010000"/>
+    <parent link="chassis"/>
+    <child link="L1_s0"/>
+    <axis xyz="1.000000 0.000000 0.000000"/>
+    <limit lower="-0.5000" upper="0.5000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="L1_j1" type="revolute">
+    <origin xyz="0.000000 0.069500 -0.013750"/>
+    <parent link="L1_s0"/>
+    <child link="L1_s1"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-1.2000" upper="1.2000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="L1_j2" type="revolute">
+    <origin xyz="-0.039162 -0.007000 -0.069759"/>
+    <parent link="L1_s1"/>
+    <child link="L1_s2"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-1.0000" upper="1.0000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="R1_j0" type="revolute">
+    <origin xyz="-0.080000 -0.033500 -0.010000"/>
+    <parent link="chassis"/>
+    <child link="R1_s0"/>
+    <axis xyz="-1.000000 -0.000000 -0.000000"/>
+    <limit lower="-0.5000" upper="0.5000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="R1_j1" type="revolute">
+    <origin xyz="0.000000 -0.069500 -0.013750"/>
+    <parent link="R1_s0"/>
+    <child link="R1_s1"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-1.2000" upper="1.2000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="R1_j2" type="revolute">
+    <origin xyz="-0.039162 0.007000 -0.069759"/>
+    <parent link="R1_s1"/>
+    <child link="R1_s2"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-1.0000" upper="1.0000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="neck_j0" type="revolute">
+    <origin xyz="0.078000 0.000000 0.044000"/>
+    <parent link="chassis"/>
+    <child link="neck"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-0.6000" upper="0.6000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="head_j1" type="revolute">
+    <origin xyz="0.045000 0.000000 0.045000"/>
+    <parent link="neck"/>
+    <child link="head"/>
+    <axis xyz="1.000000 0.000000 0.000000"/>
+    <limit lower="-0.5000" upper="0.5000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="tail_j0" type="revolute">
+    <origin xyz="-0.076000 0.000000 0.039813"/>
+    <parent link="chassis"/>
+    <child link="tail"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-0.8000" upper="0.8000" effort="2.3544" velocity="4.7171"/>
+  </joint>
+  <joint name="L0_ja" type="revolute">
+    <origin xyz="0.039162 0.000000 -0.057441"/>
+    <parent link="L0_s2"/>
+    <child link="L0_s3"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-0.4000" upper="0.4000" effort="50.0000" velocity="20.0000"/>
+  </joint>
+  <joint name="R0_ja" type="revolute">
+    <origin xyz="0.039162 0.000000 -0.057441"/>
+    <parent link="R0_s2"/>
+    <child link="R0_s3"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-0.4000" upper="0.4000" effort="50.0000" velocity="20.0000"/>
+  </joint>
+  <joint name="L1_ja" type="revolute">
+    <origin xyz="0.039162 0.000000 -0.057441"/>
+    <parent link="L1_s2"/>
+    <child link="L1_s3"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-0.4000" upper="0.4000" effort="50.0000" velocity="20.0000"/>
+  </joint>
+  <joint name="R1_ja" type="revolute">
+    <origin xyz="0.039162 0.000000 -0.057441"/>
+    <parent link="R1_s2"/>
+    <child link="R1_s3"/>
+    <axis xyz="0.000000 1.000000 0.000000"/>
+    <limit lower="-0.4000" upper="0.4000" effort="50.0000" velocity="20.0000"/>
+  </joint>
+</robot>

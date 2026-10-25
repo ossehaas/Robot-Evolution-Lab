@@ -1,0 +1,23 @@
+{
+  "name": "crawler_q4",
+  "body": {"length": 0.090, "width": 0.056, "height": 0.030},
+  "limb_pairs": [
+    {
+      "x": 0.75, "z": 0.0, "splay_deg": 35.0,
+      "segments": [
+        {"axis": "yaw",   "length": 0.030, "elev_deg": 0.0,   "range_deg": 45.0},
+        {"axis": "pitch", "length": 0.055, "elev_deg": -55.0, "range_deg": 60.0}
+      ],
+      "foot": {"radius": 0.006, "material": "tpu"}
+    },
+    {
+      "x": -0.75, "z": 0.0, "splay_deg": -35.0,
+      "segments": [
+        {"axis": "yaw",   "length": 0.030, "elev_deg": 0.0,   "range_deg": 45.0},
+        {"axis": "pitch", "length": 0.055, "elev_deg": -55.0, "range_deg": 60.0}
+      ],
+      "foot": {"radius": 0.006, "material": "tpu"}
+    }
+  ],
+  "lineage": []
+}

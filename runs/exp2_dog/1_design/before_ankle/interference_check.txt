@@ -1,0 +1,30 @@
+rest pose: 0 overlaps
+L0_j0    +-  29 deg: 0 overlaps
+L0_j1    +-  69 deg: 9 overlaps
+L0_j2    +-  57 deg: 0 overlaps
+L1_j0    +-  29 deg: 0 overlaps
+L1_j1    +-  69 deg: 9 overlaps
+L1_j2    +-  57 deg: 0 overlaps
+neck_j0  +-  34 deg: 0 overlaps
+head_j1  +-  29 deg: 0 overlaps
+tail_j0  +-  46 deg: 0 overlaps
+
+18 interferences (> 2.0 mm^3):
+  L0_j1    paw_front_L                  x shin_rear_L                     8626.0 mm3  at   68.8 deg
+  L1_j1    paw_rear_L                   x shin_front_L                    8626.0 mm3  at  -68.8 deg
+  L1_j1    shin_rear_L                  x thigh_front_L                   3252.7 mm3  at  -68.8 deg
+  L0_j1    shin_front_L                 x thigh_rear_L                    3252.7 mm3  at   68.8 deg
+  L1_j1    paw_rear_L                   x servo L0_j2                     1425.4 mm3  at  -68.8 deg
+  L0_j1    paw_front_L                  x servo L1_j2                     1425.4 mm3  at   68.8 deg
+  L0_j1    paw_front_L                  x thigh_rear_L                     962.0 mm3  at   68.8 deg
+  L1_j1    paw_rear_L                   x thigh_front_L                    962.0 mm3  at  -68.8 deg
+  L0_j1    shin_front_L                 x thigh_cover_out_rear_L           301.5 mm3  at   68.8 deg
+  L1_j1    shin_rear_L                  x thigh_cover_out_front_L          301.5 mm3  at  -68.8 deg
+  L0_j1    shin_front_L                 x shin_rear_L                      271.5 mm3  at   51.6 deg
+  L1_j1    shin_rear_L                  x shin_front_L                     271.5 mm3  at  -51.6 deg
+  L1_j1    paw_rear_L                   x pushrod_front_L                  244.2 mm3  at  -68.8 deg
+  L0_j1    paw_front_L                  x pushrod_rear_L                   244.2 mm3  at   68.8 deg
+  L0_j1    shin_front_L                 x servo L1_j2                      204.7 mm3  at   68.8 deg
+  L1_j1    shin_rear_L                  x servo L0_j2                      204.7 mm3  at  -68.8 deg
+  L0_j1    paw_front_L                  x thigh_cover_out_rear_L           121.8 mm3  at   68.8 deg
+  L1_j1    paw_rear_L                   x thigh_cover_out_front_L          121.8 mm3  at  -68.8 deg

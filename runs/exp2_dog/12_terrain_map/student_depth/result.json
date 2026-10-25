@@ -1,0 +1,667 @@
+{
+  "name": "puppy",
+  "genome": "runs\\exp2_dog\\12_terrain_map\\map_depth\\genome.json",
+  "method": "memory_student",
+  "teacher": "runs\\exp2_dog\\12_terrain_map\\map_depth",
+  "terrain_arg": "dog_rough",
+  "sensors": "imu",
+  "obs_history": 8,
+  "height_scan": true,
+  "terrain_map": "depth",
+  "env_overrides": {
+    "tracking_ang_weight": 4.0,
+    "tracking_ang_sigma": 0.3,
+    "tracking_lin_weight": 6.0,
+    "gait_freq_range": [
+      1.0,
+      2.6
+    ],
+    "command_accel": 0.5,
+    "command_yaw_accel": 1.5,
+    "command_vx_range": [
+      -0.3,
+      0.45
+    ],
+    "gait_freq_speed": 0.45,
+    "gait": "free",
+    "gait_trot_weight": 3.0,
+    "flight_weight": 2.0,
+    "action_scale": 0.75,
+    "action_rate_weight": 3.0,
+    "stand_still_weight": 0.3,
+    "paw_friction_range": [
+      0.5,
+      1.4
+    ],
+    "push_velocity": 0.3,
+    "push_interval": [
+      3.0,
+      6.0
+    ],
+    "heading_hold_gain": 2.0,
+    "map_dropout_rate": 0.1
+  },
+  "iterations": 500,
+  "seq_len": 64,
+  "rebuild_weight": 1.0,
+  "hidden": 256,
+  "num_envs": 2048,
+  "train_time_s": 3589.6,
+  "loss_curve": [
+    {
+      "iteration": 0,
+      "action_loss": 0.1142539989668876,
+      "rebuild_loss": 0.007849603600334376,
+      "rebuild_err_under_body_cm": 0.9763791412115097,
+      "teacher_drives": 1.0
+    },
+    {
+      "iteration": 10,
+      "action_loss": 0.00845514569664374,
+      "rebuild_loss": 0.004671831411542371,
+      "rebuild_err_under_body_cm": 0.6809465726837516,
+      "teacher_drives": 0.9333333333333333
+    },
+    {
+      "iteration": 20,
+      "action_loss": 0.006694948475342244,
+      "rebuild_loss": 0.004264605857315473,
+      "rebuild_err_under_body_cm": 0.6490329373627901,
+      "teacher_drives": 0.8666666666666667
+    },
+    {
+      "iteration": 30,
+      "action_loss": 0.005973686260404065,
+      "rebuild_loss": 0.003886056540068239,
+      "rebuild_err_under_body_cm": 0.623031051363796,
+      "teacher_drives": 0.8
+    },
+    {
+      "iteration": 40,
+      "action_loss": 0.005789173737866804,
+      "rebuild_loss": 0.00355962902540341,
+      "rebuild_err_under_body_cm": 0.5982807255350053,
+      "teacher_drives": 0.7333333333333334
+    },
+    {
+      "iteration": 50,
+      "action_loss": 0.006027102790540084,
+      "rebuild_loss": 0.003658149842522107,
+      "rebuild_err_under_body_cm": 0.6290152319706976,
+      "teacher_drives": 0.6666666666666667
+    },
+    {
+      "iteration": 60,
+      "action_loss": 0.005872111563803628,
+      "rebuild_loss": 0.003532594346324913,
+      "rebuild_err_under_body_cm": 0.6006166129373014,
+      "teacher_drives": 0.6
+    },
+    {
+      "iteration": 70,
+      "action_loss": 0.005863877770025283,
+      "rebuild_loss": 0.0035528792795957997,
+      "rebuild_err_under_body_cm": 0.5954698845744133,
+      "teacher_drives": 0.5333333333333333
+    },
+    {
+      "iteration": 80,
+      "action_loss": 0.006260636524530128,
+      "rebuild_loss": 0.0034023514308501035,
+      "rebuild_err_under_body_cm": 0.5923727294430137,
+      "teacher_drives": 0.4666666666666667
+    },
+    {
+      "iteration": 90,
+      "action_loss": 0.007386851269984618,
+      "rebuild_loss": 0.003423034504521638,
+      "rebuild_err_under_body_cm": 0.6030642706900835,
+      "teacher_drives": 0.4
+    },
+    {
+      "iteration": 100,
+      "action_loss": 0.008974709489848465,
+      "rebuild_loss": 0.0034672783367568627,
+      "rebuild_err_under_body_cm": 0.6171343382447958,
+      "teacher_drives": 0.33333333333333337
+    },
+    {
+      "iteration": 110,
+      "action_loss": 0.009746125841047615,
+      "rebuild_loss": 0.003456351056229323,
+      "rebuild_err_under_body_cm": 0.616027214564383,
+      "teacher_drives": 0.2666666666666667
+    },
+    {
+      "iteration": 120,
+      "action_loss": 0.010070613236166537,
+      "rebuild_loss": 0.0033426597074139863,
+      "rebuild_err_under_body_cm": 0.6090032425709069,
+      "teacher_drives": 0.19999999999999996
+    },
+    {
+      "iteration": 130,
+      "action_loss": 0.010163444967474788,
+      "rebuild_loss": 0.0034354547678958625,
+      "rebuild_err_under_body_cm": 0.5873893690295517,
+      "teacher_drives": 0.1333333333333333
+    },
+    {
+      "iteration": 140,
+      "action_loss": 0.010222836630418897,
+      "rebuild_loss": 0.0036273068835726008,
+      "rebuild_err_under_body_cm": 0.585895930416882,
+      "teacher_drives": 0.06666666666666665
+    },
+    {
+      "iteration": 150,
+      "action_loss": 0.00932092044968158,
+      "rebuild_loss": 0.0034023546759271994,
+      "rebuild_err_under_body_cm": 0.6013927864842117,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 160,
+      "action_loss": 0.008677872363477945,
+      "rebuild_loss": 0.0034291321644559503,
+      "rebuild_err_under_body_cm": 0.5872033140622079,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 170,
+      "action_loss": 0.008536066627129912,
+      "rebuild_loss": 0.0031703624699730426,
+      "rebuild_err_under_body_cm": 0.587816066108644,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 180,
+      "action_loss": 0.007865810504881665,
+      "rebuild_loss": 0.003279270837083459,
+      "rebuild_err_under_body_cm": 0.5881174025125802,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 190,
+      "action_loss": 0.00726861014845781,
+      "rebuild_loss": 0.0032241592271020636,
+      "rebuild_err_under_body_cm": 0.5686145112849772,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 200,
+      "action_loss": 0.007362741889664903,
+      "rebuild_loss": 0.003128919706796296,
+      "rebuild_err_under_body_cm": 0.5743520217947662,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 210,
+      "action_loss": 0.006788625702029094,
+      "rebuild_loss": 0.0030726272525498644,
+      "rebuild_err_under_body_cm": 0.578551369253546,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 220,
+      "action_loss": 0.0068922451755497605,
+      "rebuild_loss": 0.0030400024843402207,
+      "rebuild_err_under_body_cm": 0.5817155982367694,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 230,
+      "action_loss": 0.006253033207030967,
+      "rebuild_loss": 0.0030056218820391223,
+      "rebuild_err_under_body_cm": 0.5697891232557595,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 240,
+      "action_loss": 0.006555086583830416,
+      "rebuild_loss": 0.00299104762962088,
+      "rebuild_err_under_body_cm": 0.5815790384076536,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 250,
+      "action_loss": 0.006449266657000408,
+      "rebuild_loss": 0.003128089621895924,
+      "rebuild_err_under_body_cm": 0.566119474824518,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 260,
+      "action_loss": 0.006115159863838926,
+      "rebuild_loss": 0.0031339663109974936,
+      "rebuild_err_under_body_cm": 0.5687299510464072,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 270,
+      "action_loss": 0.005882991245016456,
+      "rebuild_loss": 0.0029365687223616987,
+      "rebuild_err_under_body_cm": 0.5550870462320745,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 280,
+      "action_loss": 0.006041013228241354,
+      "rebuild_loss": 0.003112734077149071,
+      "rebuild_err_under_body_cm": 0.5756541411392391,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 290,
+      "action_loss": 0.0059621803520713,
+      "rebuild_loss": 0.003056582689168863,
+      "rebuild_err_under_body_cm": 0.5678045377135277,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 300,
+      "action_loss": 0.0059050460695289075,
+      "rebuild_loss": 0.002871683958801441,
+      "rebuild_err_under_body_cm": 0.5734770256094635,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 310,
+      "action_loss": 0.005549354129470885,
+      "rebuild_loss": 0.0028780485881725326,
+      "rebuild_err_under_body_cm": 0.5608743336051702,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 320,
+      "action_loss": 0.005599784111836925,
+      "rebuild_loss": 0.0028513341094367206,
+      "rebuild_err_under_body_cm": 0.5640992289409041,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 330,
+      "action_loss": 0.0055614175798837095,
+      "rebuild_loss": 0.0028550856513902545,
+      "rebuild_err_under_body_cm": 0.5778704327531159,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 340,
+      "action_loss": 0.005599859985522926,
+      "rebuild_loss": 0.0028647084545809776,
+      "rebuild_err_under_body_cm": 0.563075914978981,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 350,
+      "action_loss": 0.005601351440418512,
+      "rebuild_loss": 0.0028547723486553878,
+      "rebuild_err_under_body_cm": 0.5564465210773051,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 360,
+      "action_loss": 0.0052219202916603535,
+      "rebuild_loss": 0.002738845636486076,
+      "rebuild_err_under_body_cm": 0.5506431823596358,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 370,
+      "action_loss": 0.005216878897044808,
+      "rebuild_loss": 0.002728104213019833,
+      "rebuild_err_under_body_cm": 0.5438742553815246,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 380,
+      "action_loss": 0.005157114967005327,
+      "rebuild_loss": 0.0026917099894490093,
+      "rebuild_err_under_body_cm": 0.553466493729502,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 390,
+      "action_loss": 0.005302540201228112,
+      "rebuild_loss": 0.002798930523567833,
+      "rebuild_err_under_body_cm": 0.5654658423736691,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 400,
+      "action_loss": 0.005173595796804875,
+      "rebuild_loss": 0.002782558018225245,
+      "rebuild_err_under_body_cm": 0.5416549369692802,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 410,
+      "action_loss": 0.004995572293410078,
+      "rebuild_loss": 0.002677324155229144,
+      "rebuild_err_under_body_cm": 0.5640493775717914,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 420,
+      "action_loss": 0.0049705172423273325,
+      "rebuild_loss": 0.0027510789514053613,
+      "rebuild_err_under_body_cm": 0.5506891431286931,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 430,
+      "action_loss": 0.004982706246664748,
+      "rebuild_loss": 0.0027479368000058457,
+      "rebuild_err_under_body_cm": 0.5409616930410266,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 440,
+      "action_loss": 0.004992654663510621,
+      "rebuild_loss": 0.0028854512493126094,
+      "rebuild_err_under_body_cm": 0.5650602094829082,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 450,
+      "action_loss": 0.004957280063536018,
+      "rebuild_loss": 0.002717615367146209,
+      "rebuild_err_under_body_cm": 0.5602671788074076,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 460,
+      "action_loss": 0.004837238200707361,
+      "rebuild_loss": 0.002695419476367533,
+      "rebuild_err_under_body_cm": 0.5430894414894283,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 470,
+      "action_loss": 0.0047544490080326796,
+      "rebuild_loss": 0.002658991259522736,
+      "rebuild_err_under_body_cm": 0.5349437776021659,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 480,
+      "action_loss": 0.004877093073446304,
+      "rebuild_loss": 0.002625368084409274,
+      "rebuild_err_under_body_cm": 0.5466007231734693,
+      "teacher_drives": 0.0
+    },
+    {
+      "iteration": 490,
+      "action_loss": 0.004885722475592047,
+      "rebuild_loss": 0.0027288863057037815,
+      "rebuild_err_under_body_cm": 0.5550282821059227,
+      "teacher_drives": 0.0
+    }
+  ],
+  "task": "command",
+  "distance_m": 0.003972502425312996,
+  "distance_std_m": 0.7321060299873352,
+  "speed_m_s": 0.000331041868776083,
+  "fall_rate": 0.09228515625,
+  "episodes": 2048,
+  "lin_vel_error_m_s": 0.13096840679645538,
+  "yaw_rate_error_rad_s": 0.4798172116279602,
+  "tracking_score": 0.3116617798805237,
+  "progress_ratio": 0.7966729402542114,
+  "walk_score": 0.29400908946990967,
+  "cost_of_transport": 3.678400993347168,
+  "mechanical_power_w": 17.35256576538086,
+  "level_scores": [
+    0.352,
+    0.346,
+    0.325,
+    0.312,
+    0.296,
+    0.282,
+    0.271,
+    0.259,
+    0.25,
+    0.247
+  ],
+  "level_fall_rates": [
+    0.01,
+    0.015,
+    0.039,
+    0.044,
+    0.049,
+    0.078,
+    0.093,
+    0.161,
+    0.186,
+    0.25
+  ],
+  "type_fall_rates": {
+    "bumpy": [
+      0.0,
+      0.019,
+      0.019,
+      0.02,
+      0.0,
+      0.0,
+      0.039,
+      0.02,
+      0.02,
+      0.039
+    ],
+    "slope_up": [
+      0.059,
+      0.0,
+      0.0,
+      0.059,
+      0.059,
+      0.059,
+      0.0,
+      0.118,
+      0.059,
+      0.176
+    ],
+    "slope_down": [
+      0.0,
+      0.0,
+      0.059,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.176,
+      0.118,
+      0.176
+    ],
+    "stairs_descend": [
+      0.0,
+      0.02,
+      0.039,
+      0.098,
+      0.058,
+      0.154,
+      0.118,
+      0.216,
+      0.451,
+      0.373
+    ],
+    "stairs_climb": [
+      0.029,
+      0.0,
+      0.029,
+      0.059,
+      0.088,
+      0.176,
+      0.171,
+      0.235,
+      0.118,
+      0.353
+    ],
+    "blocks": [
+      0.0,
+      0.029,
+      0.088,
+      0.0,
+      0.088,
+      0.029,
+      0.147,
+      0.229,
+      0.206,
+      0.353
+    ]
+  },
+  "type_level_scores": {
+    "bumpy": [
+      0.352,
+      0.355,
+      0.344,
+      0.334,
+      0.329,
+      0.316,
+      0.305,
+      0.298,
+      0.296,
+      0.276
+    ],
+    "slope_up": [
+      0.372,
+      0.371,
+      0.356,
+      0.349,
+      0.33,
+      0.327,
+      0.326,
+      0.329,
+      0.316,
+      0.319
+    ],
+    "slope_down": [
+      0.378,
+      0.362,
+      0.358,
+      0.325,
+      0.315,
+      0.313,
+      0.313,
+      0.29,
+      0.27,
+      0.273
+    ],
+    "stairs_descend": [
+      0.347,
+      0.34,
+      0.319,
+      0.309,
+      0.288,
+      0.267,
+      0.252,
+      0.238,
+      0.229,
+      0.227
+    ],
+    "stairs_climb": [
+      0.331,
+      0.321,
+      0.302,
+      0.263,
+      0.246,
+      0.221,
+      0.221,
+      0.193,
+      0.196,
+      0.188
+    ],
+    "blocks": [
+      0.358,
+      0.345,
+      0.3,
+      0.307,
+      0.285,
+      0.275,
+      0.249,
+      0.246,
+      0.222,
+      0.242
+    ]
+  },
+  "terrain": "rough",
+  "dark": {
+    "fall_rate": 0.10009765625,
+    "walk_score": 0.29193347692489624,
+    "lin_vel_error_m_s": 0.13184919953346252,
+    "type_fall_rates": {
+      "bumpy": [
+        0.019,
+        0.0,
+        0.019,
+        0.0,
+        0.02,
+        0.02,
+        0.0,
+        0.02,
+        0.078,
+        0.059
+      ],
+      "slope_up": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.059,
+        0.0,
+        0.0,
+        0.176,
+        0.059,
+        0.294
+      ],
+      "slope_down": [
+        0.059,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.059,
+        0.0,
+        0.118,
+        0.235,
+        0.059
+      ],
+      "stairs_descend": [
+        0.0,
+        0.0,
+        0.039,
+        0.039,
+        0.096,
+        0.154,
+        0.137,
+        0.275,
+        0.294,
+        0.412
+      ],
+      "stairs_climb": [
+        0.0,
+        0.029,
+        0.029,
+        0.029,
+        0.088,
+        0.088,
+        0.257,
+        0.412,
+        0.176,
+        0.176
+      ],
+      "blocks": [
+        0.0,
+        0.0,
+        0.059,
+        0.088,
+        0.059,
+        0.206,
+        0.265,
+        0.2,
+        0.176,
+        0.588
+      ]
+    }
+  }
+}

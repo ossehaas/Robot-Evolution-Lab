@@ -1,0 +1,19 @@
+{
+  "name": "crawler_q4",
+  "genome": "prototypes\\crawler_q4\\genome.json",
+  "topology": "yp|yp",
+  "num_servos": 8,
+  "mass_kg": 0.1805,
+  "iterations": 500,
+  "num_envs": 4096,
+  "physics": "physx",
+  "setup_time_s": 33.1,
+  "train_time_s": 1616.7,
+  "checkpoint": "runs\\exp1_crawler\\1_walking\\crawler_q4\\model_final.pt",
+  "warm_start": null,
+  "distance_m": 5.6892476081848145,
+  "distance_std_m": 0.8366482257843018,
+  "speed_m_s": 0.47410396734873456,
+  "fall_rate": 0.0,
+  "episodes": 4096
+}

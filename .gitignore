@@ -1,0 +1,65 @@
+# NVIDIA Isaac Lab is its own git checkout (tag v3.0.0-EA), including the Python environment: rebuild it with
+# .env_init/readme.txt (the exact package versions are in .env_init/uv.lock)
+IsaacLab/
+
+# runs/: the experiments are kept (batch scripts, settings, genomes, result.json, benchmark results, results.md) so
+# they can be re-run; heavy or regenerable output is not
+runs/scratch/
+runs/try/
+runs/**/robot/
+runs/**/git/
+runs/**/videos/
+runs/**/flip_frames/
+runs/**/events.out.tfevents.*
+runs/**/*.pt
+runs/**/*.onnx
+runs/**/*.onnx.data
+runs/**/*.mp4
+runs/**/*.png
+runs/**/*.jpg
+runs/**/*.gif
+runs/**/*.usda
+runs/**/*.usd
+runs/**/*.stl
+# ... except the final models of the key runs: the starting points of the later experiments, and the results to try
+!runs/exp1_crawler/1_walking/crawler_q4_steer/model_final.pt
+!runs/exp1_crawler/1_walking/crawler_q4_steer/policy.pt
+!runs/exp1_crawler/1_walking/crawler_q4_steer/policy.onnx*
+!runs/exp1_crawler/2_evolution/evo_rough_002/g05_025/model_final.pt
+!runs/exp1_crawler/2_evolution/evo_rough_002/g05_025/policy.pt
+!runs/exp1_crawler/2_evolution/evo_rough_002/g05_025/policy.onnx*
+!runs/exp2_dog/10_printable_dog/D_print_s2/model_final.pt
+!runs/exp2_dog/10_printable_dog/D_print_s2/policy.pt
+!runs/exp2_dog/10_printable_dog/D_print_s2/policy.onnx*
+!runs/exp2_dog/11_imitation/amp_w6m_slow_s1/model_final.pt
+!runs/exp2_dog/11_imitation/amp_w6m_slow_s1/policy.pt
+!runs/exp2_dog/11_imitation/amp_w6m_slow_s1/policy.onnx*
+!runs/exp2_dog/11_imitation/amp_w6m_slow_s1/amp_disc.pt
+!runs/exp2_dog/15_getup_design/getup_abd29_head/model_final.pt
+!runs/exp2_dog/15_getup_design/getup_abd29_head/policy.pt
+!runs/exp2_dog/15_getup_design/getup_abd29_head/policy.onnx*
+!runs/exp2_dog/16_recover/distill/model_final.pt
+!runs/exp2_dog/16_recover/distill/policy.pt
+!runs/exp2_dog/16_recover/distill/policy.onnx*
+!runs/exp2_dog/17_recover_bc/bc_s2/model_final.pt
+!runs/exp2_dog/17_recover_bc/bc_s2/policy.pt
+!runs/exp2_dog/17_recover_bc/bc_s2/policy.onnx*
+logs/
+*.log
+cpu_log.txt
+sim_log.txt
+
+# generated designs: rebuild with `lab -m core.morphology build <genome>`
+prototypes/*/build/
+prototypes/*/train/*.pt
+prototypes/*/train/**/events.out.tfevents.*
+
+# python and tools
+__pycache__/
+*.pyc
+.venv/
+.ruff_cache/
+
+# third-party motion data (licence CC BY-NC 4.0: do not redistribute; see data/README.md for how to get it)
+data/mocap/
+.playwright-mcp/

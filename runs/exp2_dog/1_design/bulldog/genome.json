@@ -1,0 +1,32 @@
+{
+  "name": "bulldog",
+  "kind": "dog",
+  "style": "bulldog",
+  "body": {
+    "length": 0.19,
+    "width": 0.13,
+    "height": 0.085
+  },
+  "legs": {
+    "hip_x": 0.065,
+    "upper": 0.08,
+    "lower": 0.085,
+    "rest_depth": 0.85,
+    "paw_radius": 0.019,
+    "thickness": 1.0
+  },
+  "head": {
+    "length": 0.095,
+    "width": 0.135,
+    "height": 0.1,
+    "snout": 0.028,
+    "ear_length": 0.035,
+    "ear_style": "floppy",
+    "neck": 0.035
+  },
+  "tail": {
+    "length": 0.035
+  },
+  "servo": "STS3215_12V",
+  "lineage": []
+}

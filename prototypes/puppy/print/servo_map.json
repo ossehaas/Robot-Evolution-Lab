@@ -1,0 +1,197 @@
+[
+  {
+    "id": 1,
+    "joint": "L0_j0",
+    "role": "front L abduction",
+    "direction": 1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -28.6,
+      28.6
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 2,
+    "joint": "L0_j1",
+    "role": "front L hip",
+    "direction": 1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -68.8,
+      68.8
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 3,
+    "joint": "L0_j2",
+    "role": "front L knee",
+    "direction": 1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -57.3,
+      57.3
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 4,
+    "joint": "R0_j0",
+    "role": "front R abduction",
+    "direction": -1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -28.6,
+      28.6
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 5,
+    "joint": "R0_j1",
+    "role": "front R hip",
+    "direction": -1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -68.8,
+      68.8
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 6,
+    "joint": "R0_j2",
+    "role": "front R knee",
+    "direction": -1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -57.3,
+      57.3
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 7,
+    "joint": "L1_j0",
+    "role": "rear L abduction",
+    "direction": -1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -28.6,
+      28.6
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 8,
+    "joint": "L1_j1",
+    "role": "rear L hip",
+    "direction": 1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -68.8,
+      68.8
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 9,
+    "joint": "L1_j2",
+    "role": "rear L knee",
+    "direction": 1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -57.3,
+      57.3
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 10,
+    "joint": "R1_j0",
+    "role": "rear R abduction",
+    "direction": 1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -28.6,
+      28.6
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 11,
+    "joint": "R1_j1",
+    "role": "rear R hip",
+    "direction": -1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -68.8,
+      68.8
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 12,
+    "joint": "R1_j2",
+    "role": "rear R knee",
+    "direction": -1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -57.3,
+      57.3
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 13,
+    "joint": "neck_j0",
+    "role": "neck nod",
+    "direction": 1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -34.4,
+      34.4
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 14,
+    "joint": "head_j1",
+    "role": "head tilt",
+    "direction": 1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -28.6,
+      28.6
+    ],
+    "max_torque_Nm": 2.94
+  },
+  {
+    "id": 15,
+    "joint": "tail_j0",
+    "role": "tail wag",
+    "direction": 1,
+    "center_ticks": 2048,
+    "ticks_per_rad": 651.9,
+    "limit_deg": [
+      -45.8,
+      45.8
+    ],
+    "max_torque_Nm": 2.94
+  }
+]

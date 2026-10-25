@@ -1,0 +1,351 @@
+{
+  "name": "puppy_abd29",
+  "genome": "runs\\exp2_dog\\15_getup_design\\getup_abd29_head\\genome.json",
+  "method": "distill_recover",
+  "walker": "runs\\exp2_dog\\11_imitation\\amp_w6m_slow_s1",
+  "getup": "runs\\exp2_dog\\15_getup_design\\getup_abd29_head",
+  "iterations": 400,
+  "num_envs": 2048,
+  "task": "command",
+  "terrain_arg": "dog_rough",
+  "sensors": "imu",
+  "obs_history": 8,
+  "height_scan": true,
+  "env_overrides": {
+    "tracking_ang_weight": 4.0,
+    "tracking_ang_sigma": 0.3,
+    "tracking_lin_weight": 6.0,
+    "gait_freq_range": [
+      1.0,
+      2.6
+    ],
+    "command_accel": 0.5,
+    "command_yaw_accel": 1.5,
+    "command_vx_range": [
+      -0.3,
+      0.45
+    ],
+    "gait_freq_speed": 0.45,
+    "gait": "free",
+    "gait_trot_weight": 3.0,
+    "flight_weight": 2.0,
+    "action_scale": 1.0,
+    "action_rate_weight": 3.0,
+    "stand_still_weight": 0.3,
+    "recover": true,
+    "policy_drives_expression": true,
+    "self_collisions": true,
+    "heading_hold_gain": 2.0,
+    "topple_push": [
+      0.6,
+      1.2
+    ],
+    "topple_interval": [
+      4.0,
+      8.0
+    ]
+  },
+  "train_time_s": 603.9,
+  "loss_curve": [
+    {
+      "iteration": 0,
+      "loss": 0.007126935830456205,
+      "teacher_drives": 1.0,
+      "recovering": 0.0
+    },
+    {
+      "iteration": 8,
+      "loss": 0.0017707755978335626,
+      "teacher_drives": 0.9333333333333333,
+      "recovering": 0.005167643229166667
+    },
+    {
+      "iteration": 16,
+      "loss": 0.0036183186748530716,
+      "teacher_drives": 0.8666666666666667,
+      "recovering": 0.18845621744791666
+    },
+    {
+      "iteration": 24,
+      "loss": 0.0031125617533689365,
+      "teacher_drives": 0.8,
+      "recovering": 0.17836507161458337
+    },
+    {
+      "iteration": 32,
+      "loss": 0.0012466976659197826,
+      "teacher_drives": 0.7333333333333334,
+      "recovering": 0.010131835937499997
+    },
+    {
+      "iteration": 40,
+      "loss": 0.003630335719208233,
+      "teacher_drives": 0.6666666666666667,
+      "recovering": 0.18312581380208331
+    },
+    {
+      "iteration": 48,
+      "loss": 0.002874954770959448,
+      "teacher_drives": 0.6,
+      "recovering": 0.18296305338541669
+    },
+    {
+      "iteration": 56,
+      "loss": 0.0015678771706006955,
+      "teacher_drives": 0.5333333333333333,
+      "recovering": 0.010437011718749998
+    },
+    {
+      "iteration": 64,
+      "loss": 0.003851401444990188,
+      "teacher_drives": 0.4666666666666667,
+      "recovering": 0.17323811848958334
+    },
+    {
+      "iteration": 72,
+      "loss": 0.0030810855168965645,
+      "teacher_drives": 0.4,
+      "recovering": 0.15775553385416666
+    },
+    {
+      "iteration": 80,
+      "loss": 0.0016765910295362119,
+      "teacher_drives": 0.33333333333333337,
+      "recovering": 0.006306966145833334
+    },
+    {
+      "iteration": 88,
+      "loss": 0.004745839010865893,
+      "teacher_drives": 0.2666666666666667,
+      "recovering": 0.13590494791666666
+    },
+    {
+      "iteration": 96,
+      "loss": 0.003949852325604297,
+      "teacher_drives": 0.19999999999999996,
+      "recovering": 0.15647379557291669
+    },
+    {
+      "iteration": 104,
+      "loss": 0.0020956812841177452,
+      "teacher_drives": 0.1333333333333333,
+      "recovering": 0.013041178385416666
+    },
+    {
+      "iteration": 112,
+      "loss": 0.005757633916800842,
+      "teacher_drives": 0.06666666666666665,
+      "recovering": 0.16099039713541666
+    },
+    {
+      "iteration": 120,
+      "loss": 0.01582642292487435,
+      "teacher_drives": 0.0,
+      "recovering": 0.1884562174479166
+    },
+    {
+      "iteration": 128,
+      "loss": 0.001861446140537737,
+      "teacher_drives": 0.0,
+      "recovering": 0.006571451822916668
+    },
+    {
+      "iteration": 136,
+      "loss": 0.004895327874692157,
+      "teacher_drives": 0.0,
+      "recovering": 0.113037109375
+    },
+    {
+      "iteration": 144,
+      "loss": 0.014342708687763661,
+      "teacher_drives": 0.0,
+      "recovering": 0.16227213541666666
+    },
+    {
+      "iteration": 152,
+      "loss": 0.0015645672756363638,
+      "teacher_drives": 0.0,
+      "recovering": 0.003580729166666667
+    },
+    {
+      "iteration": 160,
+      "loss": 0.004603600020345766,
+      "teacher_drives": 0.0,
+      "recovering": 0.09962972005208334
+    },
+    {
+      "iteration": 168,
+      "loss": 0.012719991354970261,
+      "teacher_drives": 0.0,
+      "recovering": 0.17486572265624997
+    },
+    {
+      "iteration": 176,
+      "loss": 0.0011238465758651728,
+      "teacher_drives": 0.0,
+      "recovering": 0.002705891927083333
+    },
+    {
+      "iteration": 184,
+      "loss": 0.0032996741647366434,
+      "teacher_drives": 0.0,
+      "recovering": 0.059020996093750014
+    },
+    {
+      "iteration": 192,
+      "loss": 0.010840630740858614,
+      "teacher_drives": 0.0,
+      "recovering": 0.18916829427083331
+    },
+    {
+      "iteration": 200,
+      "loss": 0.0015033264808153035,
+      "teacher_drives": 0.0,
+      "recovering": 0.0014241536458333335
+    },
+    {
+      "iteration": 208,
+      "loss": 0.002671124311746098,
+      "teacher_drives": 0.0,
+      "recovering": 0.029113769531250003
+    },
+    {
+      "iteration": 216,
+      "loss": 0.009447102405829355,
+      "teacher_drives": 0.0,
+      "recovering": 0.2073567708333333
+    },
+    {
+      "iteration": 224,
+      "loss": 0.007376614375971258,
+      "teacher_drives": 0.0,
+      "recovering": 0.10512288411458334
+    },
+    {
+      "iteration": 232,
+      "loss": 0.0019251353733125143,
+      "teacher_drives": 0.0,
+      "recovering": 0.01955159505208334
+    },
+    {
+      "iteration": 240,
+      "loss": 0.009659004863351583,
+      "teacher_drives": 0.0,
+      "recovering": 0.19362386067708337
+    },
+    {
+      "iteration": 248,
+      "loss": 0.01215026096906513,
+      "teacher_drives": 0.0,
+      "recovering": 0.16658528645833334
+    },
+    {
+      "iteration": 256,
+      "loss": 0.001479976675909711,
+      "teacher_drives": 0.0,
+      "recovering": 0.017232259114583332
+    },
+    {
+      "iteration": 264,
+      "loss": 0.006890464617754333,
+      "teacher_drives": 0.0,
+      "recovering": 0.17392985026041666
+    },
+    {
+      "iteration": 272,
+      "loss": 0.010551653220318258,
+      "teacher_drives": 0.0,
+      "recovering": 0.14597574869791666
+    },
+    {
+      "iteration": 280,
+      "loss": 0.0013957969240436796,
+      "teacher_drives": 0.0,
+      "recovering": 0.011067708333333334
+    },
+    {
+      "iteration": 288,
+      "loss": 0.006692526760161854,
+      "teacher_drives": 0.0,
+      "recovering": 0.1706339518229167
+    },
+    {
+      "iteration": 296,
+      "loss": 0.010882435919484124,
+      "teacher_drives": 0.0,
+      "recovering": 0.16642252604166669
+    },
+    {
+      "iteration": 304,
+      "loss": 0.0015112759538169485,
+      "teacher_drives": 0.0,
+      "recovering": 0.010009765625000002
+    },
+    {
+      "iteration": 312,
+      "loss": 0.00538339106424246,
+      "teacher_drives": 0.0,
+      "recovering": 0.14213053385416669
+    },
+    {
+      "iteration": 320,
+      "loss": 0.010018518922151998,
+      "teacher_drives": 0.0,
+      "recovering": 0.15816243489583334
+    },
+    {
+      "iteration": 328,
+      "loss": 0.0013468175275193062,
+      "teacher_drives": 0.0,
+      "recovering": 0.007751464843750001
+    },
+    {
+      "iteration": 336,
+      "loss": 0.004401475787744857,
+      "teacher_drives": 0.0,
+      "recovering": 0.12506103515625
+    },
+    {
+      "iteration": 344,
+      "loss": 0.010751455760328099,
+      "teacher_drives": 0.0,
+      "recovering": 0.1700032552083333
+    },
+    {
+      "iteration": 352,
+      "loss": 0.0013657181152666453,
+      "teacher_drives": 0.0,
+      "recovering": 0.005818684895833333
+    },
+    {
+      "iteration": 360,
+      "loss": 0.0032504786722711287,
+      "teacher_drives": 0.0,
+      "recovering": 0.10819498697916669
+    },
+    {
+      "iteration": 368,
+      "loss": 0.00959442334715277,
+      "teacher_drives": 0.0,
+      "recovering": 0.1628011067708333
+    },
+    {
+      "iteration": 376,
+      "loss": 0.000949325807596324,
+      "teacher_drives": 0.0,
+      "recovering": 0.0028279622395833326
+    },
+    {
+      "iteration": 384,
+      "loss": 0.0028419744412531145,
+      "teacher_drives": 0.0,
+      "recovering": 0.07474772135416667
+    },
+    {
+      "iteration": 392,
+      "loss": 0.009246354718925431,
+      "teacher_drives": 0.0,
+      "recovering": 0.18770345052083334
+    }
+  ]
+}

@@ -1,0 +1,392 @@
+{
+  "name": "g05_025",
+  "genome": "runs\\exp1_crawler\\2_evolution\\evo_rough_002\\g05_025\\genome.json",
+  "topology": "yp-p",
+  "num_servos": 6,
+  "mass_kg": 0.1616,
+  "method": "distillation",
+  "teachers": {
+    "stairs": {
+      "checkpoint": "runs\\exp1_crawler\\4_skills\\spec_stairs\\model_final.pt",
+      "types": [
+        "stairs_climb",
+        "stairs_descend"
+      ]
+    },
+    "blocks": {
+      "checkpoint": "runs\\exp1_crawler\\4_skills\\spec_blocks\\model_final.pt",
+      "types": [
+        "blocks"
+      ]
+    }
+  },
+  "fallback": "runs\\exp1_crawler\\4_skills\\generalist\\model_final.pt",
+  "iterations": 300,
+  "num_envs": 2048,
+  "terrain": "rough",
+  "sensors": "imu",
+  "obs_history": 8,
+  "train_time_s": 368.2,
+  "checkpoint": "runs\\exp1_crawler\\6_navigation\\poc\\student_v2\\model_final.pt",
+  "loss_curve": [
+    {
+      "iteration": 0,
+      "loss": 0.3288556672632694,
+      "beta": 1.0
+    },
+    {
+      "iteration": 6,
+      "loss": 0.06850748811848462,
+      "beta": 0.9333333333333333
+    },
+    {
+      "iteration": 12,
+      "loss": 0.06348734733182937,
+      "beta": 0.8666666666666667
+    },
+    {
+      "iteration": 18,
+      "loss": 0.060425396892242134,
+      "beta": 0.8
+    },
+    {
+      "iteration": 24,
+      "loss": 0.06025325565133244,
+      "beta": 0.7333333333333334
+    },
+    {
+      "iteration": 30,
+      "loss": 0.047718485235236585,
+      "beta": 0.6666666666666667
+    },
+    {
+      "iteration": 36,
+      "loss": 0.048474982962943614,
+      "beta": 0.6
+    },
+    {
+      "iteration": 42,
+      "loss": 0.06550255371257663,
+      "beta": 0.5333333333333333
+    },
+    {
+      "iteration": 48,
+      "loss": 0.04499461816158146,
+      "beta": 0.4666666666666667
+    },
+    {
+      "iteration": 54,
+      "loss": 0.04412654263433069,
+      "beta": 0.4
+    },
+    {
+      "iteration": 60,
+      "loss": 0.05225963017437607,
+      "beta": 0.33333333333333337
+    },
+    {
+      "iteration": 66,
+      "loss": 0.08007640996947885,
+      "beta": 0.2666666666666667
+    },
+    {
+      "iteration": 72,
+      "loss": 0.06875770725309849,
+      "beta": 0.19999999999999996
+    },
+    {
+      "iteration": 78,
+      "loss": 0.07547487923875451,
+      "beta": 0.1333333333333333
+    },
+    {
+      "iteration": 84,
+      "loss": 0.10874475492164493,
+      "beta": 0.06666666666666665
+    },
+    {
+      "iteration": 90,
+      "loss": 0.11821193411014974,
+      "beta": 0.0
+    },
+    {
+      "iteration": 96,
+      "loss": 0.09536626585759223,
+      "beta": 0.0
+    },
+    {
+      "iteration": 102,
+      "loss": 0.11590873589739203,
+      "beta": 0.0
+    },
+    {
+      "iteration": 108,
+      "loss": 0.13946954626590014,
+      "beta": 0.0
+    },
+    {
+      "iteration": 114,
+      "loss": 0.09366623335517943,
+      "beta": 0.0
+    },
+    {
+      "iteration": 120,
+      "loss": 0.09143172134645283,
+      "beta": 0.0
+    },
+    {
+      "iteration": 126,
+      "loss": 0.1304691843688488,
+      "beta": 0.0
+    },
+    {
+      "iteration": 132,
+      "loss": 0.09446776262484491,
+      "beta": 0.0
+    },
+    {
+      "iteration": 138,
+      "loss": 0.08981045940890908,
+      "beta": 0.0
+    },
+    {
+      "iteration": 144,
+      "loss": 0.10662128357216716,
+      "beta": 0.0
+    },
+    {
+      "iteration": 150,
+      "loss": 0.1221308745443821,
+      "beta": 0.0
+    },
+    {
+      "iteration": 156,
+      "loss": 0.09254877688363194,
+      "beta": 0.0
+    },
+    {
+      "iteration": 162,
+      "loss": 0.10243743844330311,
+      "beta": 0.0
+    },
+    {
+      "iteration": 168,
+      "loss": 0.1030646120198071,
+      "beta": 0.0
+    },
+    {
+      "iteration": 174,
+      "loss": 0.08546820702031255,
+      "beta": 0.0
+    },
+    {
+      "iteration": 180,
+      "loss": 0.10920213116332889,
+      "beta": 0.0
+    },
+    {
+      "iteration": 186,
+      "loss": 0.09758321125991642,
+      "beta": 0.0
+    },
+    {
+      "iteration": 192,
+      "loss": 0.0944700394757092,
+      "beta": 0.0
+    },
+    {
+      "iteration": 198,
+      "loss": 0.09399391757324338,
+      "beta": 0.0
+    },
+    {
+      "iteration": 204,
+      "loss": 0.10404836968518794,
+      "beta": 0.0
+    },
+    {
+      "iteration": 210,
+      "loss": 0.09114797413349152,
+      "beta": 0.0
+    },
+    {
+      "iteration": 216,
+      "loss": 0.11814986844547093,
+      "beta": 0.0
+    },
+    {
+      "iteration": 222,
+      "loss": 0.09095223364420235,
+      "beta": 0.0
+    },
+    {
+      "iteration": 228,
+      "loss": 0.09573469148017466,
+      "beta": 0.0
+    },
+    {
+      "iteration": 234,
+      "loss": 0.10818240884691477,
+      "beta": 0.0
+    },
+    {
+      "iteration": 240,
+      "loss": 0.09313491964712739,
+      "beta": 0.0
+    },
+    {
+      "iteration": 246,
+      "loss": 0.0818030929658562,
+      "beta": 0.0
+    },
+    {
+      "iteration": 252,
+      "loss": 0.11714100511744618,
+      "beta": 0.0
+    },
+    {
+      "iteration": 258,
+      "loss": 0.12220806907862425,
+      "beta": 0.0
+    },
+    {
+      "iteration": 264,
+      "loss": 0.07731803529895842,
+      "beta": 0.0
+    },
+    {
+      "iteration": 270,
+      "loss": 0.09017175785265863,
+      "beta": 0.0
+    },
+    {
+      "iteration": 276,
+      "loss": 0.122698157094419,
+      "beta": 0.0
+    },
+    {
+      "iteration": 282,
+      "loss": 0.08119033672846854,
+      "beta": 0.0
+    },
+    {
+      "iteration": 288,
+      "loss": 0.09039115905761719,
+      "beta": 0.0
+    },
+    {
+      "iteration": 294,
+      "loss": 0.09753481042571366,
+      "beta": 0.0
+    }
+  ],
+  "task": "command",
+  "distance_m": 0.02090662159025669,
+  "distance_std_m": 0.6665242314338684,
+  "speed_m_s": 0.0017422184658547242,
+  "fall_rate": 0.00146484375,
+  "episodes": 2048,
+  "lin_vel_error_m_s": 0.13245108723640442,
+  "yaw_rate_error_rad_s": 1.3545722961425781,
+  "tracking_score": 0.30733469128608704,
+  "progress_ratio": 0.8453333377838135,
+  "walk_score": 0.27834439277648926,
+  "level_scores": [
+    0.357,
+    0.336,
+    0.323,
+    0.303,
+    0.283,
+    0.266,
+    0.249,
+    0.226,
+    0.227,
+    0.214
+  ],
+  "level_fall_rates": [
+    0.01,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.005
+  ],
+  "type_level_scores": {
+    "bumpy": [
+      0.38,
+      0.371,
+      0.365,
+      0.352,
+      0.325,
+      0.319,
+      0.299,
+      0.275,
+      0.285,
+      0.257
+    ],
+    "slope_up": [
+      0.397,
+      0.389,
+      0.385,
+      0.368,
+      0.353,
+      0.335,
+      0.324,
+      0.298,
+      0.275,
+      0.291
+    ],
+    "slope_down": [
+      0.396,
+      0.382,
+      0.39,
+      0.36,
+      0.34,
+      0.32,
+      0.299,
+      0.265,
+      0.273,
+      0.268
+    ],
+    "stairs_descend": [
+      0.354,
+      0.337,
+      0.333,
+      0.312,
+      0.286,
+      0.269,
+      0.256,
+      0.212,
+      0.227,
+      0.201
+    ],
+    "stairs_climb": [
+      0.32,
+      0.3,
+      0.265,
+      0.237,
+      0.21,
+      0.187,
+      0.178,
+      0.169,
+      0.172,
+      0.149
+    ],
+    "blocks": [
+      0.316,
+      0.267,
+      0.238,
+      0.22,
+      0.213,
+      0.189,
+      0.171,
+      0.157,
+      0.149,
+      0.145
+    ]
+  }
+}

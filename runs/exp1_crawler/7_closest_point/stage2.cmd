@@ -1,0 +1,6 @@
+@echo off
+cd /d %~dp0..\..\..
+call "lab.cmd" -m core.evolution.train --out runs\closest\pocket_p1_mlp_warm --genome runs\poc\nav_camera\genome.json --task goal --terrain enclosure_pocket --num_envs 2048 --sensors imu --env_override goal_signal=camera --env_override collision_weight=1.0 --iterations 800 --obs_history 4 --init_checkpoint runs\closest\ring_v2\model_final.pt > runs\closest\pocket_p1.log 2>&1
+call "lab.cmd" -m core.evolution.train --out runs\closest\pocket_p2_hier_gru --genome runs\poc\nav_camera\genome.json --task goal --terrain enclosure_pocket --num_envs 2048 --sensors imu --env_override goal_signal=camera --env_override collision_weight=1.0 --iterations 1500 --obs_history 1 --memory gru --low_level_policy runs\poc\student_v2\policy.pt > runs\closest\pocket_p2.log 2>&1
+call "lab.cmd" -m core.evolution.train --out runs\closest\pocket_p3_hier_mlp --genome runs\poc\nav_camera\genome.json --task goal --terrain enclosure_pocket --num_envs 2048 --sensors imu --env_override goal_signal=camera --env_override collision_weight=1.0 --iterations 1500 --obs_history 4 --low_level_policy runs\poc\student_v2\policy.pt > runs\closest\pocket_p3.log 2>&1
+echo done > runs\closest\stage2.done
