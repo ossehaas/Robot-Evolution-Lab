@@ -23,16 +23,18 @@ as "before" on stairs_straight), a GRU memory student from the stairs or support
 forwards, stairs videos (level 7, straight on) and results.md. A smoke test first.
 Takes ~10 h.
 """
+import os
 import json
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "13_stairs"
 START = ROOT / "runs" / "exp2_dog" / "11_imitation" / "amp_w6m_slow_s1"
-LAB = str(ROOT / "lab.cmd")
-PY = str(ROOT / "IsaacLab" / ".venv" / "Scripts" / "python.exe")
+LAB = str(ROOT / LAUNCHER)
+PY = str(ROOT / "IsaacLab" / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python"))
 O = "--env_override="
 # the recipe amp_w6m_slow_s1 was trained with (11_imitation/batch*.py), plus heading hold
 RECIPE = ["-m", "core.evolution.train", "--task", "command", "--terrain", "dog_rough",

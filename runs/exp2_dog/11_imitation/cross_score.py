@@ -1,11 +1,13 @@
 """Score every dog with every trained judge (AMP discriminator, frozen): evaluation only (--iterations 0 warm start).
 Each judge was trained against its own policy, so its scores of the others are a cross-check, not an absolute scale.
 Writes cross_score.json: {judge: {dog: style_score}}."""
+import os
 import json
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "11_imitation"
 DOGS = {"D_print_s2": ROOT / "runs" / "exp2_dog" / "10_printable_dog" / "D_print_s2",
         "free_ctrl": HERE / "free_ctrl", "amp_w3": HERE / "amp_w3", "amp_w6": HERE / "amp_w6",
@@ -22,7 +24,7 @@ for judge, (motion, mirror) in JUDGES.items():
         if dog in table.get(judge, {}):
             continue
         res = json.loads((run / "result.json").read_text())
-        cmd = [str(ROOT / "lab.cmd"), "-m", "core.evolution.train", "--task", "command", "--terrain", "dog_rough",
+        cmd = [str(ROOT / LAUNCHER), "-m", "core.evolution.train", "--task", "command", "--terrain", "dog_rough",
                "--num_envs", "1024", "--sensors", "imu", "--obs_history", "8", "--symmetry", "--height_scan",
                "--genome", str(run / "genome.json"), "--init_checkpoint", str(run / "model_final.pt"), "--iterations", "0",
                "--seed", "7", "--out", str(work / f"{judge}__{dog}")]

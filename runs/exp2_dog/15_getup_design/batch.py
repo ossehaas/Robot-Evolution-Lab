@@ -14,16 +14,18 @@ get-up training (from scratch, 3000 it, flat floor, perfect scan, full joint ran
 Then the get-up test per start, a video of the four starts for the best run and results.md. A smoke test first (incl.
 a check that self-collision does not break a standing walker). ~5 h.
 """
+import os
 import json
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "15_getup_design"
 ORIGINAL = ROOT / "runs" / "exp2_dog" / "11_imitation" / "amp_w6m_slow_s1"
-LAB = str(ROOT / "lab.cmd")
-PY = str(ROOT / "IsaacLab" / ".venv" / "Scripts" / "python.exe")
+LAB = str(ROOT / LAUNCHER)
+PY = str(ROOT / "IsaacLab" / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python"))
 O = "--env_override="
 ITERATIONS = 3000
 CATEGORIES = ("standing", "dropped upright", "on its side", "on its back")

@@ -1,8 +1,10 @@
+import os
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
-lab = str(ROOT / "lab.cmd")
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
+lab = str(ROOT / LAUNCHER)
 common = ["-m", "core.evolution.train", "--genome", r"runs\poc\nav_camera\genome.json", "--task", "goal", "--terrain", "cup",
           "--num_envs", "2048", "--sensors", "imu", "--obs_history", "4", "--env_override", "goal_signal=camera"]
 runs = [("zeroshot_nav_camera", ["--iterations", "0", "--init_checkpoint", r"runs\poc\nav_camera\model_final.pt"]),

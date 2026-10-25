@@ -4,10 +4,12 @@ to grippy rubber), shoves of 0.3 m/s every 3-6 s (training had 0.2 every 4-8 s) 
   robust_slow_s1/s2  from amp_w6m_slow_s1 (style 6, mirrored + slowed recordings), seeds 1 and 2
   robust_D           from D_print_s2 with its own recipe (walk/trot rhythm, no imitation): the fair comparison
 """
+import os
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "11_imitation"
 START = ROOT / "runs" / "exp2_dog" / "10_printable_dog" / "D_print_s2"
 COMMON = ["-m", "core.evolution.train", "--task", "command", "--terrain", "dog_rough",
@@ -35,11 +37,11 @@ for name, seed, extra in RUNS:
     out = HERE / name
     if not (out / "result.json").exists():
         with open(HERE / f"{name}.log", "w") as log:
-            subprocess.run([str(ROOT / "lab.cmd"), *COMMON, "--seed", seed, *extra, "--out", str(out)],
+            subprocess.run([str(ROOT / LAUNCHER), *COMMON, "--seed", seed, *extra, "--out", str(out)],
                            stdout=log, stderr=subprocess.STDOUT, cwd=ROOT)
 for name, _, _ in RUNS:  # the benchmark for the new dogs
     for sc in ("flat", "course", "slippery", "grippy", "pushes"):
-        subprocess.run([str(ROOT / "lab.cmd"), "tools/dog/benchmark.py", str(HERE / name), sc, "--out",
+        subprocess.run([str(ROOT / LAUNCHER), "tools/dog/benchmark.py", str(HERE / name), sc, "--out",
                         str(HERE / "benchmark.jsonl")], stdout=open(HERE / "benchmark.log", "a"),
                        stderr=subprocess.STDOUT, cwd=ROOT)
 (HERE / "batch4.done").write_text("done")

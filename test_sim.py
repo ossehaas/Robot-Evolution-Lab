@@ -1,7 +1,7 @@
 """Environment health check: drop a rigid cube on the ground and check that it lands and comes to rest.
 
-    IsaacLab\\.venv\\Scripts\\python.exe test_sim.py              # headless
-    IsaacLab\\.venv\\Scripts\\python.exe test_sim.py --viz kit    # with the Isaac Sim viewport
+    lab test_sim.py              # headless (lab.cmd on Windows, ./lab.sh on Linux/macOS)
+    lab test_sim.py --viz kit    # with the Isaac Sim viewport
 
 Exits with code 0 when GPU physics works, 1 otherwise.
 """

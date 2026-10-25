@@ -13,18 +13,20 @@
   5  get-up test per start, a video of the four starts (best seed), results.md
 Takes ~4 h.
 """
+import os
 import json
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "14_getup"
 STAIRS = ROOT / "runs" / "exp2_dog" / "13_stairs"
 ORIGINAL = ROOT / "runs" / "exp2_dog" / "11_imitation" / "amp_w6m_slow_s1"
 BEFORE = ROOT / "runs" / "exp2_dog" / "12_terrain_map" / "map_depth"
-LAB = str(ROOT / "lab.cmd")
-PY = str(ROOT / "IsaacLab" / ".venv" / "Scripts" / "python.exe")
+LAB = str(ROOT / LAUNCHER)
+PY = str(ROOT / "IsaacLab" / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python"))
 O = "--env_override="
 ITERATIONS = 3000
 GETUP = ["-m", "core.evolution.train", "--task", "command", "--terrain", "flat", "--sensors", "imu", "--obs_history", "8",

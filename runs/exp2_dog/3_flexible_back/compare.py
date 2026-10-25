@@ -2,13 +2,15 @@
 
     python runs/dog_spine/compare.py            (runs the extra evaluations that are missing, then prints the table)
 """
+import os
 import json
 import math
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
-LAB = str(ROOT / "lab.cmd")
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
+LAB = str(ROOT / LAUNCHER)
 VARIANTS = ["stiff", "roll_k4", "roll_k8", "roll_k16", "pitch_k8", "both_k8"]
 SEEDS = [1, 2]
 

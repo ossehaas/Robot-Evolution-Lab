@@ -1,10 +1,12 @@
 """Natural gait (list step 1): smooth speed changes (0.5 m/s^2), top speed 0.45 m/s, and the gait either prescribed by
 speed (4-beat walk when slow, trot when fast, no flight phase) or free (no rhythm, energy weighted 3x).
 Each +3000 it from seeing_v3 (dog course, height scan)."""
+import os
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "6_natural_gait"
 COMMON = ["-m", "core.evolution.train", "--genome", r"prototypes\puppy\genome.json", "--task", "command",
           "--terrain", "dog_rough", "--iterations", "3000", "--num_envs", "2048", "--sensors", "imu", "--obs_history", "8",
@@ -23,5 +25,5 @@ for name, extra in RUNS:
     if (out / "result.json").exists():
         continue
     with open(HERE / f"{name}.log", "w") as log:
-        subprocess.run([str(ROOT / "lab.cmd"), *COMMON, "--out", str(out), *extra], stdout=log, stderr=subprocess.STDOUT, cwd=ROOT)
+        subprocess.run([str(ROOT / LAUNCHER), *COMMON, "--out", str(out), *extra], stdout=log, stderr=subprocess.STDOUT, cwd=ROOT)
 (HERE / "batch.done").write_text("done")

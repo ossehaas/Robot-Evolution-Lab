@@ -1,9 +1,11 @@
 """Flexible back experiment (roadmap D2b): every variant gets +1000 iterations from the stiff dog's rough_v5."""
+import os
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
-LAB = str(ROOT / "lab.cmd")
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
+LAB = str(ROOT / LAUNCHER)
 COMMON = ["-m", "core.evolution.train", "--task", "command", "--terrain", "rough", "--iterations", "1000",
           "--num_envs", "2048", "--sensors", "imu", "--obs_history", "8", "--symmetry",
           "--init_checkpoint", r"runs\dog_walk\puppy_rough_v5\model_final.pt",

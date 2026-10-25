@@ -21,7 +21,10 @@ latency), PLA links and TPU feet (masses and friction), an ESP32-S3, PCA9685 ser
 
 ## Quick start
 
-All commands run from this folder in PowerShell or cmd. `lab.cmd` is Python from the Isaac Lab environment.
+All commands run from this folder. `lab` is Python from the Isaac Lab environment with this repository on the
+import path: `lab.cmd` on Windows (PowerShell or cmd), `./lab.sh` on Linux and macOS. The examples use Windows
+paths; on Linux write `./lab.sh` and forward slashes. The batch scripts in `runs/` pick the right launcher themselves.
+Setting up the environment (Isaac Lab 3.0 with its own Python, via uv): `.env_init/readme.txt`.
 
 ```bat
 :: 1. health check: GPU physics works (drops a cube, prints PASS)

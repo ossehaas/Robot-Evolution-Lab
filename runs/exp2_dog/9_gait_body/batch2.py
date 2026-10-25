@@ -10,10 +10,12 @@ The paw is its own link (ankle hinge) so the contact sensor sees paws only and s
   A_stiff       knees as now (front back, rear forward), stiff ankle (50 N*m/rad, effectively rigid)
   B_springy     knees as now, springy ankle (1.5 N*m/rad) + soft TPU paws (compliant contact)
   C_spot_knees  all knees backwards (as Spot), stiff ankle"""
+import os
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "9_gait_body"
 COMMON = ["-m", "core.evolution.train", "--task", "command", "--terrain", "dog_rough",
           "--num_envs", "2048", "--sensors", "imu", "--obs_history", "8", "--symmetry", "--height_scan",
@@ -30,10 +32,10 @@ for name in ("D_spot_springy", "E_springy_hardpaw", "F_stiff_softpaw"):
     s1, s2 = HERE / f"{name}_stage1", HERE / name
     if not (s1 / "model_final.pt").exists():
         with open(HERE / f"{name}_stage1.log", "w") as log:
-            subprocess.run([str(ROOT / "lab.cmd"), *COMMON, *STAGE1, "--genome", genome, "--out", str(s1)],
+            subprocess.run([str(ROOT / LAUNCHER), *COMMON, *STAGE1, "--genome", genome, "--out", str(s1)],
                            stdout=log, stderr=subprocess.STDOUT, cwd=ROOT)
     if not (s2 / "result.json").exists():
         with open(HERE / f"{name}.log", "w") as log:
-            subprocess.run([str(ROOT / "lab.cmd"), *COMMON, *STAGE2, "--genome", genome, "--out", str(s2),
+            subprocess.run([str(ROOT / LAUNCHER), *COMMON, *STAGE2, "--genome", genome, "--out", str(s2),
                             "--init_checkpoint", str(s1 / "model_final.pt")], stdout=log, stderr=subprocess.STDOUT, cwd=ROOT)
 (HERE / "batch2.done").write_text("done")

@@ -11,16 +11,18 @@ Map runs train with sensor blackouts (0.1 per second, 0.3-1.5 s). Then: map qual
 (course, dark = blackouts, slippery, pushes) and stairs videos. Smoke tests first: the batch stops at the first one
 that fails (smoke.failed names it).
 """
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "12_terrain_map"
 IMIT = ROOT / "runs" / "exp2_dog" / "11_imitation"
 START = IMIT / "amp_w6m_slow_s1"
-LAB = str(ROOT / "lab.cmd")
-PY = str(ROOT / "IsaacLab" / ".venv" / "Scripts" / "python.exe")
+LAB = str(ROOT / LAUNCHER)
+PY = str(ROOT / "IsaacLab" / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python"))
 COMMON = ["-m", "core.evolution.train", "--task", "command", "--terrain", "dog_rough",
           "--sensors", "imu", "--obs_history", "8", "--symmetry", "--height_scan",
           "--genome", str(START / "genome.json"), "--init_checkpoint", str(START / "model_final.pt"),

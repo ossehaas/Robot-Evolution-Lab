@@ -1,8 +1,10 @@
 """Stairs on the dog-sized course: joint range 75 % vs 50 %, each +3000 it from calm_v2."""
+import os
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 COMMON = ["-m", "core.evolution.train", "--genome", r"prototypes\puppy\genome.json", "--task", "command",
           "--terrain", "dog_rough", "--iterations", "3000", "--num_envs", "2048", "--sensors", "imu", "--obs_history", "8",
           "--symmetry", "--init_checkpoint", r"runs\dog_walk\calm_v2\model_final.pt",
@@ -14,6 +16,6 @@ for name, scale in [("range75", 0.75), ("range50", 0.5)]:
     if (out / "result.json").exists():
         continue
     with open(ROOT / "runs" / "dog_stairs" / f"{name}.log", "w") as log:
-        subprocess.run([str(ROOT / "lab.cmd"), *COMMON, "--out", str(out), "--env_override", f"action_scale={scale}"],
+        subprocess.run([str(ROOT / LAUNCHER), *COMMON, "--out", str(out), "--env_override", f"action_scale={scale}"],
                        stdout=log, stderr=subprocess.STDOUT, cwd=ROOT)
 (ROOT / "runs" / "dog_stairs" / "batch.done").write_text("done")

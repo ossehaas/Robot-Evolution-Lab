@@ -1,10 +1,12 @@
 """Every candidate dog through every benchmark scenario (tools/dog/benchmark.py); results in benchmark.jsonl,
 summary table in benchmark.md."""
+import os
 import json
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "11_imitation"
 OUT = HERE / "benchmark.jsonl"
 DOGS = {"now: D_print_s2": "runs/exp2_dog/10_printable_dog/D_print_s2",
@@ -25,7 +27,7 @@ for sc in SCENARIOS:
         if (run, sc) in done():
             continue
         with open(HERE / "benchmark.log", "a") as log:
-            subprocess.run([str(ROOT / "lab.cmd"), "tools/dog/benchmark.py", run, sc, "--out", str(OUT)],
+            subprocess.run([str(ROOT / LAUNCHER), "tools/dog/benchmark.py", run, sc, "--out", str(OUT)],
                            stdout=log, stderr=subprocess.STDOUT, cwd=ROOT)
 
 rows = {(r["run"], r["scenario"]): r for r in map(json.loads, OUT.read_text().splitlines())}

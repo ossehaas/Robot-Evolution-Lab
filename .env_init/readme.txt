@@ -29,6 +29,21 @@ deliberately pins in the lockfile and are expected.
 
 ## Install / rebuild
 
+Isaac Lab is not part of this repository: clone it into the folder `IsaacLab` next to `core` first
+(`git clone https://github.com/isaac-sim/IsaacLab.git IsaacLab`). The exact package versions used here are in
+`.env_init/uv.lock` (copy it over `IsaacLab/uv.lock` to reproduce them exactly).
+
+Linux (bash): the same steps; the environment ends up in `IsaacLab/.venv/bin/python` and `./lab.sh` runs it:
+
+```bash
+cd <repository folder>/IsaacLab
+git fetch --tags && git checkout -B evolution-v3.0.0-EA v3.0.0-EA
+UV_HTTP_TIMEOUT=900 uv sync --extra isaacsim --extra rsl-rl --extra skrl --extra video
+cd .. && chmod +x lab.sh && ./lab.sh test_sim.py
+```
+
+Windows (PowerShell):
+
 ```powershell
 cd <repository folder>\IsaacLab
 git fetch --tags

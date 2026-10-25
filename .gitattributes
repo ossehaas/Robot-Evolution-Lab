@@ -1,0 +1,11 @@
+# line endings: shell scripts must keep LF to run on Linux/macOS, Windows scripts CRLF; everything else normalized
+* text=auto
+*.sh text eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.pt binary
+*.onnx binary
+*.onnx.data binary
+*.stl binary
+*.usd binary
+*.png binary

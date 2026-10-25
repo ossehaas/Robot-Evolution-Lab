@@ -1,6 +1,6 @@
 """Checks of the terrain map and the odometry error (plain torch, no simulator):
 
-    IsaacLab\\.venv\\Scripts\\python.exe tools/dog/test_terrain_map.py
+    lab tools/dog/test_terrain_map.py      (lab.cmd on Windows, ./lab.sh on Linux/macOS)
 """
 
 import math

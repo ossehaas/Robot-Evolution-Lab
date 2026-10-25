@@ -14,17 +14,19 @@ does go over, gets up and walks on.
      while walking (10 directions), and a walking tour (original vs polished) to judge the gait by eye.
 A smoke test first. ~3.5 h.
 """
+import os
 import json
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # the repository root
+LAUNCHER = "lab.cmd" if os.name == "nt" else "lab.sh"  # the lab's Python with this repository on the path
 HERE = ROOT / "runs" / "exp2_dog" / "16_recover"
 WALKER = ROOT / "runs" / "exp2_dog" / "11_imitation" / "amp_w6m_slow_s1"
 GETUP = ROOT / "runs" / "exp2_dog" / "15_getup_design" / "getup_abd29_head"
-LAB = str(ROOT / "lab.cmd")
-PY = str(ROOT / "IsaacLab" / ".venv" / "Scripts" / "python.exe")
+LAB = str(ROOT / LAUNCHER)
+PY = str(ROOT / "IsaacLab" / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python"))
 O = "--env_override="
 
 
