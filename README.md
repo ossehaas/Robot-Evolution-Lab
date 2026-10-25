@@ -1,7 +1,9 @@
-# Evolution lab
+# Robot Evolution Lab
 
 Design small servo-driven robots, teach them to walk in simulation, let evolution improve their bodies, then
 3D-print the winners.
+
+**The story of this project, step by step with videos and 3D models of the robots: https://robotevolutionlab.azurewebsites.net/**
 
 ```
 genome.json ──► core.morphology ──► USD (simulation) + URDF + printable STL parts + BOM + preview.png
