@@ -1,0 +1,8 @@
+{
+ "rise": 0.04,
+ "tread": 0.12,
+ "dir": "up",
+ "feasible": false,
+ "seconds": 49.2,
+ "slope_deg": 18.4
+}

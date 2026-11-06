@@ -42,7 +42,10 @@ for item in args.set:
     import ast
 
     key, value = item.split("=", 1)
-    setattr(cfg, key, ast.literal_eval(value))
+    try:
+        setattr(cfg, key, ast.literal_eval(value))
+    except (ValueError, SyntaxError):
+        setattr(cfg, key, value)  # plain text, e.g. gait_clock_idle=hold
 cfg.getup, cfg.getup_category = True, -2  # robot i starts in category i % 4
 cfg.command_standing_prob = 1.0
 cfg.episode_length_s = args.seconds + 1.0

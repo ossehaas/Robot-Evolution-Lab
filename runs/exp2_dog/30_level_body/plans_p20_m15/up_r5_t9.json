@@ -1,0 +1,19 @@
+{
+ "rise": 0.05,
+ "tread": 0.09,
+ "dir": "up",
+ "feasible": false,
+ "settings": {
+  "joint_share": 0.95,
+  "swing_clear_m": 0.01,
+  "stability_m": 0.015,
+  "max_pitch_deg": 20.0,
+  "riser_gap_m": 0.0134,
+  "torque_nm": 1.884,
+  "beam": 8,
+  "targets": 6,
+  "partner": true
+ },
+ "seconds": 297.9,
+ "slope_deg": 29.1
+}

@@ -1,0 +1,849 @@
+[ISAACLAB] AppLauncher initialization complete
+[ISAACLAB] Kit version: 110.3.0+feature.371399.00c488ae.gl
+[ISAACLAB] Kit kernel:  210.3.2+release.14366.2926fc80.gl
+[ISAACLAB] Kit hash:    00c488ae
+Warp 1.16.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.1
+   Devices:
+     "cpu"      : "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel"
+     "cuda:0"   : "NVIDIA GeForce RTX 5080 Laptop GPU" (16 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     \\?\C:\Users\osseh\AppData\Local\NVIDIA\warp\Cache\1.16.0
+[INFO]: Base environment:
+	Environment device    : cuda:0
+	Environment seed      : None
+	Physics step-size     : 0.005
+	Rendering step-size   : 0.02
+	Environment step-size : 0.02
+[INFO]: libcarb.so unavailable — Fabric notice suspension disabled (Linux x86_64 only)
+[INFO]: Registered backend 'physx' for factory Articulation.
+[INFO] Generating terrains based on curriculum took Last: 0.212558 s
+[INFO]: Physics scene prim path: /physicsScene
+[INFO]: Registered backend 'physx' for factory RayCaster.
+[INFO]: Registered backend 'physx' for factory Imu.
+[INFO]: Registered backend 'physx' for factory ContactSensor.
+[INFO]: Time taken for scene creation Last: 1.776613 s, Mean: 1.776613 s, Std: 0.000000 s, N: 1
+[INFO]: Scene manager:  <class InteractiveScene>
+	Number of environments: 1
+	Environment spacing   : 0.5575
+	Source prim name      : /World/envs/env_0
+	Global prim paths     : ['/World/ground']
+	Replicate physics     : True
+[INFO]: Starting the simulation. This may take a few seconds. Please wait...
+[INFO]: Simulation parameters for joints in /World/envs/env_[^/]+/Robot:
++--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                            Simulation Joint Information (Prim path: /World/envs/env_[^/]+/Robot)                                             |
++-------+---------+-----------+---------+----------+-----------------+------------------+------------------+-----------------+-----------------+---------------+
+| Index | Name    | Stiffness | Damping | Armature | Static Friction | Dynamic Friction | Viscous Friction | Position Limits | Velocity Limits | Effort Limits |
++-------+---------+-----------+---------+----------+-----------------+------------------+------------------+-----------------+-----------------+---------------+
+|   0   | L0_j0   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.506, 0.506] |     5.9e+36     |     2.943     |
+|   1   | R0_j0   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.506, 0.506] |     5.9e+36     |     2.943     |
+|   2   | L1_j0   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.506, 0.506] |     5.9e+36     |     2.943     |
+|   3   | R1_j0   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.506, 0.506] |     5.9e+36     |     2.943     |
+|   4   | neck_j0 |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.600, 0.600] |     5.9e+36     |     2.943     |
+|   5   | tail_j0 |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.800, 0.800] |     5.9e+36     |     2.943     |
+|   6   | L0_j1   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.200, 1.200] |     5.9e+36     |     2.943     |
+|   7   | R0_j1   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.200, 1.200] |     5.9e+36     |     2.943     |
+|   8   | L1_j1   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.200, 1.200] |     5.9e+36     |     2.943     |
+|   9   | R1_j1   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.200, 1.200] |     5.9e+36     |     2.943     |
+|   10  | head_j1 |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-0.500, 0.500] |     5.9e+36     |     2.943     |
+|   11  | L0_j2   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.000, 1.000] |     5.9e+36     |     2.943     |
+|   12  | R0_j2   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.000, 1.000] |     5.9e+36     |     2.943     |
+|   13  | L1_j2   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.000, 1.000] |     5.9e+36     |     2.943     |
+|   14  | R1_j2   |   0.000   |  0.000  |  0.010   |      0.050      |      0.000       |      0.000       | [-1.000, 1.000] |     5.9e+36     |     2.943     |
+|   15  | L0_ja   |   1.500   |  0.030  |  0.000   |      0.000      |      0.000       |      0.000       | [-0.400, 0.400] |      20.000     |     50.000    |
+|   16  | R0_ja   |   1.500   |  0.030  |  0.000   |      0.000      |      0.000       |      0.000       | [-0.400, 0.400] |      20.000     |     50.000    |
+|   17  | L1_ja   |   1.500   |  0.030  |  0.000   |      0.000      |      0.000       |      0.000       | [-0.400, 0.400] |      20.000     |     50.000    |
+|   18  | R1_ja   |   1.500   |  0.030  |  0.000   |      0.000      |      0.000       |      0.000       | [-0.400, 0.400] |      20.000     |     50.000    |
++-------+---------+-----------+---------+----------+-----------------+------------------+------------------+-----------------+-----------------+---------------+
+[INFO]: Read mesh prim: /World/ground/terrain/mesh with 6032 vertices and 25824 faces.
+Loading user config located at: 'c:/projectshome/robots/evolution/isaaclab/.venv/lib/site-packages/isaacsim/kit/data/Kit/IsaacLab/3.0/user.config.json'
+2026-10-25T21:29:52Z [0ms] [Warning] [omni.usd_config.extension] Enable omni.materialx.libs extension to use MaterialX
+2026-10-25T21:29:56Z [4,063ms] [Warning] [isaaclab.envs.direct_rl_env] Seed not set for the environment. The environment creation may not be deterministic.
+2026-10-25T21:29:56Z [4,063ms] [Warning] [isaaclab.envs.common] env_cfg.viewer is deprecated. Set env_cfg.sim.default_visualizer_cfg = KitVisualizerCfg(eye=..., lookat=...) instead. The viewer values have been automatically forwarded for this run.
+2026-10-25T21:29:58Z [5,992ms] [Warning] [usdrt.population.plugin] Last global time was not created. Did you call setEnableUsdNoticeHandling?
+2026-10-25T21:29:59Z [6,797ms] [Error] [omni.physx.tensors.plugin] CUDA driver shim call failed at C:\g\405278669\omni\ovruntime\source\omni.physx.tensors\plugins\gpu\GpuArticulationView.cpp:623
+2026-10-25T21:29:59Z [6,798ms] [Error] [omni.physx.tensors.plugin] CUDA error: operation would make the legacy stream depend on a capturing blocking stream: C:\g\405278669\omni\ovruntime\source\omni.physx.tensors\plugins\gpu\CudaKernels.cu: 534
+2026-10-25T21:29:59Z [6,798ms] [Error] [omni.physx.tensors.plugin] Failed to fetch DOF position attribute
+[INFO]: Time taken for simulation start Last: 0.374673 s, Mean: 0.374673 s, Std: 0.000000 s, N: 1
+[INFO]: Completed setting up the environment...
+[paws] t  0.00s swing -1  measured -0.023 -0.037 -0.187 -0.199  used -0.023 -0.037 -0.187 -0.199  plan -0.025 -0.025 -0.185 -0.185  contact [0, 0, 0, 0] pending [0, 0, 0, 0]
+[paws] t  0.00s swing -1  measured -0.023 -0.037 -0.187 -0.199  used -0.023 -0.037 -0.187 -0.199  plan -0.025 -0.025 -0.185 -0.185  contact [0, 0, 0, 0] pending [0, 0, 0, 0]
+[trace] t  0.00s  x +0.000 (vs plan)  z 0.186 / 0.187  nose up  -0.1 /  +0.0 deg  fallen False
+[paws] t  0.24s swing -1  measured -0.021 -0.036 -0.185 -0.197  used -0.023 -0.037 -0.187 -0.199  plan -0.025 -0.025 -0.185 -0.185  contact [1, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  0.24s  x +0.002 (vs plan)  z 0.186 / 0.187  nose up  -2.1 /  -2.0 deg  fallen False
+[paws] t  0.48s swing -1  measured -0.020 -0.034 -0.183 -0.195  used -0.023 -0.037 -0.187 -0.199  plan -0.025 -0.025 -0.185 -0.185  contact [1, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  0.48s  x +0.004 (vs plan)  z 0.185 / 0.187  nose up  -4.2 /  -4.0 deg  fallen False
+[paws] t  0.72s swing 2  measured -0.018 -0.032 -0.176 -0.192  used -0.023 -0.037 -0.187 -0.199  plan -0.025 -0.025 -0.182 -0.185  contact [1, 1, 0, 1] pending [0, 0, 0, 0]
+[trace] t  0.72s  x +0.010 (vs plan)  z 0.185 / 0.187  nose up  -5.7 /  -5.0 deg  fallen False
+[paws] t  0.96s swing 2  measured -0.018 -0.033 -0.151 -0.193  used -0.023 -0.037 -0.187 -0.199  plan -0.025 -0.025 -0.152 -0.185  contact [1, 1, 0, 1] pending [0, 0, 0, 0]
+[trace] t  0.96s  x +0.007 (vs plan)  z 0.185 / 0.187  nose up  -5.2 /  -5.0 deg  fallen False
+[paws] t  1.20s swing 2  measured -0.018 -0.033 -0.121 -0.193  used -0.023 -0.037 -0.187 -0.199  plan -0.025 -0.025 -0.122 -0.185  contact [1, 1, 0, 1] pending [0, 0, 0, 0]
+[trace] t  1.20s  x +0.008 (vs plan)  z 0.185 / 0.187  nose up  -5.3 /  -5.0 deg  fallen False
+[paws] t  1.44s swing 2  measured -0.018 -0.033 -0.098 -0.193  used -0.023 -0.037 -0.187 -0.199  plan -0.025 -0.025 -0.105 -0.185  contact [1, 1, 0, 1] pending [0, 0, 0, 0]
+[trace] t  1.44s  x +0.008 (vs plan)  z 0.185 / 0.187  nose up  -5.4 /  -5.0 deg  fallen False
+[paws] t  1.68s swing -1  measured -0.020 -0.033 -0.096 -0.192  used -0.023 -0.037 -0.098 -0.199  plan -0.025 -0.025 -0.105 -0.185  contact [1, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  1.68s  x +0.008 (vs plan)  z 0.186 / 0.187  nose up  -0.3 /  +1.0 deg  fallen False
+[paws] t  1.92s swing -1  measured -0.021 -0.035 -0.098 -0.196  used -0.023 -0.037 -0.098 -0.199  plan -0.025 -0.025 -0.105 -0.185  contact [1, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  1.92s  x +0.003 (vs plan)  z 0.185 / 0.187  nose up  +6.3 /  +7.0 deg  fallen False
+[paws] t  2.16s swing 0  measured -0.033 -0.036 -0.101 -0.199  used -0.023 -0.037 -0.098 -0.199  plan -0.025 -0.025 -0.105 -0.185  contact [0, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  2.16s  x -0.007 (vs plan)  z 0.183 / 0.187  nose up +10.1 / +10.0 deg  fallen False
+[paws] t  2.40s swing 0  measured -0.033 -0.035 -0.101 -0.198  used -0.023 -0.037 -0.098 -0.199  plan -0.022 -0.025 -0.105 -0.185  contact [0, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  2.40s  x -0.003 (vs plan)  z 0.184 / 0.187  nose up  +9.6 / +10.0 deg  fallen False
+[paws] t  2.64s swing 0  measured -0.006 -0.036 -0.102 -0.199  used -0.023 -0.037 -0.098 -0.199  plan +0.012 -0.025 -0.105 -0.185  contact [0, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  2.64s  x -0.005 (vs plan)  z 0.183 / 0.187  nose up  +9.6 / +10.0 deg  fallen False
+[paws] t  2.88s swing 0  measured +0.029 -0.035 -0.101 -0.198  used -0.023 -0.037 -0.098 -0.199  plan +0.040 -0.025 -0.105 -0.185  contact [0, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  2.88s  x -0.004 (vs plan)  z 0.183 / 0.187  nose up  +9.5 / +10.0 deg  fallen False
+[paws] t  3.12s swing -1  measured +0.024 -0.043 -0.103 -0.199  used +0.031 -0.037 -0.098 -0.199  plan +0.040 -0.025 -0.105 -0.185  contact [1, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  3.12s  x -0.012 (vs plan)  z 0.182 / 0.184  nose up  +9.0 /  +8.2 deg  fallen False
+[paws] t  3.36s swing -1  measured +0.029 -0.036 -0.099 -0.192  used +0.031 -0.037 -0.098 -0.199  plan +0.040 -0.025 -0.105 -0.185  contact [1, 1, 0, 1] pending [0, 0, 0, 0]
+[trace] t  3.36s  x +0.000 (vs plan)  z 0.180 / 0.180  nose up  +5.6 /  +6.2 deg  fallen False
+[paws] t  3.60s swing 3  measured +0.035 -0.027 -0.089 -0.179  used +0.031 -0.037 -0.098 -0.199  plan +0.040 -0.025 -0.105 -0.180  contact [1, 1, 0, 0] pending [0, 0, 0, 0]
+[trace] t  3.60s  x +0.021 (vs plan)  z 0.174 / 0.178  nose up  +2.6 /  +5.0 deg  fallen False
+[paws] t  3.84s swing 3  measured +0.035 -0.027 -0.093 -0.132  used +0.031 -0.037 -0.098 -0.199  plan +0.040 -0.025 -0.105 -0.143  contact [1, 1, 0, 0] pending [0, 0, 0, 0]
+[trace] t  3.84s  x +0.026 (vs plan)  z 0.176 / 0.178  nose up  -0.2 /  +5.0 deg  fallen False
+[paws] t  4.08s swing 3  measured +0.032 -0.027 -0.093 -0.095  used +0.031 -0.037 -0.098 -0.199  plan +0.040 -0.025 -0.105 -0.105  contact [1, 1, 1, 0] pending [0, 0, 0, 0]
+[trace] t  4.08s  x +0.009 (vs plan)  z 0.174 / 0.178  nose up  +5.5 /  +5.0 deg  fallen False
+[paws] t  4.32s swing -1  measured +0.031 -0.028 -0.095 -0.063  used +0.031 -0.037 -0.098 -0.063  plan +0.040 -0.025 -0.105 -0.080  contact [1, 1, 0, 1] pending [0, 0, 0, 0]
+[trace] t  4.32s  x +0.010 (vs plan)  z 0.175 / 0.178  nose up  +4.5 /  +5.2 deg  fallen False
+[paws] t  4.56s swing -1  measured +0.032 -0.032 -0.099 -0.065  used +0.031 -0.037 -0.098 -0.063  plan +0.040 -0.025 -0.105 -0.080  contact [1, 1, 0, 1] pending [0, 0, 0, 0]
+[trace] t  4.56s  x +0.020 (vs plan)  z 0.181 / 0.178  nose up  +0.9 /  +7.2 deg  fallen False
+[paws] t  4.80s swing -1  measured +0.028 -0.033 -0.102 -0.067  used +0.031 -0.037 -0.098 -0.063  plan +0.040 -0.025 -0.105 -0.080  contact [1, 1, 0, 1] pending [0, 0, 0, 0]
+[trace] t  4.80s  x +0.004 (vs plan)  z 0.179 / 0.178  nose up  +7.4 /  +9.2 deg  fallen False
+[paws] t  5.04s swing 1  measured +0.012 -0.038 -0.110 -0.073  used +0.031 -0.037 -0.098 -0.063  plan +0.040 -0.025 -0.105 -0.080  contact [1, 1, 1, 1] pending [0, 0, 0, 0]
+[trace] t  5.04s  x -0.027 (vs plan)  z 0.171 / 0.178  nose up +13.3 / +10.0 deg  fallen False
+[paws] t  5.28s swing 1  measured +0.010 -0.048 -0.109 -0.078  used +0.031 -0.037 -0.098 -0.063  plan +0.040 -0.010 -0.105 -0.080  contact [0, 0, 1, 1] pending [0, 0, 0, 0]
+[trace] t  5.28s  x -0.041 (vs plan)  z 0.169 / 0.178  nose up +17.3 / +10.0 deg  fallen False
+[paws] t  5.52s swing 1  measured -0.004 -0.011 -0.113 -0.079  used +0.031 -0.037 -0.098 -0.063  plan +0.040 +0.032 -0.105 -0.080  contact [0, 0, 1, 1] pending [0, 0, 0, 0]
+[trace] t  5.52s  x -0.068 (vs plan)  z 0.164 / 0.178  nose up +26.6 / +10.0 deg  fallen False
+[paws] t  5.76s swing 1  measured -0.045 -0.021 -0.119 -0.087  used +0.031 -0.037 -0.098 -0.063  plan +0.040 +0.065 -0.105 -0.080  contact [0, 0, 0, 0] pending [0, 0, 0, 0]
+[trace] t  5.76s  x -0.141 (vs plan)  z 0.144 / 0.178  nose up +55.5 / +10.0 deg  fallen True
+[paws] t  6.00s swing -1  measured -0.175 -0.154 -0.159 -0.138  used +0.031 +0.065 -0.098 -0.063  plan +0.040 +0.065 -0.105 -0.080  contact [0, 0, 0, 0] pending [0, 1, 0, 0]
+[trace] t  6.00s  x -0.276 (vs plan)  z 0.126 / 0.181  nose up +83.3 / +10.0 deg  fallen True
+[paws] t  6.24s swing -1  measured -0.212 -0.195 -0.187 -0.170  used +0.031 +0.065 -0.098 -0.063  plan +0.040 +0.065 -0.105 -0.080  contact [0, 0, 0, 0] pending [0, 1, 0, 0]
+[trace] t  6.24s  x -0.335 (vs plan)  z 0.132 / 0.184  nose up +80.7 / +10.0 deg  fallen True
+[paws] t  6.48s swing 2  measured -0.216 -0.202 -0.188 -0.169  used +0.031 +0.065 -0.098 -0.063  plan +0.040 +0.065 -0.104 -0.080  contact [0, 0, 0, 0] pending [0, 1, 0, 0]
+[trace] t  6.48s  x -0.356 (vs plan)  z 0.137 / 0.186  nose up +77.1 / +10.0 deg  fallen True
+[paws] t  6.72s swing 2  measured -0.214 -0.200 -0.193 -0.168  used +0.031 +0.065 -0.098 -0.063  plan +0.040 +0.065 -0.081 -0.080  contact [0, 0, 0, 0] pending [0, 1, 0, 0]
+[trace] t  6.72s  x -0.354 (vs plan)  z 0.136 / 0.186  nose up +78.5 / +10.0 deg  fallen True
+[paws] t  6.96s swing 2  measured -0.212 -0.196 -0.192 -0.167  used +0.031 +0.065 -0.098 -0.063  plan +0.040 +0.065 -0.059 -0.080  contact [0, 0, 0, 0] pending [0, 1, 0, 0]
+[trace] t  6.96s  x -0.351 (vs plan)  z 0.134 / 0.186  nose up +80.2 / +10.0 deg  fallen True
+[paws] t  7.20s swing -1  measured -0.208 -0.192 -0.181 -0.166  used +0.031 +0.065 -0.050 -0.063  plan +0.040 +0.065 -0.050 -0.080  contact [0, 0, 0, 0] pending [0, 1, 1, 0]
+[trace] t  7.20s  x -0.344 (vs plan)  z 0.132 / 0.186  nose up +81.9 / +10.0 deg  fallen True
+[paws] t  7.44s swing -1  measured -0.206 -0.188 -0.184 -0.171  used +0.031 +0.065 -0.050 -0.063  plan +0.040 +0.065 -0.050 -0.080  contact [0, 0, 0, 0] pending [0, 1, 1, 0]
+[trace] t  7.44s  x -0.321 (vs plan)  z 0.126 / 0.186  nose up +85.5 / +10.0 deg  fallen True
+[paws] t  7.68s swing -1  measured -0.202 -0.182 -0.186 -0.174  used +0.031 +0.065 -0.050 -0.063  plan +0.040 +0.065 -0.050 -0.080  contact [0, 0, 0, 0] pending [0, 1, 1, 0]
+[trace] t  7.68s  x -0.299 (vs plan)  z 0.119 / 0.186  nose up +88.5 / +10.0 deg  fallen True
+[paws] t  7.92s swing 0  measured -0.208 -0.179 -0.188 -0.176  used +0.031 +0.065 -0.050 -0.063  plan +0.050 +0.065 -0.050 -0.080  contact [0, 0, 0, 0] pending [0, 1, 1, 0]
+[trace] t  7.92s  x -0.293 (vs plan)  z 0.116 / 0.186  nose up +87.6 / +10.0 deg  fallen True
+[paws] t  8.16s swing 0  measured -0.201 -0.179 -0.188 -0.176  used +0.031 +0.065 -0.050 -0.063  plan +0.080 +0.065 -0.050 -0.080  contact [0, 0, 0, 0] pending [0, 1, 1, 0]
+[trace] t  8.16s  x -0.293 (vs plan)  z 0.116 / 0.186  nose up +87.6 / +10.0 deg  fallen True
+[paws] t  8.40s swing 0  measured -0.195 -0.179 -0.188 -0.176  used +0.031 +0.065 -0.050 -0.063  plan +0.110 +0.065 -0.050 -0.080  contact [0, 0, 0, 0] pending [0, 1, 1, 0]
+[trace] t  8.40s  x -0.293 (vs plan)  z 0.116 / 0.186  nose up +87.6 / +10.0 deg  fallen True
+[paws] t  8.64s swing -1  measured -0.183 -0.180 -0.187 -0.175  used +0.120 +0.065 -0.050 -0.063  plan +0.120 +0.065 -0.050 -0.080  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t  8.64s  x -0.304 (vs plan)  z 0.118 / 0.186  nose up +88.3 / +10.0 deg  fallen True
+[paws] t  8.88s swing -1  measured -0.199 -0.190 -0.184 -0.171  used +0.120 +0.065 -0.050 -0.063  plan +0.120 +0.065 -0.050 -0.080  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t  8.88s  x -0.339 (vs plan)  z 0.128 / 0.186  nose up +84.1 / +10.0 deg  fallen True
+[paws] t  9.12s swing -1  measured -0.205 -0.191 -0.173 -0.160  used +0.120 +0.065 -0.050 -0.063  plan +0.120 +0.065 -0.050 -0.080  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t  9.12s  x -0.372 (vs plan)  z 0.135 / 0.186  nose up +79.3 / +10.0 deg  fallen True
+[paws] t  9.36s swing 3  measured -0.212 -0.191 -0.170 -0.160  used +0.120 +0.065 -0.050 -0.063  plan +0.120 +0.065 -0.050 -0.078  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t  9.36s  x -0.379 (vs plan)  z 0.139 / 0.186  nose up +75.9 / +10.0 deg  fallen True
+[paws] t  9.60s swing 3  measured -0.209 -0.189 -0.170 -0.162  used +0.120 +0.065 -0.050 -0.063  plan +0.120 +0.065 -0.050 -0.063  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t  9.60s  x -0.377 (vs plan)  z 0.138 / 0.186  nose up +76.9 / +10.0 deg  fallen True
+[paws] t  9.84s swing 3  measured -0.206 -0.187 -0.169 -0.162  used +0.120 +0.065 -0.050 -0.063  plan +0.120 +0.065 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t  9.84s  x -0.375 (vs plan)  z 0.137 / 0.186  nose up +77.8 / +10.0 deg  fallen True
+[paws] t 10.08s swing -1  measured -0.199 -0.182 -0.168 -0.151  used +0.120 +0.065 -0.050 -0.050  plan +0.120 +0.065 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 10.08s  x -0.357 (vs plan)  z 0.135 / 0.186  nose up +79.7 / +10.0 deg  fallen True
+[paws] t 10.32s swing -1  measured -0.185 -0.172 -0.165 -0.148  used +0.120 +0.065 -0.050 -0.050  plan +0.120 +0.065 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 10.32s  x -0.323 (vs plan)  z 0.130 / 0.186  nose up +83.4 / +10.0 deg  fallen True
+[paws] t 10.56s swing -1  measured -0.176 -0.167 -0.170 -0.153  used +0.120 +0.065 -0.050 -0.050  plan +0.120 +0.065 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 10.56s  x -0.299 (vs plan)  z 0.123 / 0.186  nose up +88.1 / +10.0 deg  fallen True
+[paws] t 10.80s swing 1  measured -0.173 -0.174 -0.170 -0.153  used +0.120 +0.077 -0.050 -0.050  plan +0.120 +0.077 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 10.80s  x -0.299 (vs plan)  z 0.121 / 0.186  nose up +88.9 / +10.0 deg  fallen True
+[paws] t 11.04s swing 1  measured -0.173 -0.170 -0.170 -0.153  used +0.120 +0.100 -0.050 -0.050  plan +0.120 +0.100 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 11.04s  x -0.299 (vs plan)  z 0.121 / 0.186  nose up +88.9 / +10.0 deg  fallen True
+[paws] t 11.28s swing 1  measured -0.173 -0.167 -0.170 -0.153  used +0.120 +0.120 -0.050 -0.050  plan +0.120 +0.120 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 11.28s  x -0.299 (vs plan)  z 0.121 / 0.186  nose up +88.9 / +10.0 deg  fallen True
+[paws] t 11.52s swing -1  measured -0.182 -0.165 -0.168 -0.151  used +0.120 +0.120 -0.050 -0.050  plan +0.120 +0.120 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 11.52s  x -0.326 (vs plan)  z 0.128 / 0.186  nose up +84.8 / +10.0 deg  fallen True
+[paws] t 11.76s swing -1  measured -0.189 -0.172 -0.157 -0.141  used +0.120 +0.120 -0.050 -0.050  plan +0.120 +0.120 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 11.76s  x -0.362 (vs plan)  z 0.136 / 0.186  nose up +79.2 / +10.0 deg  fallen True
+[paws] t 12.00s swing 2  measured -0.191 -0.174 -0.148 -0.131  used +0.120 +0.120 -0.050 -0.050  plan +0.120 +0.120 -0.050 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 12.00s  x -0.397 (vs plan)  z 0.140 / 0.186  nose up +75.5 / +10.0 deg  fallen True
+[paws] t 12.24s swing 2  measured -0.195 -0.178 -0.159 -0.132  used +0.120 +0.120 -0.046 -0.050  plan +0.120 +0.120 -0.046 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 12.24s  x -0.399 (vs plan)  z 0.141 / 0.186  nose up +74.5 / +10.0 deg  fallen True
+[paws] t 12.48s swing 2  measured -0.193 -0.176 -0.160 -0.132  used +0.120 +0.120 -0.034 -0.050  plan +0.120 +0.120 -0.034 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 12.48s  x -0.398 (vs plan)  z 0.140 / 0.186  nose up +75.1 / +10.0 deg  fallen True
+[paws] t 12.72s swing 2  measured -0.191 -0.174 -0.155 -0.131  used +0.120 +0.120 -0.030 -0.050  plan +0.120 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 12.72s  x -0.396 (vs plan)  z 0.139 / 0.186  nose up +76.0 / +10.0 deg  fallen True
+[paws] t 12.96s swing -1  measured -0.184 -0.165 -0.150 -0.131  used +0.120 +0.120 -0.030 -0.050  plan +0.120 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 12.96s  x -0.356 (vs plan)  z 0.136 / 0.186  nose up +78.9 / +10.0 deg  fallen True
+[paws] t 13.20s swing -1  measured -0.175 -0.155 -0.154 -0.136  used +0.120 +0.120 -0.030 -0.050  plan +0.120 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 13.20s  x -0.315 (vs plan)  z 0.128 / 0.186  nose up +83.6 / +10.0 deg  fallen True
+[paws] t 13.44s swing 0  measured -0.166 -0.144 -0.158 -0.143  used +0.120 +0.120 -0.030 -0.050  plan +0.120 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 13.44s  x -0.292 (vs plan)  z 0.120 / 0.186  nose up +87.4 / +10.0 deg  fallen True
+[paws] t 13.68s swing 0  measured -0.195 -0.145 -0.158 -0.143  used +0.120 +0.120 -0.030 -0.050  plan +0.120 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 13.68s  x -0.292 (vs plan)  z 0.120 / 0.186  nose up +87.4 / +10.0 deg  fallen True
+[paws] t 13.92s swing 0  measured -0.199 -0.145 -0.158 -0.143  used +0.146 +0.120 -0.030 -0.050  plan +0.146 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 13.92s  x -0.292 (vs plan)  z 0.120 / 0.186  nose up +87.4 / +10.0 deg  fallen True
+[paws] t 14.16s swing 0  measured -0.192 -0.145 -0.158 -0.143  used +0.165 +0.120 -0.030 -0.050  plan +0.165 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 14.16s  x -0.292 (vs plan)  z 0.120 / 0.186  nose up +87.4 / +10.0 deg  fallen True
+[paws] t 14.40s swing -1  measured -0.198 -0.153 -0.154 -0.136  used +0.165 +0.120 -0.030 -0.050  plan +0.165 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 14.40s  x -0.330 (vs plan)  z 0.129 / 0.189  nose up +83.6 / +10.0 deg  fallen True
+[paws] t 14.64s swing -1  measured -0.202 -0.155 -0.141 -0.125  used +0.165 +0.120 -0.030 -0.050  plan +0.165 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 14.64s  x -0.367 (vs plan)  z 0.135 / 0.192  nose up +79.7 / +10.0 deg  fallen True
+[paws] t 14.88s swing 3  measured -0.207 -0.158 -0.138 -0.123  used +0.165 +0.120 -0.030 -0.120  plan +0.165 +0.120 -0.030 -0.050  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 14.88s  x -0.391 (vs plan)  z 0.138 / 0.193  nose up +77.3 / +10.0 deg  fallen True
+[paws] t 15.12s swing 3  measured -0.209 -0.161 -0.138 -0.131  used +0.165 +0.120 -0.030 -0.120  plan +0.165 +0.120 -0.030 -0.042  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 15.12s  x -0.392 (vs plan)  z 0.138 / 0.193  nose up +76.7 / +10.0 deg  fallen True
+[paws] t 15.36s swing 3  measured -0.207 -0.158 -0.138 -0.131  used +0.165 +0.120 -0.030 -0.120  plan +0.165 +0.120 -0.030 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 15.36s  x -0.390 (vs plan)  z 0.138 / 0.193  nose up +77.4 / +10.0 deg  fallen True
+[paws] t 15.60s swing -1  measured -0.202 -0.155 -0.137 -0.121  used +0.165 +0.120 -0.030 -0.030  plan +0.165 +0.120 -0.030 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 15.60s  x -0.382 (vs plan)  z 0.136 / 0.193  nose up +78.8 / +10.0 deg  fallen True
+[paws] t 15.84s swing -1  measured -0.189 -0.144 -0.135 -0.119  used +0.165 +0.120 -0.030 -0.030  plan +0.165 +0.120 -0.030 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 15.84s  x -0.340 (vs plan)  z 0.132 / 0.193  nose up +82.0 / +10.0 deg  fallen True
+[paws] t 16.08s swing -1  measured -0.177 -0.137 -0.141 -0.125  used +0.165 +0.120 -0.030 -0.030  plan +0.165 +0.120 -0.030 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 16.08s  x -0.309 (vs plan)  z 0.124 / 0.193  nose up +87.1 / +10.0 deg  fallen True
+[paws] t 16.32s swing 1  measured -0.168 -0.143 -0.143 -0.127  used +0.165 +0.120 -0.030 -0.030  plan +0.165 +0.120 -0.030 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 16.32s  x -0.299 (vs plan)  z 0.120 / 0.193  nose up +89.8 / +10.0 deg  fallen True
+[paws] t 16.56s swing 1  measured -0.168 -0.170 -0.143 -0.127  used +0.165 +0.127 -0.030 -0.030  plan +0.165 +0.127 -0.030 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 16.56s  x -0.299 (vs plan)  z 0.120 / 0.193  nose up +89.8 / +10.0 deg  fallen True
+[paws] t 16.80s swing 1  measured -0.168 -0.164 -0.143 -0.127  used +0.165 +0.156 -0.030 -0.030  plan +0.165 +0.156 -0.030 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 16.80s  x -0.299 (vs plan)  z 0.120 / 0.193  nose up +89.8 / +10.0 deg  fallen True
+[paws] t 17.04s swing -1  measured -0.170 -0.153 -0.142 -0.126  used +0.165 +0.165 -0.030 -0.030  plan +0.165 +0.165 -0.030 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 17.04s  x -0.313 (vs plan)  z 0.122 / 0.194  nose up +88.5 / +10.0 deg  fallen True
+[paws] t 17.28s swing -1  measured -0.184 -0.168 -0.132 -0.116  used +0.165 +0.165 -0.030 -0.030  plan +0.165 +0.165 -0.030 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 17.28s  x -0.357 (vs plan)  z 0.132 / 0.197  nose up +82.2 / +10.0 deg  fallen True
+[paws] t 17.52s swing -1  measured -0.187 -0.171 -0.123 -0.107  used +0.165 +0.165 -0.124 -0.108  plan +0.165 +0.165 -0.030 -0.030  contact [0, 0, 1, 1] pending [1, 1, 0, 0]
+[trace] t 17.52s  x -0.406 (vs plan)  z 0.137 / 0.200  nose up +78.3 / +10.0 deg  fallen True
+[paws] t 17.76s swing 2  measured -0.199 -0.183 -0.135 -0.106  used +0.165 +0.165 -0.124 -0.108  plan +0.165 +0.165 -0.030 -0.030  contact [0, 0, 1, 1] pending [1, 1, 0, 0]
+[trace] t 17.76s  x -0.421 (vs plan)  z 0.141 / 0.201  nose up +74.9 / +10.0 deg  fallen True
+[paws] t 18.00s swing 2  measured -0.203 -0.188 -0.162 -0.105  used +0.165 +0.165 -0.124 -0.108  plan +0.165 +0.165 -0.014 -0.030  contact [0, 0, 0, 1] pending [1, 1, 0, 0]
+[trace] t 18.00s  x -0.424 (vs plan)  z 0.142 / 0.201  nose up +71.3 / +10.0 deg  fallen True
+[paws] t 18.24s swing 2  measured -0.207 -0.192 -0.167 -0.106  used +0.165 +0.165 -0.124 -0.108  plan +0.165 +0.165 +0.022 -0.030  contact [0, 0, 0, 1] pending [1, 1, 0, 0]
+[trace] t 18.24s  x -0.427 (vs plan)  z 0.142 / 0.201  nose up +68.8 / +10.0 deg  fallen True
+[paws] t 18.48s swing -1  measured -0.215 -0.198 -0.165 -0.106  used +0.165 +0.165 +0.040 -0.108  plan +0.165 +0.165 +0.040 -0.030  contact [0, 0, 0, 1] pending [1, 1, 1, 0]
+[trace] t 18.48s  x -0.424 (vs plan)  z 0.141 / 0.200  nose up +63.0 / +10.0 deg  fallen True
+[paws] t 18.72s swing -1  measured -0.266 -0.234 -0.200 -0.120  used +0.165 +0.165 +0.040 -0.108  plan +0.165 +0.165 +0.040 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 18.72s  x -0.418 (vs plan)  z 0.131 / 0.197  nose up +42.1 / +10.0 deg  fallen True
+[paws] t 18.96s swing -1  measured -0.374 -0.308 -0.294 -0.161  used +0.165 +0.165 +0.040 -0.108  plan +0.165 +0.165 +0.040 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 18.96s  x -0.433 (vs plan)  z 0.114 / 0.193  nose up +14.8 / +10.0 deg  fallen True
+[paws] t 19.20s swing 0  measured -0.332 -0.296 -0.248 -0.131  used +0.165 +0.165 +0.040 -0.108  plan +0.165 +0.165 +0.040 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 19.20s  x -0.401 (vs plan)  z 0.112 / 0.193  nose up  -2.5 / +10.0 deg  fallen True
+[paws] t 19.44s swing 0  measured -0.352 -0.298 -0.261 -0.131  used +0.176 +0.165 +0.040 -0.108  plan +0.176 +0.165 +0.040 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 19.44s  x -0.408 (vs plan)  z 0.104 / 0.193  nose up  +0.7 / +10.0 deg  fallen True
+[paws] t 19.68s swing 0  measured -0.354 -0.297 -0.259 -0.130  used +0.185 +0.165 +0.040 -0.108  plan +0.185 +0.165 +0.040 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 19.68s  x -0.407 (vs plan)  z 0.104 / 0.193  nose up  -0.4 / +10.0 deg  fallen True
+[paws] t 19.92s swing -1  measured -0.342 -0.294 -0.255 -0.128  used +0.185 +0.165 +0.040 -0.108  plan +0.185 +0.165 +0.040 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 19.92s  x -0.423 (vs plan)  z 0.104 / 0.193  nose up  -0.4 / +10.0 deg  fallen True
+[paws] t 20.16s swing -1  measured -0.326 -0.276 -0.241 -0.144  used +0.185 +0.165 +0.040 -0.108  plan +0.185 +0.165 +0.040 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 20.16s  x -0.460 (vs plan)  z 0.104 / 0.193  nose up  +0.2 / +10.0 deg  fallen True
+[paws] t 20.40s swing -1  measured -0.311 -0.260 -0.226 -0.129  used +0.185 +0.165 +0.040 -0.108  plan +0.185 +0.165 +0.040 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 20.40s  x -0.497 (vs plan)  z 0.105 / 0.193  nose up  +1.3 / +10.0 deg  fallen True
+[paws] t 20.64s swing 3  measured -0.307 -0.255 -0.221 -0.127  used +0.185 +0.165 +0.040 -0.108  plan +0.185 +0.165 +0.040 -0.030  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 20.64s  x -0.501 (vs plan)  z 0.105 / 0.193  nose up  +1.4 / +10.0 deg  fallen True
+[paws] t 20.88s swing 3  measured -0.307 -0.254 -0.216 -0.145  used +0.185 +0.165 +0.040 -0.108  plan +0.185 +0.165 +0.040 -0.027  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 20.88s  x -0.497 (vs plan)  z 0.107 / 0.193  nose up  -0.2 / +10.0 deg  fallen True
+[paws] t 21.12s swing 3  measured -0.307 -0.254 -0.215 -0.163  used +0.185 +0.165 +0.040 -0.108  plan +0.185 +0.165 +0.040 +0.009  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 21.12s  x -0.497 (vs plan)  z 0.107 / 0.193  nose up  -0.3 / +10.0 deg  fallen True
+[paws] t 21.36s swing 3  measured -0.307 -0.255 -0.219 -0.183  used +0.185 +0.165 +0.040 -0.108  plan +0.185 +0.165 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 0]
+[trace] t 21.36s  x -0.500 (vs plan)  z 0.106 / 0.193  nose up  +0.2 / +10.0 deg  fallen True
+[paws] t 21.60s swing -1  measured -0.316 -0.265 -0.232 -0.189  used +0.185 +0.165 +0.040 +0.040  plan +0.185 +0.165 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 21.60s  x -0.475 (vs plan)  z 0.105 / 0.190  nose up  +0.7 / +11.8 deg  fallen True
+[paws] t 21.84s swing -1  measured -0.326 -0.277 -0.248 -0.206  used +0.185 +0.165 +0.040 +0.040  plan +0.185 +0.165 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 21.84s  x -0.449 (vs plan)  z 0.104 / 0.186  nose up  +0.8 / +13.8 deg  fallen True
+[paws] t 22.08s swing 1  measured -0.335 -0.291 -0.258 -0.217  used +0.185 +0.165 +0.040 +0.040  plan +0.185 +0.165 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 22.08s  x -0.433 (vs plan)  z 0.103 / 0.184  nose up  +0.4 / +15.0 deg  fallen True
+[paws] t 22.32s swing 1  measured -0.336 -0.303 -0.259 -0.219  used +0.185 +0.185 +0.040 +0.040  plan +0.185 +0.185 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 22.32s  x -0.435 (vs plan)  z 0.103 / 0.184  nose up  +0.1 / +15.0 deg  fallen True
+[paws] t 22.56s swing 1  measured -0.336 -0.311 -0.259 -0.220  used +0.185 +0.206 +0.040 +0.040  plan +0.185 +0.206 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 22.56s  x -0.435 (vs plan)  z 0.103 / 0.184  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 22.80s swing -1  measured -0.336 -0.309 -0.259 -0.220  used +0.185 +0.215 +0.040 +0.040  plan +0.185 +0.215 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 22.80s  x -0.438 (vs plan)  z 0.103 / 0.185  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 23.04s swing -1  measured -0.322 -0.293 -0.242 -0.202  used +0.185 +0.215 +0.040 +0.040  plan +0.185 +0.215 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 23.04s  x -0.471 (vs plan)  z 0.104 / 0.191  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 23.28s swing -1  measured -0.301 -0.272 -0.218 -0.178  used +0.185 +0.215 +0.040 +0.040  plan +0.185 +0.215 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 23.28s  x -0.500 (vs plan)  z 0.105 / 0.198  nose up  -0.8 / +15.0 deg  fallen True
+[paws] t 23.52s swing 2  measured -0.287 -0.258 -0.209 -0.163  used +0.185 +0.215 +0.040 +0.040  plan +0.185 +0.215 +0.040 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 23.52s  x -0.513 (vs plan)  z 0.106 / 0.200  nose up  -0.7 / +15.0 deg  fallen True
+[paws] t 23.76s swing 2  measured -0.287 -0.258 -0.216 -0.163  used +0.185 +0.215 +0.049 +0.040  plan +0.185 +0.215 +0.049 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 23.76s  x -0.513 (vs plan)  z 0.106 / 0.200  nose up  -0.7 / +15.0 deg  fallen True
+[paws] t 24.00s swing 2  measured -0.287 -0.258 -0.221 -0.163  used +0.185 +0.215 +0.060 +0.040  plan +0.185 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 24.00s  x -0.513 (vs plan)  z 0.106 / 0.200  nose up  -0.7 / +15.0 deg  fallen True
+[paws] t 24.24s swing -1  measured -0.288 -0.258 -0.212 -0.164  used +0.185 +0.215 +0.060 +0.040  plan +0.185 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 24.24s  x -0.506 (vs plan)  z 0.106 / 0.200  nose up  -0.7 / +15.0 deg  fallen True
+[paws] t 24.48s swing -1  measured -0.301 -0.272 -0.226 -0.179  used +0.185 +0.215 +0.060 +0.040  plan +0.185 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 24.48s  x -0.482 (vs plan)  z 0.105 / 0.200  nose up  -0.7 / +15.0 deg  fallen True
+[paws] t 24.72s swing -1  measured -0.311 -0.282 -0.239 -0.193  used +0.185 +0.215 +0.060 +0.040  plan +0.185 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 24.72s  x -0.457 (vs plan)  z 0.103 / 0.200  nose up  -0.3 / +15.0 deg  fallen True
+[paws] t 24.96s swing 0  measured -0.322 -0.285 -0.245 -0.198  used +0.186 +0.215 +0.060 +0.040  plan +0.186 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 24.96s  x -0.452 (vs plan)  z 0.103 / 0.200  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 25.20s swing 0  measured -0.328 -0.285 -0.245 -0.198  used +0.201 +0.215 +0.060 +0.040  plan +0.201 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 25.20s  x -0.452 (vs plan)  z 0.103 / 0.200  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 25.44s swing 0  measured -0.333 -0.285 -0.245 -0.198  used +0.215 +0.215 +0.060 +0.040  plan +0.215 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 25.44s  x -0.452 (vs plan)  z 0.103 / 0.200  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 25.68s swing -1  measured -0.324 -0.285 -0.242 -0.195  used +0.215 +0.215 +0.060 +0.040  plan +0.215 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 25.68s  x -0.467 (vs plan)  z 0.103 / 0.200  nose up  -0.2 / +14.2 deg  fallen True
+[paws] t 25.92s swing -1  measured -0.314 -0.274 -0.225 -0.176  used +0.215 +0.215 +0.060 +0.040  plan +0.215 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 25.92s  x -0.502 (vs plan)  z 0.105 / 0.200  nose up  -0.6 / +12.2 deg  fallen True
+[paws] t 26.16s swing -1  measured -0.300 -0.258 -0.206 -0.155  used +0.215 +0.215 +0.060 +0.040  plan +0.215 +0.215 +0.060 +0.040  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 26.16s  x -0.539 (vs plan)  z 0.106 / 0.200  nose up  -0.2 / +10.2 deg  fallen True
+[paws] t 26.40s swing 3  measured -0.296 -0.254 -0.199 -0.158  used +0.215 +0.215 +0.060 +0.049  plan +0.215 +0.215 +0.060 +0.049  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 26.40s  x -0.540 (vs plan)  z 0.106 / 0.200  nose up  -0.3 / +10.0 deg  fallen True
+[paws] t 26.64s swing 3  measured -0.296 -0.254 -0.200 -0.170  used +0.215 +0.215 +0.060 +0.070  plan +0.215 +0.215 +0.060 +0.070  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 26.64s  x -0.542 (vs plan)  z 0.106 / 0.200  nose up  -0.2 / +10.0 deg  fallen True
+[paws] t 26.88s swing 3  measured -0.297 -0.254 -0.203 -0.181  used +0.215 +0.215 +0.060 +0.090  plan +0.215 +0.215 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 26.88s  x -0.544 (vs plan)  z 0.105 / 0.200  nose up  +0.2 / +10.0 deg  fallen True
+[paws] t 27.12s swing -1  measured -0.302 -0.260 -0.212 -0.182  used +0.215 +0.215 +0.060 +0.090  plan +0.215 +0.215 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 27.12s  x -0.529 (vs plan)  z 0.104 / 0.200  nose up  +0.7 / +10.0 deg  fallen True
+[paws] t 27.36s swing -1  measured -0.316 -0.275 -0.225 -0.197  used +0.215 +0.215 +0.060 +0.090  plan +0.215 +0.215 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 27.36s  x -0.499 (vs plan)  z 0.104 / 0.200  nose up  +0.5 / +10.0 deg  fallen True
+[paws] t 27.60s swing 1  measured -0.329 -0.289 -0.237 -0.210  used +0.215 +0.215 +0.060 +0.090  plan +0.215 +0.215 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 27.60s  x -0.470 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 27.84s swing 1  measured -0.331 -0.300 -0.239 -0.212  used +0.215 +0.218 +0.060 +0.090  plan +0.215 +0.218 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 27.84s  x -0.470 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 28.08s swing 1  measured -0.330 -0.305 -0.238 -0.212  used +0.215 +0.230 +0.060 +0.090  plan +0.215 +0.230 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 28.08s  x -0.470 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 28.32s swing 1  measured -0.330 -0.304 -0.238 -0.212  used +0.215 +0.235 +0.060 +0.090  plan +0.215 +0.235 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 28.32s  x -0.470 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 28.56s swing -1  measured -0.323 -0.292 -0.231 -0.204  used +0.215 +0.235 +0.060 +0.090  plan +0.215 +0.235 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 28.56s  x -0.494 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 28.80s swing -1  measured -0.310 -0.278 -0.218 -0.190  used +0.215 +0.235 +0.060 +0.090  plan +0.215 +0.235 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 28.80s  x -0.525 (vs plan)  z 0.103 / 0.200  nose up  +0.2 / +10.0 deg  fallen True
+[paws] t 29.04s swing 2  measured -0.296 -0.263 -0.202 -0.173  used +0.215 +0.235 +0.060 +0.090  plan +0.215 +0.235 +0.060 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 29.04s  x -0.546 (vs plan)  z 0.105 / 0.200  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 29.28s swing 2  measured -0.296 -0.263 -0.213 -0.173  used +0.215 +0.235 +0.069 +0.090  plan +0.215 +0.235 +0.069 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 29.28s  x -0.546 (vs plan)  z 0.105 / 0.200  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 29.52s swing 2  measured -0.296 -0.263 -0.219 -0.173  used +0.215 +0.235 +0.084 +0.090  plan +0.215 +0.235 +0.084 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 29.52s  x -0.546 (vs plan)  z 0.105 / 0.200  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 29.76s swing 2  measured -0.296 -0.263 -0.219 -0.173  used +0.215 +0.235 +0.090 +0.090  plan +0.215 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 29.76s  x -0.546 (vs plan)  z 0.105 / 0.200  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 30.00s swing -1  measured -0.303 -0.271 -0.224 -0.183  used +0.215 +0.235 +0.090 +0.090  plan +0.215 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 30.00s  x -0.523 (vs plan)  z 0.104 / 0.200  nose up  +0.4 / +11.8 deg  fallen True
+[paws] t 30.24s swing -1  measured -0.310 -0.278 -0.236 -0.196  used +0.215 +0.235 +0.090 +0.090  plan +0.215 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 30.24s  x -0.498 (vs plan)  z 0.103 / 0.200  nose up  +0.2 / +13.8 deg  fallen True
+[paws] t 30.48s swing 0  measured -0.317 -0.282 -0.242 -0.203  used +0.215 +0.235 +0.090 +0.090  plan +0.215 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 30.48s  x -0.482 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 30.72s swing 0  measured -0.328 -0.282 -0.242 -0.203  used +0.235 +0.235 +0.090 +0.090  plan +0.235 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 30.72s  x -0.482 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 30.96s swing 0  measured -0.335 -0.282 -0.242 -0.203  used +0.256 +0.235 +0.090 +0.090  plan +0.256 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 30.96s  x -0.482 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 31.20s swing -1  measured -0.334 -0.282 -0.242 -0.203  used +0.265 +0.235 +0.090 +0.090  plan +0.265 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 31.20s  x -0.485 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 31.44s swing -1  measured -0.323 -0.271 -0.231 -0.190  used +0.265 +0.235 +0.090 +0.090  plan +0.265 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 31.44s  x -0.518 (vs plan)  z 0.104 / 0.200  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 31.68s swing -1  measured -0.308 -0.255 -0.213 -0.172  used +0.265 +0.235 +0.090 +0.090  plan +0.265 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 31.68s  x -0.548 (vs plan)  z 0.105 / 0.200  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 31.92s swing 3  measured -0.297 -0.243 -0.201 -0.163  used +0.265 +0.235 +0.090 +0.090  plan +0.265 +0.235 +0.090 +0.090  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 31.92s  x -0.559 (vs plan)  z 0.106 / 0.200  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 32.16s swing 3  measured -0.297 -0.243 -0.199 -0.169  used +0.265 +0.235 +0.090 +0.099  plan +0.265 +0.235 +0.090 +0.099  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 32.16s  x -0.559 (vs plan)  z 0.107 / 0.200  nose up  -0.5 / +15.0 deg  fallen True
+[paws] t 32.40s swing 3  measured -0.297 -0.244 -0.201 -0.176  used +0.265 +0.235 +0.090 +0.110  plan +0.265 +0.235 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 32.40s  x -0.560 (vs plan)  z 0.106 / 0.200  nose up  -0.3 / +15.0 deg  fallen True
+[paws] t 32.64s swing -1  measured -0.298 -0.245 -0.205 -0.171  used +0.265 +0.235 +0.090 +0.110  plan +0.265 +0.235 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 32.64s  x -0.556 (vs plan)  z 0.106 / 0.200  nose up  +0.1 / +15.0 deg  fallen True
+[paws] t 32.88s swing -1  measured -0.310 -0.258 -0.220 -0.186  used +0.265 +0.235 +0.090 +0.110  plan +0.265 +0.235 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 32.88s  x -0.532 (vs plan)  z 0.104 / 0.200  nose up  +0.4 / +15.0 deg  fallen True
+[paws] t 33.12s swing -1  measured -0.321 -0.270 -0.231 -0.198  used +0.265 +0.235 +0.090 +0.110  plan +0.265 +0.235 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 33.12s  x -0.505 (vs plan)  z 0.103 / 0.200  nose up  +0.3 / +15.0 deg  fallen True
+[paws] t 33.36s swing 1  measured -0.326 -0.283 -0.235 -0.203  used +0.265 +0.236 +0.090 +0.110  plan +0.265 +0.236 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 33.36s  x -0.498 (vs plan)  z 0.103 / 0.200  nose up  +0.1 / +15.0 deg  fallen True
+[paws] t 33.60s swing 1  measured -0.326 -0.290 -0.236 -0.204  used +0.265 +0.251 +0.090 +0.110  plan +0.265 +0.251 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 33.60s  x -0.499 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 33.84s swing 1  measured -0.325 -0.295 -0.235 -0.203  used +0.265 +0.265 +0.090 +0.110  plan +0.265 +0.265 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 33.84s  x -0.498 (vs plan)  z 0.103 / 0.200  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 34.08s swing -1  measured -0.320 -0.281 -0.230 -0.198  used +0.265 +0.265 +0.090 +0.110  plan +0.265 +0.265 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 34.08s  x -0.515 (vs plan)  z 0.103 / 0.205  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 34.32s swing -1  measured -0.296 -0.256 -0.204 -0.171  used +0.265 +0.265 +0.090 +0.110  plan +0.265 +0.265 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 34.32s  x -0.553 (vs plan)  z 0.103 / 0.218  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 34.56s swing -1  measured -0.270 -0.230 -0.176 -0.144  used +0.265 +0.265 +0.090 +0.110  plan +0.265 +0.265 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 34.56s  x -0.590 (vs plan)  z 0.104 / 0.230  nose up  -0.3 / +15.0 deg  fallen True
+[paws] t 34.80s swing 2  measured -0.262 -0.222 -0.188 -0.136  used +0.265 +0.265 +0.090 +0.110  plan +0.265 +0.265 +0.090 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 34.80s  x -0.594 (vs plan)  z 0.104 / 0.232  nose up  -0.3 / +15.0 deg  fallen True
+[paws] t 35.04s swing 2  measured -0.262 -0.222 -0.212 -0.136  used +0.265 +0.265 +0.119 +0.110  plan +0.265 +0.265 +0.119 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 35.04s  x -0.594 (vs plan)  z 0.104 / 0.232  nose up  -0.3 / +15.0 deg  fallen True
+[paws] t 35.28s swing 2  measured -0.262 -0.222 -0.227 -0.136  used +0.265 +0.265 +0.158 +0.110  plan +0.265 +0.265 +0.158 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 35.28s  x -0.594 (vs plan)  z 0.104 / 0.232  nose up  -0.3 / +15.0 deg  fallen True
+[paws] t 35.52s swing -1  measured -0.264 -0.225 -0.228 -0.139  used +0.265 +0.265 +0.170 +0.110  plan +0.265 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 35.52s  x -0.580 (vs plan)  z 0.104 / 0.233  nose up  -0.3 / +15.0 deg  fallen True
+[paws] t 35.76s swing -1  measured -0.271 -0.232 -0.237 -0.148  used +0.265 +0.265 +0.170 +0.110  plan +0.265 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 35.76s  x -0.554 (vs plan)  z 0.103 / 0.236  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 36.00s swing -1  measured -0.276 -0.238 -0.242 -0.155  used +0.265 +0.265 +0.170 +0.110  plan +0.265 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 36.00s  x -0.525 (vs plan)  z 0.103 / 0.239  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 36.24s swing 0  measured -0.292 -0.240 -0.242 -0.157  used +0.265 +0.265 +0.170 +0.110  plan +0.265 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 36.24s  x -0.524 (vs plan)  z 0.103 / 0.239  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 36.48s swing 0  measured -0.316 -0.240 -0.243 -0.157  used +0.279 +0.265 +0.170 +0.110  plan +0.279 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 36.48s  x -0.524 (vs plan)  z 0.103 / 0.239  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 36.72s swing 0  measured -0.327 -0.240 -0.243 -0.157  used +0.309 +0.265 +0.170 +0.110  plan +0.309 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 36.72s  x -0.524 (vs plan)  z 0.103 / 0.239  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 36.96s swing -1  measured -0.320 -0.237 -0.241 -0.154  used +0.315 +0.265 +0.170 +0.110  plan +0.315 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 36.96s  x -0.542 (vs plan)  z 0.103 / 0.237  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 37.20s swing -1  measured -0.314 -0.229 -0.233 -0.144  used +0.315 +0.265 +0.170 +0.110  plan +0.315 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 37.20s  x -0.577 (vs plan)  z 0.103 / 0.234  nose up  -0.1 / +15.0 deg  fallen True
+[paws] t 37.44s swing -1  measured -0.304 -0.218 -0.221 -0.131  used +0.315 +0.265 +0.170 +0.110  plan +0.315 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 37.44s  x -0.610 (vs plan)  z 0.104 / 0.231  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 37.68s swing 3  measured -0.299 -0.213 -0.211 -0.143  used +0.315 +0.265 +0.170 +0.110  plan +0.315 +0.265 +0.170 +0.110  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 37.68s  x -0.603 (vs plan)  z 0.106 / 0.231  nose up  -1.6 / +15.0 deg  fallen True
+[paws] t 37.92s swing 3  measured -0.298 -0.212 -0.208 -0.163  used +0.315 +0.265 +0.170 +0.141  plan +0.315 +0.265 +0.170 +0.141  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 37.92s  x -0.602 (vs plan)  z 0.106 / 0.231  nose up  -1.7 / +15.0 deg  fallen True
+[paws] t 38.16s swing 3  measured -0.299 -0.214 -0.214 -0.185  used +0.315 +0.265 +0.170 +0.179  plan +0.315 +0.265 +0.170 +0.179  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 38.16s  x -0.607 (vs plan)  z 0.105 / 0.231  nose up  -1.0 / +15.0 deg  fallen True
+[paws] t 38.40s swing -1  measured -0.303 -0.218 -0.222 -0.189  used +0.315 +0.265 +0.170 +0.185  plan +0.315 +0.265 +0.170 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 38.40s  x -0.601 (vs plan)  z 0.104 / 0.229  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 38.64s swing -1  measured -0.312 -0.227 -0.233 -0.199  used +0.315 +0.265 +0.170 +0.185  plan +0.315 +0.265 +0.170 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 38.64s  x -0.586 (vs plan)  z 0.103 / 0.226  nose up  +0.2 / +15.0 deg  fallen True
+[paws] t 38.88s swing 1  measured -0.321 -0.236 -0.242 -0.207  used +0.315 +0.265 +0.170 +0.185  plan +0.315 +0.265 +0.170 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 38.88s  x -0.571 (vs plan)  z 0.103 / 0.223  nose up  +0.2 / +15.0 deg  fallen True
+[paws] t 39.12s swing 1  measured -0.317 -0.259 -0.240 -0.204  used +0.315 +0.265 +0.170 +0.185  plan +0.315 +0.265 +0.170 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 39.12s  x -0.567 (vs plan)  z 0.104 / 0.223  nose up  +1.0 / +15.0 deg  fallen True
+[paws] t 39.36s swing 1  measured -0.318 -0.279 -0.241 -0.205  used +0.315 +0.301 +0.170 +0.185  plan +0.315 +0.301 +0.170 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 39.36s  x -0.568 (vs plan)  z 0.104 / 0.223  nose up  +0.7 / +15.0 deg  fallen True
+[paws] t 39.60s swing 1  measured -0.319 -0.295 -0.240 -0.206  used +0.315 +0.339 +0.170 +0.185  plan +0.315 +0.339 +0.170 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 39.60s  x -0.568 (vs plan)  z 0.103 / 0.223  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 39.84s swing -1  measured -0.312 -0.282 -0.232 -0.198  used +0.315 +0.340 +0.170 +0.185  plan +0.315 +0.340 +0.170 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 39.84s  x -0.591 (vs plan)  z 0.103 / 0.225  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 40.08s swing -1  measured -0.298 -0.267 -0.215 -0.180  used +0.315 +0.340 +0.170 +0.185  plan +0.315 +0.340 +0.170 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 40.08s  x -0.619 (vs plan)  z 0.104 / 0.228  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 40.32s swing 2  measured -0.281 -0.249 -0.197 -0.161  used +0.315 +0.340 +0.170 +0.185  plan +0.315 +0.340 +0.170 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 40.32s  x -0.639 (vs plan)  z 0.106 / 0.230  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 40.56s swing 2  measured -0.281 -0.249 -0.210 -0.161  used +0.315 +0.340 +0.186 +0.185  plan +0.315 +0.340 +0.186 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 40.56s  x -0.639 (vs plan)  z 0.106 / 0.230  nose up  -0.3 / +15.0 deg  fallen True
+[paws] t 40.80s swing 2  measured -0.281 -0.249 -0.219 -0.161  used +0.315 +0.340 +0.207 +0.185  plan +0.315 +0.340 +0.207 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 40.80s  x -0.639 (vs plan)  z 0.106 / 0.230  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 41.04s swing 2  measured -0.281 -0.249 -0.222 -0.161  used +0.315 +0.340 +0.220 +0.185  plan +0.315 +0.340 +0.220 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 41.04s  x -0.639 (vs plan)  z 0.106 / 0.230  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 41.28s swing -1  measured -0.289 -0.258 -0.225 -0.171  used +0.315 +0.340 +0.220 +0.185  plan +0.315 +0.340 +0.220 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 41.28s  x -0.619 (vs plan)  z 0.105 / 0.230  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 41.52s swing -1  measured -0.300 -0.270 -0.237 -0.185  used +0.315 +0.340 +0.220 +0.185  plan +0.315 +0.340 +0.220 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 41.52s  x -0.597 (vs plan)  z 0.104 / 0.230  nose up  -0.1 / +15.0 deg  fallen True
+[paws] t 41.76s swing 0  measured -0.310 -0.277 -0.245 -0.193  used +0.315 +0.340 +0.220 +0.185  plan +0.315 +0.340 +0.220 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 41.76s  x -0.584 (vs plan)  z 0.103 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 42.00s swing 0  measured -0.321 -0.277 -0.245 -0.193  used +0.335 +0.340 +0.220 +0.185  plan +0.335 +0.340 +0.220 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 42.00s  x -0.584 (vs plan)  z 0.103 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 42.24s swing 0  measured -0.329 -0.277 -0.245 -0.193  used +0.356 +0.340 +0.220 +0.185  plan +0.356 +0.340 +0.220 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 42.24s  x -0.584 (vs plan)  z 0.103 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 42.48s swing -1  measured -0.327 -0.277 -0.245 -0.193  used +0.365 +0.340 +0.220 +0.185  plan +0.365 +0.340 +0.220 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 42.48s  x -0.587 (vs plan)  z 0.103 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 42.72s swing -1  measured -0.315 -0.265 -0.232 -0.179  used +0.365 +0.340 +0.220 +0.185  plan +0.365 +0.340 +0.220 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 42.72s  x -0.618 (vs plan)  z 0.104 / 0.230  nose up  -0.3 / +15.0 deg  fallen True
+[paws] t 42.96s swing -1  measured -0.298 -0.247 -0.214 -0.159  used +0.365 +0.340 +0.220 +0.185  plan +0.365 +0.340 +0.220 +0.185  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 42.96s  x -0.648 (vs plan)  z 0.106 / 0.230  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 43.20s swing 3  measured -0.287 -0.236 -0.202 -0.152  used +0.365 +0.340 +0.220 +0.187  plan +0.365 +0.340 +0.220 +0.187  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 43.20s  x -0.659 (vs plan)  z 0.107 / 0.230  nose up  -0.6 / +15.0 deg  fallen True
+[paws] t 43.44s swing 3  measured -0.287 -0.236 -0.202 -0.163  used +0.365 +0.340 +0.220 +0.208  plan +0.365 +0.340 +0.220 +0.208  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 43.44s  x -0.660 (vs plan)  z 0.107 / 0.230  nose up  -0.5 / +15.0 deg  fallen True
+[paws] t 43.68s swing 3  measured -0.288 -0.237 -0.206 -0.175  used +0.365 +0.340 +0.220 +0.229  plan +0.365 +0.340 +0.220 +0.229  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 43.68s  x -0.663 (vs plan)  z 0.106 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 43.92s swing -1  measured -0.289 -0.238 -0.209 -0.173  used +0.365 +0.340 +0.220 +0.235  plan +0.365 +0.340 +0.220 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 43.92s  x -0.659 (vs plan)  z 0.105 / 0.230  nose up  +0.5 / +15.0 deg  fallen True
+[paws] t 44.16s swing -1  measured -0.298 -0.248 -0.221 -0.185  used +0.365 +0.340 +0.220 +0.235  plan +0.365 +0.340 +0.220 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 44.16s  x -0.637 (vs plan)  z 0.104 / 0.230  nose up  +0.9 / +15.0 deg  fallen True
+[paws] t 44.40s swing -1  measured -0.309 -0.260 -0.230 -0.195  used +0.365 +0.340 +0.220 +0.235  plan +0.365 +0.340 +0.220 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 44.40s  x -0.612 (vs plan)  z 0.104 / 0.230  nose up  +0.5 / +15.0 deg  fallen True
+[paws] t 44.64s swing 1  measured -0.313 -0.274 -0.234 -0.200  used +0.365 +0.347 +0.220 +0.235  plan +0.365 +0.347 +0.220 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 44.64s  x -0.606 (vs plan)  z 0.103 / 0.230  nose up  +0.3 / +15.0 deg  fallen True
+[paws] t 44.88s swing 1  measured -0.315 -0.285 -0.236 -0.202  used +0.365 +0.369 +0.220 +0.235  plan +0.365 +0.369 +0.220 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 44.88s  x -0.608 (vs plan)  z 0.103 / 0.230  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 45.12s swing 1  measured -0.314 -0.293 -0.235 -0.201  used +0.365 +0.392 +0.220 +0.235  plan +0.365 +0.392 +0.220 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 45.12s  x -0.608 (vs plan)  z 0.103 / 0.230  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 45.36s swing -1  measured -0.312 -0.284 -0.232 -0.199  used +0.365 +0.395 +0.220 +0.235  plan +0.365 +0.395 +0.220 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 45.36s  x -0.622 (vs plan)  z 0.103 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 45.60s swing -1  measured -0.300 -0.272 -0.219 -0.185  used +0.365 +0.395 +0.220 +0.235  plan +0.365 +0.395 +0.220 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 45.60s  x -0.657 (vs plan)  z 0.103 / 0.230  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 45.84s swing -1  measured -0.284 -0.255 -0.200 -0.165  used +0.365 +0.395 +0.220 +0.235  plan +0.365 +0.395 +0.220 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 45.84s  x -0.687 (vs plan)  z 0.105 / 0.230  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 46.08s swing 2  measured -0.279 -0.250 -0.206 -0.160  used +0.365 +0.395 +0.229 +0.235  plan +0.365 +0.395 +0.229 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 46.08s  x -0.689 (vs plan)  z 0.106 / 0.230  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 46.32s swing 2  measured -0.279 -0.250 -0.214 -0.160  used +0.365 +0.395 +0.250 +0.235  plan +0.365 +0.395 +0.250 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 46.32s  x -0.689 (vs plan)  z 0.106 / 0.230  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 46.56s swing 2  measured -0.279 -0.250 -0.222 -0.160  used +0.365 +0.395 +0.270 +0.235  plan +0.365 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 46.56s  x -0.689 (vs plan)  z 0.106 / 0.230  nose up  -0.5 / +15.0 deg  fallen True
+[paws] t 46.80s swing -1  measured -0.283 -0.254 -0.219 -0.165  used +0.365 +0.395 +0.270 +0.235  plan +0.365 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 46.80s  x -0.676 (vs plan)  z 0.105 / 0.230  nose up  -0.4 / +15.0 deg  fallen True
+[paws] t 47.04s swing -1  measured -0.295 -0.267 -0.232 -0.179  used +0.365 +0.395 +0.270 +0.235  plan +0.365 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 47.04s  x -0.655 (vs plan)  z 0.104 / 0.230  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 47.28s swing 0  measured -0.304 -0.276 -0.242 -0.190  used +0.365 +0.395 +0.270 +0.235  plan +0.365 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 47.28s  x -0.634 (vs plan)  z 0.103 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 47.52s swing 0  measured -0.317 -0.277 -0.243 -0.191  used +0.378 +0.395 +0.270 +0.235  plan +0.378 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 47.52s  x -0.634 (vs plan)  z 0.103 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 47.76s swing 0  measured -0.325 -0.277 -0.243 -0.191  used +0.399 +0.395 +0.270 +0.235  plan +0.399 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 47.76s  x -0.634 (vs plan)  z 0.103 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 48.00s swing 0  measured -0.332 -0.277 -0.243 -0.191  used +0.415 +0.395 +0.270 +0.235  plan +0.415 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 48.00s  x -0.634 (vs plan)  z 0.103 / 0.230  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 48.24s swing -1  measured -0.318 -0.271 -0.236 -0.183  used +0.415 +0.395 +0.270 +0.235  plan +0.415 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 48.24s  x -0.659 (vs plan)  z 0.103 / 0.230  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 48.48s swing -1  measured -0.302 -0.254 -0.219 -0.164  used +0.415 +0.395 +0.270 +0.235  plan +0.415 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 48.48s  x -0.688 (vs plan)  z 0.105 / 0.230  nose up  -0.5 / +15.0 deg  fallen True
+[paws] t 48.72s swing 3  measured -0.286 -0.237 -0.202 -0.146  used +0.415 +0.395 +0.270 +0.235  plan +0.415 +0.395 +0.270 +0.235  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 48.72s  x -0.710 (vs plan)  z 0.107 / 0.230  nose up  -0.5 / +15.0 deg  fallen True
+[paws] t 48.96s swing 3  measured -0.286 -0.236 -0.200 -0.156  used +0.415 +0.395 +0.270 +0.246  plan +0.415 +0.395 +0.270 +0.246  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 48.96s  x -0.709 (vs plan)  z 0.107 / 0.230  nose up  -0.7 / +15.0 deg  fallen True
+[paws] t 49.20s swing 3  measured -0.286 -0.237 -0.201 -0.165  used +0.415 +0.395 +0.270 +0.262  plan +0.415 +0.395 +0.270 +0.262  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 49.20s  x -0.711 (vs plan)  z 0.107 / 0.230  nose up  -0.5 / +15.0 deg  fallen True
+[paws] t 49.44s swing 3  measured -0.288 -0.238 -0.205 -0.168  used +0.415 +0.395 +0.270 +0.270  plan +0.415 +0.395 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 49.44s  x -0.714 (vs plan)  z 0.106 / 0.230  nose up  -0.1 / +15.0 deg  fallen True
+[paws] t 49.68s swing -1  measured -0.296 -0.247 -0.216 -0.174  used +0.415 +0.395 +0.270 +0.270  plan +0.415 +0.395 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 49.68s  x -0.693 (vs plan)  z 0.105 / 0.230  nose up  +0.3 / +15.0 deg  fallen True
+[paws] t 49.92s swing -1  measured -0.306 -0.259 -0.228 -0.187  used +0.415 +0.395 +0.270 +0.270  plan +0.415 +0.395 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 49.92s  x -0.670 (vs plan)  z 0.104 / 0.230  nose up  +0.5 / +15.0 deg  fallen True
+[paws] t 50.16s swing 1  measured -0.315 -0.271 -0.235 -0.196  used +0.415 +0.395 +0.270 +0.270  plan +0.415 +0.395 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 50.16s  x -0.654 (vs plan)  z 0.103 / 0.230  nose up  +0.1 / +15.0 deg  fallen True
+[paws] t 50.40s swing 1  measured -0.315 -0.279 -0.235 -0.196  used +0.415 +0.404 +0.270 +0.270  plan +0.415 +0.404 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 50.40s  x -0.655 (vs plan)  z 0.103 / 0.230  nose up  +0.2 / +15.0 deg  fallen True
+[paws] t 50.64s swing 1  measured -0.315 -0.285 -0.236 -0.197  used +0.415 +0.418 +0.270 +0.270  plan +0.415 +0.418 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 50.64s  x -0.655 (vs plan)  z 0.103 / 0.230  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 50.88s swing -1  measured -0.314 -0.279 -0.235 -0.196  used +0.415 +0.420 +0.270 +0.270  plan +0.415 +0.420 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 50.88s  x -0.657 (vs plan)  z 0.103 / 0.231  nose up  +0.0 / +15.0 deg  fallen True
+[paws] t 51.12s swing -1  measured -0.295 -0.258 -0.215 -0.176  used +0.415 +0.420 +0.270 +0.270  plan +0.415 +0.420 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 51.12s  x -0.690 (vs plan)  z 0.103 / 0.244  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 51.36s swing -1  measured -0.272 -0.234 -0.191 -0.151  used +0.415 +0.420 +0.270 +0.270  plan +0.415 +0.420 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 51.36s  x -0.721 (vs plan)  z 0.103 / 0.256  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 51.60s swing 2  measured -0.258 -0.220 -0.187 -0.136  used +0.415 +0.420 +0.270 +0.270  plan +0.415 +0.420 +0.270 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 51.60s  x -0.735 (vs plan)  z 0.103 / 0.262  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 51.84s swing 2  measured -0.258 -0.220 -0.215 -0.136  used +0.415 +0.420 +0.286 +0.270  plan +0.415 +0.420 +0.286 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 51.84s  x -0.735 (vs plan)  z 0.103 / 0.262  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 52.08s swing 2  measured -0.258 -0.220 -0.229 -0.136  used +0.415 +0.420 +0.322 +0.270  plan +0.415 +0.420 +0.322 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 52.08s  x -0.735 (vs plan)  z 0.103 / 0.262  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 52.32s swing -1  measured -0.258 -0.220 -0.230 -0.136  used +0.415 +0.420 +0.340 +0.270  plan +0.415 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 52.32s  x -0.730 (vs plan)  z 0.103 / 0.261  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 52.56s swing -1  measured -0.267 -0.229 -0.239 -0.146  used +0.415 +0.420 +0.340 +0.270  plan +0.415 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 52.56s  x -0.714 (vs plan)  z 0.103 / 0.257  nose up  -0.2 / +15.0 deg  fallen True
+[paws] t 52.80s swing -1  measured -0.276 -0.239 -0.249 -0.156  used +0.415 +0.420 +0.340 +0.270  plan +0.415 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 52.80s  x -0.698 (vs plan)  z 0.103 / 0.254  nose up  -0.1 / +15.0 deg  fallen True
+[paws] t 53.04s swing 0  measured -0.297 -0.243 -0.253 -0.161  used +0.415 +0.420 +0.340 +0.270  plan +0.415 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 53.04s  x -0.694 (vs plan)  z 0.103 / 0.253  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 53.28s swing 0  measured -0.323 -0.243 -0.253 -0.161  used +0.439 +0.420 +0.340 +0.270  plan +0.439 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 53.28s  x -0.694 (vs plan)  z 0.103 / 0.253  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 53.52s swing 0  measured -0.336 -0.243 -0.253 -0.161  used +0.476 +0.420 +0.340 +0.270  plan +0.476 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 53.52s  x -0.694 (vs plan)  z 0.103 / 0.253  nose up  -0.0 / +15.0 deg  fallen True
+[paws] t 53.76s swing -1  measured -0.333 -0.241 -0.251 -0.158  used +0.490 +0.420 +0.340 +0.270  plan +0.490 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 53.76s  x -0.706 (vs plan)  z 0.103 / 0.255  nose up  -0.1 / +14.2 deg  fallen True
+[paws] t 54.00s swing -1  measured -0.325 -0.230 -0.237 -0.142  used +0.490 +0.420 +0.340 +0.270  plan +0.490 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 54.00s  x -0.737 (vs plan)  z 0.103 / 0.258  nose up  -0.1 / +12.2 deg  fallen True
+[paws] t 54.24s swing -1  measured -0.314 -0.217 -0.222 -0.125  used +0.490 +0.420 +0.340 +0.270  plan +0.490 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 54.24s  x -0.769 (vs plan)  z 0.103 / 0.261  nose up  +0.0 / +10.2 deg  fallen True
+[paws] t 54.48s swing 3  measured -0.311 -0.213 -0.215 -0.131  used +0.490 +0.420 +0.340 +0.270  plan +0.490 +0.420 +0.340 +0.270  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 54.48s  x -0.768 (vs plan)  z 0.104 / 0.261  nose up  -0.6 / +10.0 deg  fallen True
+[paws] t 54.72s swing 3  measured -0.309 -0.210 -0.209 -0.153  used +0.490 +0.420 +0.340 +0.298  plan +0.490 +0.420 +0.340 +0.298  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 54.72s  x -0.764 (vs plan)  z 0.105 / 0.261  nose up  -1.4 / +10.0 deg  fallen True
+[paws] t 54.96s swing 3  measured -0.309 -0.211 -0.213 -0.179  used +0.490 +0.420 +0.340 +0.341  plan +0.490 +0.420 +0.340 +0.341  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 54.96s  x -0.769 (vs plan)  z 0.104 / 0.261  nose up  -0.6 / +10.0 deg  fallen True
+[paws] t 55.20s swing -1  measured -0.310 -0.213 -0.217 -0.189  used +0.490 +0.420 +0.340 +0.365  plan +0.490 +0.420 +0.340 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 55.20s  x -0.768 (vs plan)  z 0.103 / 0.260  nose up  +0.1 / +10.0 deg  fallen True
+[paws] t 55.44s swing -1  measured -0.318 -0.221 -0.226 -0.197  used +0.490 +0.420 +0.340 +0.365  plan +0.490 +0.420 +0.340 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 55.44s  x -0.753 (vs plan)  z 0.103 / 0.257  nose up  +0.2 / +10.0 deg  fallen True
+[paws] t 55.68s swing -1  measured -0.326 -0.230 -0.235 -0.206  used +0.490 +0.420 +0.340 +0.365  plan +0.490 +0.420 +0.340 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 55.68s  x -0.738 (vs plan)  z 0.103 / 0.253  nose up  +0.2 / +10.0 deg  fallen True
+[paws] t 55.92s swing 1  measured -0.327 -0.247 -0.237 -0.207  used +0.490 +0.420 +0.340 +0.365  plan +0.490 +0.420 +0.340 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 55.92s  x -0.731 (vs plan)  z 0.104 / 0.253  nose up  +0.9 / +10.0 deg  fallen True
+[paws] t 56.16s swing 1  measured -0.325 -0.275 -0.237 -0.205  used +0.490 +0.459 +0.340 +0.365  plan +0.490 +0.459 +0.340 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 56.16s  x -0.732 (vs plan)  z 0.104 / 0.253  nose up  +0.9 / +10.0 deg  fallen True
+[paws] t 56.40s swing 1  measured -0.332 -0.304 -0.240 -0.212  used +0.490 +0.508 +0.340 +0.365  plan +0.490 +0.508 +0.340 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 56.40s  x -0.736 (vs plan)  z 0.103 / 0.253  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 56.64s swing -1  measured -0.329 -0.310 -0.238 -0.210  used +0.490 +0.535 +0.340 +0.365  plan +0.490 +0.535 +0.340 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 56.64s  x -0.748 (vs plan)  z 0.103 / 0.254  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 56.88s swing -1  measured -0.311 -0.291 -0.220 -0.192  used +0.490 +0.535 +0.340 +0.365  plan +0.490 +0.535 +0.340 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 56.88s  x -0.783 (vs plan)  z 0.103 / 0.257  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 57.12s swing -1  measured -0.293 -0.273 -0.200 -0.170  used +0.490 +0.535 +0.340 +0.365  plan +0.490 +0.535 +0.340 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 57.12s  x -0.816 (vs plan)  z 0.104 / 0.260  nose up  -0.2 / +10.0 deg  fallen True
+[paws] t 57.36s swing 2  measured -0.285 -0.265 -0.202 -0.162  used +0.490 +0.535 +0.349 +0.365  plan +0.490 +0.535 +0.349 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 57.36s  x -0.821 (vs plan)  z 0.105 / 0.260  nose up  -0.2 / +10.0 deg  fallen True
+[paws] t 57.60s swing 2  measured -0.285 -0.265 -0.212 -0.162  used +0.490 +0.535 +0.371 +0.365  plan +0.490 +0.535 +0.371 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 57.60s  x -0.820 (vs plan)  z 0.105 / 0.260  nose up  -0.2 / +10.0 deg  fallen True
+[paws] t 57.84s swing 2  measured -0.285 -0.265 -0.222 -0.162  used +0.490 +0.535 +0.394 +0.365  plan +0.490 +0.535 +0.394 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 57.84s  x -0.820 (vs plan)  z 0.105 / 0.260  nose up  -0.2 / +10.0 deg  fallen True
+[paws] t 58.08s swing -1  measured -0.289 -0.268 -0.220 -0.166  used +0.490 +0.535 +0.395 +0.365  plan +0.490 +0.535 +0.395 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 58.08s  x -0.809 (vs plan)  z 0.104 / 0.260  nose up  -0.1 / +10.0 deg  fallen True
+[paws] t 58.32s swing -1  measured -0.301 -0.281 -0.233 -0.180  used +0.490 +0.535 +0.395 +0.365  plan +0.490 +0.535 +0.395 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 58.32s  x -0.787 (vs plan)  z 0.103 / 0.260  nose up  -0.1 / +10.0 deg  fallen True
+[paws] t 58.56s swing -1  measured -0.310 -0.291 -0.242 -0.191  used +0.490 +0.535 +0.395 +0.365  plan +0.490 +0.535 +0.395 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 58.56s  x -0.763 (vs plan)  z 0.103 / 0.260  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 58.80s swing 0  measured -0.324 -0.293 -0.245 -0.193  used +0.501 +0.535 +0.395 +0.365  plan +0.501 +0.535 +0.395 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 58.80s  x -0.763 (vs plan)  z 0.103 / 0.260  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 59.04s swing 0  measured -0.333 -0.293 -0.245 -0.193  used +0.522 +0.535 +0.395 +0.365  plan +0.522 +0.535 +0.395 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 59.04s  x -0.763 (vs plan)  z 0.103 / 0.260  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 59.28s swing 0  measured -0.342 -0.293 -0.245 -0.193  used +0.540 +0.535 +0.395 +0.365  plan +0.540 +0.535 +0.395 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 59.28s  x -0.763 (vs plan)  z 0.103 / 0.260  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 59.52s swing -1  measured -0.327 -0.286 -0.237 -0.184  used +0.540 +0.535 +0.395 +0.365  plan +0.540 +0.535 +0.395 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 59.52s  x -0.790 (vs plan)  z 0.103 / 0.260  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 59.76s swing -1  measured -0.308 -0.265 -0.216 -0.161  used +0.540 +0.535 +0.395 +0.365  plan +0.540 +0.535 +0.395 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 59.76s  x -0.826 (vs plan)  z 0.105 / 0.260  nose up  -0.2 / +10.0 deg  fallen True
+[paws] t 60.00s swing 3  measured -0.287 -0.243 -0.195 -0.138  used +0.540 +0.535 +0.395 +0.365  plan +0.540 +0.535 +0.395 +0.365  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 60.00s  x -0.857 (vs plan)  z 0.106 / 0.260  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 60.24s swing 3  measured -0.286 -0.242 -0.192 -0.149  used +0.540 +0.535 +0.395 +0.380  plan +0.540 +0.535 +0.395 +0.380  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 60.24s  x -0.856 (vs plan)  z 0.106 / 0.260  nose up  -0.2 / +10.0 deg  fallen True
+[paws] t 60.48s swing 3  measured -0.286 -0.242 -0.193 -0.161  used +0.540 +0.535 +0.395 +0.400  plan +0.540 +0.535 +0.395 +0.400  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 60.48s  x -0.858 (vs plan)  z 0.106 / 0.260  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 60.72s swing 3  measured -0.287 -0.242 -0.196 -0.170  used +0.540 +0.535 +0.395 +0.415  plan +0.540 +0.535 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 60.72s  x -0.860 (vs plan)  z 0.105 / 0.260  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 60.96s swing -1  measured -0.296 -0.252 -0.208 -0.175  used +0.540 +0.535 +0.395 +0.415  plan +0.540 +0.535 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 60.96s  x -0.837 (vs plan)  z 0.104 / 0.260  nose up  +0.9 / +10.0 deg  fallen True
+[paws] t 61.20s swing -1  measured -0.311 -0.269 -0.221 -0.190  used +0.540 +0.535 +0.395 +0.415  plan +0.540 +0.535 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 61.20s  x -0.807 (vs plan)  z 0.104 / 0.260  nose up  +0.5 / +10.0 deg  fallen True
+[paws] t 61.44s swing 1  measured -0.324 -0.283 -0.233 -0.203  used +0.540 +0.535 +0.395 +0.415  plan +0.540 +0.535 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 61.44s  x -0.786 (vs plan)  z 0.103 / 0.260  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 61.68s swing 1  measured -0.323 -0.292 -0.233 -0.203  used +0.540 +0.541 +0.395 +0.415  plan +0.540 +0.541 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 61.68s  x -0.786 (vs plan)  z 0.103 / 0.260  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 61.92s swing 1  measured -0.322 -0.297 -0.232 -0.202  used +0.540 +0.553 +0.395 +0.415  plan +0.540 +0.553 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 61.92s  x -0.786 (vs plan)  z 0.103 / 0.260  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 62.16s swing 1  measured -0.322 -0.293 -0.232 -0.202  used +0.540 +0.555 +0.395 +0.415  plan +0.540 +0.555 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 62.16s  x -0.786 (vs plan)  z 0.103 / 0.260  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 62.40s swing -1  measured -0.312 -0.280 -0.221 -0.191  used +0.540 +0.555 +0.395 +0.415  plan +0.540 +0.555 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 62.40s  x -0.818 (vs plan)  z 0.103 / 0.260  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 62.64s swing -1  measured -0.298 -0.265 -0.207 -0.175  used +0.540 +0.555 +0.395 +0.415  plan +0.540 +0.555 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 62.64s  x -0.849 (vs plan)  z 0.104 / 0.260  nose up  +0.5 / +10.0 deg  fallen True
+[paws] t 62.88s swing 2  measured -0.287 -0.253 -0.197 -0.162  used +0.540 +0.555 +0.395 +0.415  plan +0.540 +0.555 +0.395 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 62.88s  x -0.862 (vs plan)  z 0.105 / 0.260  nose up  +0.4 / +10.0 deg  fallen True
+[paws] t 63.12s swing 2  measured -0.287 -0.253 -0.206 -0.162  used +0.540 +0.555 +0.405 +0.415  plan +0.540 +0.555 +0.405 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 63.12s  x -0.862 (vs plan)  z 0.105 / 0.260  nose up  +0.4 / +10.0 deg  fallen True
+[paws] t 63.36s swing 2  measured -0.287 -0.253 -0.212 -0.162  used +0.540 +0.555 +0.419 +0.415  plan +0.540 +0.555 +0.419 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 63.36s  x -0.862 (vs plan)  z 0.105 / 0.260  nose up  +0.4 / +10.0 deg  fallen True
+[paws] t 63.60s swing -1  measured -0.287 -0.253 -0.206 -0.162  used +0.540 +0.555 +0.420 +0.415  plan +0.540 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 63.60s  x -0.858 (vs plan)  z 0.105 / 0.260  nose up  +0.4 / +10.0 deg  fallen True
+[paws] t 63.84s swing -1  measured -0.300 -0.266 -0.219 -0.177  used +0.540 +0.555 +0.420 +0.415  plan +0.540 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 63.84s  x -0.833 (vs plan)  z 0.104 / 0.260  nose up  +0.6 / +10.0 deg  fallen True
+[paws] t 64.08s swing -1  measured -0.313 -0.281 -0.231 -0.191  used +0.540 +0.555 +0.420 +0.415  plan +0.540 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 64.08s  x -0.805 (vs plan)  z 0.103 / 0.260  nose up  +0.1 / +10.0 deg  fallen True
+[paws] t 64.32s swing 0  measured -0.323 -0.287 -0.237 -0.197  used +0.540 +0.555 +0.420 +0.415  plan +0.540 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 64.32s  x -0.796 (vs plan)  z 0.103 / 0.260  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 64.56s swing 0  measured -0.330 -0.287 -0.237 -0.197  used +0.550 +0.555 +0.420 +0.415  plan +0.550 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 64.56s  x -0.796 (vs plan)  z 0.103 / 0.260  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 64.80s swing 0  measured -0.336 -0.287 -0.237 -0.197  used +0.560 +0.555 +0.420 +0.415  plan +0.560 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 64.80s  x -0.796 (vs plan)  z 0.103 / 0.260  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 65.04s swing -1  measured -0.326 -0.286 -0.235 -0.195  used +0.560 +0.555 +0.420 +0.415  plan +0.560 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 65.04s  x -0.806 (vs plan)  z 0.103 / 0.262  nose up  +0.0 /  +9.3 deg  fallen True
+[paws] t 65.28s swing -1  measured -0.311 -0.269 -0.216 -0.175  used +0.560 +0.555 +0.420 +0.415  plan +0.560 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 65.28s  x -0.838 (vs plan)  z 0.103 / 0.269  nose up  +0.1 /  +7.3 deg  fallen True
+[paws] t 65.52s swing -1  measured -0.293 -0.251 -0.195 -0.153  used +0.560 +0.555 +0.420 +0.415  plan +0.560 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 65.52s  x -0.869 (vs plan)  z 0.104 / 0.275  nose up  +0.5 /  +5.3 deg  fallen True
+[paws] t 65.76s swing 3  measured -0.287 -0.245 -0.186 -0.159  used +0.560 +0.555 +0.420 +0.415  plan +0.560 +0.555 +0.420 +0.415  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 65.76s  x -0.873 (vs plan)  z 0.104 / 0.276  nose up  +0.3 /  +5.0 deg  fallen True
+[paws] t 66.00s swing 3  measured -0.287 -0.245 -0.183 -0.178  used +0.560 +0.555 +0.420 +0.430  plan +0.560 +0.555 +0.420 +0.430  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 66.00s  x -0.871 (vs plan)  z 0.105 / 0.276  nose up  -0.2 /  +5.0 deg  fallen True
+[paws] t 66.24s swing 3  measured -0.287 -0.244 -0.187 -0.198  used +0.560 +0.555 +0.420 +0.460  plan +0.560 +0.555 +0.420 +0.460  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 66.24s  x -0.874 (vs plan)  z 0.104 / 0.276  nose up  +0.5 /  +5.0 deg  fallen True
+[paws] t 66.48s swing -1  measured -0.289 -0.247 -0.190 -0.199  used +0.560 +0.555 +0.420 +0.465  plan +0.560 +0.555 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 66.48s  x -0.862 (vs plan)  z 0.104 / 0.277  nose up  +0.6 /  +6.0 deg  fallen True
+[paws] t 66.72s swing -1  measured -0.297 -0.256 -0.200 -0.210  used +0.560 +0.555 +0.420 +0.465  plan +0.560 +0.555 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 66.72s  x -0.838 (vs plan)  z 0.103 / 0.280  nose up  +0.2 /  +8.0 deg  fallen True
+[paws] t 66.96s swing -1  measured -0.301 -0.261 -0.208 -0.218  used +0.560 +0.555 +0.420 +0.465  plan +0.560 +0.555 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 66.96s  x -0.813 (vs plan)  z 0.103 / 0.283  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 67.20s swing 1  measured -0.302 -0.288 -0.210 -0.219  used +0.560 +0.555 +0.420 +0.465  plan +0.560 +0.555 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 67.20s  x -0.813 (vs plan)  z 0.103 / 0.283  nose up  +0.1 / +10.0 deg  fallen True
+[paws] t 67.44s swing 1  measured -0.301 -0.312 -0.209 -0.219  used +0.560 +0.597 +0.420 +0.465  plan +0.560 +0.597 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 67.44s  x -0.812 (vs plan)  z 0.103 / 0.283  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 67.68s swing 1  measured -0.299 -0.331 -0.206 -0.219  used +0.560 +0.639 +0.420 +0.465  plan +0.560 +0.639 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 67.68s  x -0.811 (vs plan)  z 0.103 / 0.283  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 67.92s swing -1  measured -0.288 -0.320 -0.195 -0.209  used +0.560 +0.645 +0.420 +0.465  plan +0.560 +0.645 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 67.92s  x -0.837 (vs plan)  z 0.103 / 0.285  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 68.16s swing -1  measured -0.271 -0.300 -0.179 -0.189  used +0.560 +0.645 +0.420 +0.465  plan +0.560 +0.645 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 68.16s  x -0.878 (vs plan)  z 0.103 / 0.288  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 68.40s swing 2  measured -0.251 -0.280 -0.156 -0.165  used +0.560 +0.645 +0.420 +0.465  plan +0.560 +0.645 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 68.40s  x -0.908 (vs plan)  z 0.104 / 0.291  nose up  -0.4 / +10.0 deg  fallen True
+[paws] t 68.64s swing 2  measured -0.249 -0.278 -0.176 -0.163  used +0.560 +0.645 +0.420 +0.465  plan +0.560 +0.645 +0.420 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 68.64s  x -0.907 (vs plan)  z 0.104 / 0.291  nose up  -0.4 / +10.0 deg  fallen True
+[paws] t 68.88s swing 2  measured -0.249 -0.278 -0.199 -0.163  used +0.560 +0.645 +0.449 +0.465  plan +0.560 +0.645 +0.449 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 68.88s  x -0.907 (vs plan)  z 0.104 / 0.291  nose up  -0.4 / +10.0 deg  fallen True
+[paws] t 69.12s swing 2  measured -0.249 -0.278 -0.216 -0.163  used +0.560 +0.645 +0.485 +0.465  plan +0.560 +0.645 +0.485 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 69.12s  x -0.907 (vs plan)  z 0.104 / 0.291  nose up  -0.4 / +10.0 deg  fallen True
+[paws] t 69.36s swing -1  measured -0.254 -0.283 -0.219 -0.169  used +0.560 +0.645 +0.490 +0.465  plan +0.560 +0.645 +0.490 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 69.36s  x -0.897 (vs plan)  z 0.104 / 0.289  nose up  -0.4 / +10.0 deg  fallen True
+[paws] t 69.60s swing -1  measured -0.265 -0.294 -0.231 -0.181  used +0.560 +0.645 +0.490 +0.465  plan +0.560 +0.645 +0.490 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 69.60s  x -0.881 (vs plan)  z 0.103 / 0.285  nose up  -0.2 / +10.0 deg  fallen True
+[paws] t 69.84s swing 0  measured -0.275 -0.303 -0.242 -0.192  used +0.560 +0.645 +0.490 +0.465  plan +0.560 +0.645 +0.490 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 69.84s  x -0.867 (vs plan)  z 0.103 / 0.283  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 70.08s swing 0  measured -0.307 -0.303 -0.242 -0.193  used +0.566 +0.645 +0.490 +0.465  plan +0.566 +0.645 +0.490 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 70.08s  x -0.867 (vs plan)  z 0.103 / 0.283  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 70.32s swing 0  measured -0.328 -0.303 -0.242 -0.193  used +0.606 +0.645 +0.490 +0.465  plan +0.606 +0.645 +0.490 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 70.32s  x -0.867 (vs plan)  z 0.103 / 0.283  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 70.56s swing 0  measured -0.347 -0.303 -0.243 -0.193  used +0.645 +0.645 +0.490 +0.465  plan +0.645 +0.645 +0.490 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 70.56s  x -0.867 (vs plan)  z 0.103 / 0.283  nose up  -0.0 / +10.0 deg  fallen True
+[paws] t 70.80s swing -1  measured -0.331 -0.293 -0.230 -0.179  used +0.645 +0.645 +0.490 +0.465  plan +0.645 +0.645 +0.490 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 70.80s  x -0.898 (vs plan)  z 0.103 / 0.285  nose up  -0.3 / +10.0 deg  fallen True
+[paws] t 71.04s swing -1  measured -0.307 -0.268 -0.204 -0.152  used +0.645 +0.645 +0.490 +0.465  plan +0.645 +0.645 +0.490 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 71.04s  x -0.932 (vs plan)  z 0.105 / 0.288  nose up  -0.4 / +10.0 deg  fallen True
+[paws] t 71.28s swing 3  measured -0.287 -0.246 -0.184 -0.133  used +0.645 +0.645 +0.490 +0.465  plan +0.645 +0.645 +0.490 +0.465  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 71.28s  x -0.956 (vs plan)  z 0.106 / 0.290  nose up  -0.1 / +10.0 deg  fallen True
+[paws] t 71.52s swing 3  measured -0.286 -0.246 -0.182 -0.145  used +0.645 +0.645 +0.490 +0.485  plan +0.645 +0.645 +0.490 +0.485  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 71.52s  x -0.955 (vs plan)  z 0.106 / 0.290  nose up  -0.3 / +10.0 deg  fallen True
+[paws] t 71.76s swing 3  measured -0.287 -0.247 -0.184 -0.159  used +0.645 +0.645 +0.490 +0.508  plan +0.645 +0.645 +0.490 +0.508  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 71.76s  x -0.957 (vs plan)  z 0.106 / 0.290  nose up  -0.1 / +10.0 deg  fallen True
+[paws] t 72.00s swing 3  measured -0.287 -0.247 -0.188 -0.166  used +0.645 +0.645 +0.490 +0.520  plan +0.645 +0.645 +0.490 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 72.00s  x -0.959 (vs plan)  z 0.105 / 0.290  nose up  +0.4 / +10.0 deg  fallen True
+[paws] t 72.24s swing -1  measured -0.299 -0.259 -0.202 -0.176  used +0.645 +0.645 +0.490 +0.520  plan +0.645 +0.645 +0.490 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 72.24s  x -0.931 (vs plan)  z 0.104 / 0.290  nose up  +0.8 / +10.0 deg  fallen True
+[paws] t 72.48s swing -1  measured -0.315 -0.277 -0.216 -0.192  used +0.645 +0.645 +0.490 +0.520  plan +0.645 +0.645 +0.490 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 72.48s  x -0.901 (vs plan)  z 0.103 / 0.290  nose up  +0.2 / +10.0 deg  fallen True
+[paws] t 72.72s swing 1  measured -0.325 -0.290 -0.225 -0.202  used +0.645 +0.645 +0.490 +0.520  plan +0.645 +0.645 +0.490 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 72.72s  x -0.886 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 72.96s swing 1  measured -0.324 -0.298 -0.225 -0.202  used +0.645 +0.653 +0.490 +0.520  plan +0.645 +0.653 +0.490 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 72.96s  x -0.885 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 73.20s swing 1  measured -0.324 -0.304 -0.225 -0.201  used +0.645 +0.665 +0.490 +0.520  plan +0.645 +0.665 +0.490 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 73.20s  x -0.885 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 73.44s swing -1  measured -0.324 -0.297 -0.225 -0.201  used +0.645 +0.665 +0.490 +0.520  plan +0.645 +0.665 +0.490 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 73.44s  x -0.891 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 73.68s swing -1  measured -0.310 -0.282 -0.211 -0.187  used +0.645 +0.665 +0.490 +0.520  plan +0.645 +0.665 +0.490 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 73.68s  x -0.923 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 73.92s swing -1  measured -0.296 -0.267 -0.194 -0.170  used +0.645 +0.665 +0.490 +0.520  plan +0.645 +0.665 +0.490 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 73.92s  x -0.953 (vs plan)  z 0.104 / 0.290  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 74.16s swing 2  measured -0.286 -0.257 -0.192 -0.159  used +0.645 +0.665 +0.494 +0.520  plan +0.645 +0.665 +0.494 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 74.16s  x -0.962 (vs plan)  z 0.105 / 0.290  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 74.40s swing 2  measured -0.286 -0.257 -0.203 -0.159  used +0.645 +0.665 +0.515 +0.520  plan +0.645 +0.665 +0.515 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 74.40s  x -0.962 (vs plan)  z 0.105 / 0.290  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 74.64s swing 2  measured -0.286 -0.257 -0.213 -0.159  used +0.645 +0.665 +0.536 +0.520  plan +0.645 +0.665 +0.536 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 74.64s  x -0.962 (vs plan)  z 0.105 / 0.290  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 74.88s swing -1  measured -0.288 -0.258 -0.210 -0.161  used +0.645 +0.665 +0.540 +0.520  plan +0.645 +0.665 +0.540 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 74.88s  x -0.954 (vs plan)  z 0.105 / 0.290  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 75.12s swing -1  measured -0.301 -0.272 -0.224 -0.176  used +0.645 +0.665 +0.540 +0.520  plan +0.645 +0.665 +0.540 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 75.12s  x -0.932 (vs plan)  z 0.104 / 0.290  nose up  +0.4 / +10.0 deg  fallen True
+[paws] t 75.36s swing -1  measured -0.313 -0.285 -0.236 -0.189  used +0.645 +0.665 +0.540 +0.520  plan +0.645 +0.665 +0.540 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 75.36s  x -0.907 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 75.60s swing 0  measured -0.327 -0.290 -0.240 -0.193  used +0.654 +0.665 +0.540 +0.520  plan +0.654 +0.665 +0.540 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 75.60s  x -0.902 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 75.84s swing 0  measured -0.338 -0.290 -0.240 -0.193  used +0.676 +0.665 +0.540 +0.520  plan +0.676 +0.665 +0.540 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 75.84s  x -0.902 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 76.08s swing 0  measured -0.349 -0.290 -0.240 -0.193  used +0.699 +0.665 +0.540 +0.520  plan +0.699 +0.665 +0.540 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 76.08s  x -0.902 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 76.32s swing -1  measured -0.339 -0.285 -0.235 -0.189  used +0.700 +0.665 +0.540 +0.520  plan +0.700 +0.665 +0.540 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 76.32s  x -0.920 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 76.56s swing -1  measured -0.323 -0.267 -0.218 -0.169  used +0.700 +0.665 +0.540 +0.520  plan +0.700 +0.665 +0.540 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 76.56s  x -0.953 (vs plan)  z 0.104 / 0.290  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 76.80s swing -1  measured -0.304 -0.246 -0.196 -0.147  used +0.700 +0.665 +0.540 +0.520  plan +0.700 +0.665 +0.540 +0.520  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 76.80s  x -0.985 (vs plan)  z 0.105 / 0.290  nose up  +0.2 / +10.0 deg  fallen True
+[paws] t 77.04s swing 3  measured -0.299 -0.241 -0.191 -0.152  used +0.700 +0.665 +0.540 +0.531  plan +0.700 +0.665 +0.540 +0.531  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 77.04s  x -0.983 (vs plan)  z 0.106 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 77.28s swing 3  measured -0.299 -0.241 -0.192 -0.165  used +0.700 +0.665 +0.540 +0.552  plan +0.700 +0.665 +0.540 +0.552  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 77.28s  x -0.985 (vs plan)  z 0.105 / 0.290  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 77.52s swing 3  measured -0.298 -0.241 -0.195 -0.177  used +0.700 +0.665 +0.540 +0.570  plan +0.700 +0.665 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 77.52s  x -0.987 (vs plan)  z 0.105 / 0.290  nose up  +0.9 / +10.0 deg  fallen True
+[paws] t 77.76s swing -1  measured -0.304 -0.247 -0.201 -0.176  used +0.700 +0.665 +0.540 +0.570  plan +0.700 +0.665 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 77.76s  x -0.971 (vs plan)  z 0.105 / 0.290  nose up  +1.2 / +10.0 deg  fallen True
+[paws] t 78.00s swing -1  measured -0.319 -0.263 -0.213 -0.190  used +0.700 +0.665 +0.540 +0.570  plan +0.700 +0.665 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 78.00s  x -0.947 (vs plan)  z 0.104 / 0.290  nose up  +0.8 / +10.0 deg  fallen True
+[paws] t 78.24s swing 1  measured -0.334 -0.279 -0.227 -0.205  used +0.700 +0.665 +0.540 +0.570  plan +0.700 +0.665 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 78.24s  x -0.927 (vs plan)  z 0.103 / 0.290  nose up  +0.3 / +10.0 deg  fallen True
+[paws] t 78.48s swing 1  measured -0.335 -0.295 -0.228 -0.207  used +0.700 +0.681 +0.540 +0.570  plan +0.700 +0.681 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 78.48s  x -0.928 (vs plan)  z 0.103 / 0.290  nose up  +0.2 / +10.0 deg  fallen True
+[paws] t 78.72s swing 1  measured -0.335 -0.307 -0.228 -0.208  used +0.700 +0.704 +0.540 +0.570  plan +0.700 +0.704 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 78.72s  x -0.929 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 78.96s swing 1  measured -0.335 -0.317 -0.228 -0.207  used +0.700 +0.720 +0.540 +0.570  plan +0.700 +0.720 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 78.96s  x -0.929 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 79.20s swing -1  measured -0.324 -0.298 -0.217 -0.196  used +0.700 +0.720 +0.540 +0.570  plan +0.700 +0.720 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 79.20s  x -0.958 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 79.44s swing -1  measured -0.307 -0.280 -0.199 -0.178  used +0.700 +0.720 +0.540 +0.570  plan +0.700 +0.720 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 79.44s  x -0.993 (vs plan)  z 0.103 / 0.290  nose up  +0.1 / +10.0 deg  fallen True
+[paws] t 79.68s swing 2  measured -0.290 -0.262 -0.181 -0.158  used +0.700 +0.720 +0.540 +0.570  plan +0.700 +0.720 +0.540 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 79.68s  x -1.014 (vs plan)  z 0.105 / 0.290  nose up  +0.1 / +10.0 deg  fallen True
+[paws] t 79.92s swing 2  measured -0.290 -0.262 -0.192 -0.158  used +0.700 +0.720 +0.550 +0.570  plan +0.700 +0.720 +0.550 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 79.92s  x -1.014 (vs plan)  z 0.105 / 0.290  nose up  +0.1 / +10.0 deg  fallen True
+[paws] t 80.16s swing 2  measured -0.290 -0.262 -0.200 -0.158  used +0.700 +0.720 +0.565 +0.570  plan +0.700 +0.720 +0.565 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 80.16s  x -1.014 (vs plan)  z 0.105 / 0.290  nose up  +0.1 / +10.0 deg  fallen True
+[paws] t 80.40s swing 2  measured -0.290 -0.262 -0.199 -0.158  used +0.700 +0.720 +0.570 +0.570  plan +0.700 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 80.40s  x -1.014 (vs plan)  z 0.105 / 0.290  nose up  +0.1 / +10.0 deg  fallen True
+[paws] t 80.64s swing -1  measured -0.302 -0.275 -0.209 -0.172  used +0.700 +0.720 +0.570 +0.570  plan +0.700 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 80.64s  x -0.989 (vs plan)  z 0.104 / 0.290  nose up  +0.4 / +10.0 deg  fallen True
+[paws] t 80.88s swing -1  measured -0.316 -0.290 -0.223 -0.187  used +0.700 +0.720 +0.570 +0.570  plan +0.700 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 80.88s  x -0.963 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 81.12s swing 0  measured -0.328 -0.299 -0.232 -0.196  used +0.700 +0.720 +0.570 +0.570  plan +0.700 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 81.12s  x -0.949 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 81.36s swing 0  measured -0.336 -0.299 -0.232 -0.196  used +0.708 +0.720 +0.570 +0.570  plan +0.708 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 81.36s  x -0.949 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 81.60s swing 0  measured -0.342 -0.299 -0.232 -0.196  used +0.720 +0.720 +0.570 +0.570  plan +0.720 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 81.60s  x -0.949 (vs plan)  z 0.103 / 0.290  nose up  +0.0 / +10.0 deg  fallen True
+[paws] t 81.84s swing -1  measured -0.336 -0.299 -0.232 -0.196  used +0.720 +0.720 +0.570 +0.570  plan +0.720 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 81.84s  x -0.954 (vs plan)  z 0.103 / 0.291  nose up  -0.0 /  +9.7 deg  fallen True
+[paws] t 82.08s swing -1  measured -0.320 -0.284 -0.213 -0.177  used +0.720 +0.720 +0.570 +0.570  plan +0.720 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 82.08s  x -0.987 (vs plan)  z 0.103 / 0.297  nose up  +0.0 /  +7.7 deg  fallen True
+[paws] t 82.32s swing -1  measured -0.302 -0.265 -0.192 -0.155  used +0.720 +0.720 +0.570 +0.570  plan +0.720 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 82.32s  x -1.018 (vs plan)  z 0.103 / 0.304  nose up  +0.3 /  +5.7 deg  fallen True
+[paws] t 82.56s swing 3  measured -0.293 -0.256 -0.179 -0.152  used +0.720 +0.720 +0.570 +0.570  plan +0.720 +0.720 +0.570 +0.570  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 82.56s  x -1.028 (vs plan)  z 0.104 / 0.306  nose up  +0.3 /  +5.0 deg  fallen True
+[paws] t 82.80s swing 3  measured -0.293 -0.257 -0.176 -0.170  used +0.720 +0.720 +0.570 +0.578  plan +0.720 +0.720 +0.570 +0.578  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 82.80s  x -1.025 (vs plan)  z 0.105 / 0.306  nose up  -0.4 /  +5.0 deg  fallen True
+[paws] t 83.04s swing 3  measured -0.293 -0.256 -0.178 -0.190  used +0.720 +0.720 +0.570 +0.606  plan +0.720 +0.720 +0.570 +0.606  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 83.04s  x -1.028 (vs plan)  z 0.104 / 0.306  nose up  +0.1 /  +5.0 deg  fallen True
+[paws] t 83.28s swing -1  measured -0.294 -0.257 -0.181 -0.194  used +0.720 +0.720 +0.570 +0.615  plan +0.720 +0.720 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 83.28s  x -1.020 (vs plan)  z 0.104 / 0.305  nose up  +0.5 /  +5.0 deg  fallen True
+[paws] t 83.52s swing -1  measured -0.313 -0.277 -0.199 -0.213  used +0.720 +0.720 +0.570 +0.615  plan +0.720 +0.720 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 83.52s  x -0.995 (vs plan)  z 0.103 / 0.301  nose up  +0.3 /  +5.0 deg  fallen True
+[paws] t 83.76s swing -1  measured -0.331 -0.295 -0.217 -0.232  used +0.720 +0.720 +0.570 +0.615  plan +0.720 +0.720 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 83.76s  x -0.969 (vs plan)  z 0.103 / 0.298  nose up  +0.0 /  +5.0 deg  fallen True
+[paws] t 84.00s swing 1  measured -0.337 -0.312 -0.223 -0.238  used +0.720 +0.729 +0.570 +0.615  plan +0.720 +0.729 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 84.00s  x -0.965 (vs plan)  z 0.103 / 0.298  nose up  +0.0 /  +5.0 deg  fallen True
+[paws] t 84.24s swing 1  measured -0.337 -0.326 -0.223 -0.238  used +0.720 +0.751 +0.570 +0.615  plan +0.720 +0.751 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 84.24s  x -0.965 (vs plan)  z 0.103 / 0.298  nose up  +0.0 /  +5.0 deg  fallen True
+[paws] t 84.48s swing 1  measured -0.337 -0.339 -0.223 -0.238  used +0.720 +0.774 +0.570 +0.615  plan +0.720 +0.774 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 84.48s  x -0.965 (vs plan)  z 0.103 / 0.298  nose up  -0.0 /  +5.0 deg  fallen True
+[paws] t 84.72s swing -1  measured -0.332 -0.331 -0.217 -0.233  used +0.720 +0.775 +0.570 +0.615  plan +0.720 +0.775 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 84.72s  x -0.982 (vs plan)  z 0.103 / 0.298  nose up  -0.0 /  +4.0 deg  fallen True
+[paws] t 84.96s swing -1  measured -0.315 -0.315 -0.196 -0.212  used +0.720 +0.775 +0.570 +0.615  plan +0.720 +0.775 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 84.96s  x -1.018 (vs plan)  z 0.103 / 0.298  nose up  -0.0 /  +2.0 deg  fallen True
+[paws] t 85.20s swing -1  measured -0.297 -0.298 -0.175 -0.190  used +0.720 +0.775 +0.570 +0.615  plan +0.720 +0.775 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 85.20s  x -1.054 (vs plan)  z 0.103 / 0.298  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 85.44s swing 2  measured -0.293 -0.294 -0.186 -0.185  used +0.720 +0.775 +0.570 +0.615  plan +0.720 +0.775 +0.570 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 85.44s  x -1.053 (vs plan)  z 0.103 / 0.298  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 85.68s swing 2  measured -0.293 -0.294 -0.206 -0.185  used +0.720 +0.775 +0.587 +0.615  plan +0.720 +0.775 +0.587 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 85.68s  x -1.053 (vs plan)  z 0.103 / 0.298  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 85.92s swing 2  measured -0.293 -0.294 -0.225 -0.185  used +0.720 +0.775 +0.615 +0.615  plan +0.720 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 85.92s  x -1.053 (vs plan)  z 0.103 / 0.298  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 86.16s swing -1  measured -0.300 -0.301 -0.229 -0.193  used +0.720 +0.775 +0.615 +0.615  plan +0.720 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 86.16s  x -1.037 (vs plan)  z 0.103 / 0.300  nose up  +0.1 /  +0.0 deg  fallen True
+[paws] t 86.40s swing -1  measured -0.314 -0.316 -0.243 -0.208  used +0.720 +0.775 +0.615 +0.615  plan +0.720 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 86.40s  x -1.011 (vs plan)  z 0.103 / 0.303  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 86.64s swing 0  measured -0.329 -0.331 -0.258 -0.223  used +0.720 +0.775 +0.615 +0.615  plan +0.720 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 86.64s  x -0.990 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 86.88s swing 0  measured -0.344 -0.332 -0.259 -0.224  used +0.736 +0.775 +0.615 +0.615  plan +0.736 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 86.88s  x -0.990 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 87.12s swing 0  measured -0.360 -0.332 -0.259 -0.224  used +0.759 +0.775 +0.615 +0.615  plan +0.759 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 87.12s  x -0.990 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 87.36s swing 0  measured -0.373 -0.332 -0.259 -0.223  used +0.775 +0.775 +0.615 +0.615  plan +0.775 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 87.36s  x -0.990 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 87.60s swing -1  measured -0.352 -0.317 -0.244 -0.209  used +0.775 +0.775 +0.615 +0.615  plan +0.775 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 87.60s  x -1.019 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 87.84s swing -1  measured -0.329 -0.293 -0.221 -0.185  used +0.775 +0.775 +0.615 +0.615  plan +0.775 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 87.84s  x -1.055 (vs plan)  z 0.103 / 0.305  nose up  +0.0 /  +0.0 deg  fallen True
+[paws] t 88.08s swing 3  measured -0.308 -0.271 -0.198 -0.162  used +0.775 +0.775 +0.615 +0.615  plan +0.775 +0.775 +0.615 +0.615  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 88.08s  x -1.076 (vs plan)  z 0.104 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 88.32s swing 3  measured -0.309 -0.272 -0.197 -0.170  used +0.775 +0.775 +0.615 +0.621  plan +0.775 +0.775 +0.615 +0.621  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 88.32s  x -1.076 (vs plan)  z 0.104 / 0.305  nose up  -0.1 /  +0.0 deg  fallen True
+[paws] t 88.56s swing 3  measured -0.308 -0.272 -0.198 -0.179  used +0.775 +0.775 +0.615 +0.633  plan +0.775 +0.775 +0.615 +0.633  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 88.56s  x -1.077 (vs plan)  z 0.104 / 0.305  nose up  +0.0 /  +0.0 deg  fallen True
+[paws] t 88.80s swing 3  measured -0.307 -0.271 -0.199 -0.177  used +0.775 +0.775 +0.615 +0.635  plan +0.775 +0.775 +0.615 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 88.80s  x -1.077 (vs plan)  z 0.104 / 0.305  nose up  +0.2 /  +0.0 deg  fallen True
+[paws] t 89.04s swing -1  measured -0.326 -0.290 -0.217 -0.195  used +0.775 +0.775 +0.615 +0.635  plan +0.775 +0.775 +0.615 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 89.04s  x -1.044 (vs plan)  z 0.103 / 0.305  nose up  +0.1 /  +0.0 deg  fallen True
+[paws] t 89.28s swing -1  measured -0.347 -0.312 -0.239 -0.218  used +0.775 +0.775 +0.615 +0.635  plan +0.775 +0.775 +0.615 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 89.28s  x -1.009 (vs plan)  z 0.103 / 0.305  nose up  +0.0 /  +0.0 deg  fallen True
+[paws] t 89.52s swing 1  measured -0.364 -0.331 -0.255 -0.234  used +0.775 +0.775 +0.615 +0.635  plan +0.775 +0.775 +0.615 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 89.52s  x -0.992 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 89.76s swing 1  measured -0.364 -0.340 -0.255 -0.234  used +0.775 +0.783 +0.615 +0.635  plan +0.775 +0.783 +0.615 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 89.76s  x -0.992 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 90.00s swing 1  measured -0.364 -0.348 -0.255 -0.234  used +0.775 +0.795 +0.615 +0.635  plan +0.775 +0.795 +0.615 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 90.00s  x -0.992 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 90.24s swing -1  measured -0.364 -0.343 -0.255 -0.234  used +0.775 +0.795 +0.615 +0.635  plan +0.775 +0.795 +0.615 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 90.24s  x -0.999 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 90.48s swing -1  measured -0.339 -0.318 -0.231 -0.209  used +0.775 +0.795 +0.615 +0.635  plan +0.775 +0.795 +0.615 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 90.48s  x -1.037 (vs plan)  z 0.103 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 90.72s swing -1  measured -0.315 -0.293 -0.206 -0.184  used +0.775 +0.795 +0.615 +0.635  plan +0.775 +0.795 +0.615 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 90.72s  x -1.075 (vs plan)  z 0.103 / 0.305  nose up  +0.0 /  +0.0 deg  fallen True
+[paws] t 90.96s swing 2  measured -0.301 -0.278 -0.205 -0.168  used +0.775 +0.795 +0.635 +0.635  plan +0.775 +0.795 +0.635 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 90.96s  x -1.086 (vs plan)  z 0.104 / 0.305  nose up  +0.0 /  +0.0 deg  fallen True
+[paws] t 91.20s swing 2  measured -0.301 -0.278 -0.236 -0.168  used +0.775 +0.795 +0.680 +0.635  plan +0.775 +0.795 +0.680 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 91.20s  x -1.086 (vs plan)  z 0.104 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[paws] t 91.44s swing 2  measured -0.301 -0.278 -0.267 -0.168  used +0.775 +0.795 +0.725 +0.635  plan +0.775 +0.795 +0.725 +0.635  contact [0, 0, 0, 0] pending [1, 1, 1, 1]
+[trace] t 91.44s  x -1.086 (vs plan)  z 0.104 / 0.305  nose up  -0.0 /  +0.0 deg  fallen True
+[INFO]: SimulationContext cleared
+[stairs_replay] up_r3_t15.json (nominal): climbed 0%, fell 100%, height error 0.202 m, pitch error 79.8 deg
+2026-10-25T21:29:59Z [6,798ms] [Warning] [isaaclab_physx.assets.articulation.actuator_control] Host Newton-actuator CUDA graph capture failed; using eager execution: Failed to get DOF positions from backend
+2026-10-25T21:30:00Z [7,304ms] [Warning] [py.warnings] C:\ProjectsHome\Robots\Evolution\tools\dog\stairs_replay.py:244: UserWarning: PhysX does not return a total contact force. This is a known limitation in PhysX and we are fixing it for the next release. Returning 'net_normal_forces_w'.
+  forces = base.contact.data.net_forces_w.torch[:, base._foot_sensor_ids]
+
+2026-10-25T21:30:00Z [7,444ms] [Warning] [py.warnings] C:\ProjectsHome\Robots\Evolution\core\sim\locomotion_env.py:1414: UserWarning: PhysX does not return a total contact force. This is a known limitation in PhysX and we are fixing it for the next release. Returning 'net_normal_forces_w'.
+  force = self.contact.data.net_forces_w.torch[:, self._chassis_sensor_id]
+
+2026-10-25T21:30:00Z [7,448ms] [Warning] [py.warnings] C:\ProjectsHome\Robots\Evolution\core\sim\locomotion_env.py:685: UserWarning: PhysX does not return a total contact force. This is a known limitation in PhysX and we are fixing it for the next release. Returning 'net_normal_forces_w'.
+  forces = self.contact.data.net_forces_w.torch
+
+2026-10-25T21:30:00Z [7,478ms] [Warning] [py.warnings] C:\ProjectsHome\Robots\Evolution\core\sim\locomotion_env.py:1246: UserWarning: PhysX does not return a total contact force. This is a known limitation in PhysX and we are fixing it for the next release. Returning 'net_normal_forces_w'.
+  forces = self.contact.data.net_forces_w.torch
+

@@ -1,0 +1,1 @@
+{"best": "ring_s1", "ok": false, "scores": {"walk_score": 0.3318294882774353, "fall_rate": 0.0078125, "getup": 0.988, "stairs_up": 0.38549999999999995}, "pass_mark": {"walk_score": 0.4, "fall_rate": 0.02, "getup": 0.95, "stairs_up": 0.37}}

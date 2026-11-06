@@ -1,0 +1,1 @@
+{"plans": "runs/exp2_dog/19_stairs_proof/plans_all", "dogs": 300, "mid_climb": 300, "upright_after_1s_normal_start": null, "paw_gap_mm_mean": 21.8, "paw_gap_mm_p95": 81.0, "paw_gap_mm_min": -121.1, "upright_after_1s": 0.863, "ok": false}

@@ -1,0 +1,1 @@
+{"plans": "runs/exp2_dog/30_level_body/plans_p15_m15,runs/exp2_dog/30_level_body/plans_p45_m15", "dogs": 300, "mid_climb": 106, "upright_after_1s_normal_start": 1.0, "paw_gap_mm_mean": 2.0, "paw_gap_mm_p95": 4.3, "paw_gap_mm_min": 0.9, "upright_after_1s": 1.0, "ok": true}

@@ -1,0 +1,1 @@
+{"rsi": ["rsi_s2", 0.37], "rsi_terms": ["rsi_terms_s1", 0.328], "cont": ["cont_s1", 0.373], "start free_s2": 0.378}

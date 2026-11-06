@@ -1,0 +1,1 @@
+free_s2 (clean share 0.378; all: {'anchor_s1': 0.305, 'anchor_s2': 0.30625, 'free_s1': 0.34975, 'free_s2': 0.37799999999999995}; dog v1 0.292)

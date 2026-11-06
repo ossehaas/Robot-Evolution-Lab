@@ -1,0 +1,2 @@
+{"plan": "up_r4_t15.json", "dir": "up", "rise": 0.04, "tread": 0.15, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.226, "max_pitch_error_deg": 79.8, "seconds": 86.1}
+{"plan": "up_r5_t20.json", "dir": "up", "rise": 0.05, "tread": 0.2, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.29, "max_pitch_error_deg": 91.4, "seconds": 107.4}

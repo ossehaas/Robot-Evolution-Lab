@@ -161,6 +161,10 @@ class EvoLocomotionEnvCfg(DirectRLEnvCfg):
     gait: str = ""  # "trot" | "walk_trot" (4-beat walk when slow, trot when fast) | "free" (no rhythm prescribed)
     gait_freq_range: tuple[float, float] = (1.4, 2.6)  # [Hz] trot frequency from slow to fast commands
     gait_freq_speed: float = 0.35  # [m/s] command speed at which the highest frequency is reached
+    # the gait clock while upright and told to stand still: "run" (keeps ticking at the lowest frequency), "hold" (stops,
+    # the policy sees a constant clock) or "zero" (the clock input reads 0, 0: a clear "no rhythm" signal); it always
+    # runs while fallen
+    gait_clock_idle: str = "run"
     gait_walk_trot_speed: tuple[float, float] = (0.25, 0.40)  # [m/s] walk below, trot above, blended in between
     gait_trot_weight: float = 1.0
     flight_weight: float = 0.0  # per second with no paw on the ground while walking (walk and trot have no flight)  # per second, share of feet whose contact matches the trot pattern
@@ -169,6 +173,10 @@ class EvoLocomotionEnvCfg(DirectRLEnvCfg):
     undesired_contact_weight: float = 2.0  # per second with chassis, shoulder or thigh touching anything
     abduction_pose_weight: float = 1.0  # per rad^2 of sideways leg angle (no sprawling)
     stand_still_weight: float = 0.0  # per second, per rad/s of summed joint speed while the command is "stand still"
+    stand_still_upright_only: bool = False  # recover mode: not while fallen (a strong weight would hinder getting up)
+    # tilted plates and pads (terrain dog_rough_stairs_tilt / dog_tilt, base skill B2): the dog starts standing on the
+    # plate, perpendicular to it, and is told to stand still; its heading is random (False: reset_yaw_range, videos)
+    tilt_reset_yaw_random: bool = True
     # front and rear leg on one side collide when their hips swing towards each other by more than ~0.8 rad in total
     # (prototypes/puppy interference check); the simulation has no self-collision, so penalize getting close
     leg_clash_margin: float = 0.55  # [rad] closing angle where the penalty starts
@@ -309,6 +317,61 @@ class EvoLocomotionEnvCfg(DirectRLEnvCfg):
     policy_drives_expression: bool = False
     # training only (not re-applied for tests and videos): stair treads from the easiest to the hardest row [m]
     stair_tread_range: tuple = ()
+    # stairs goal (journal step 40, terrain dog_stairs / dog_rough_stairs): on the straight-staircase tiles the walking
+    # command comes from a navigation layer (turn towards the goal, then walk at it) instead of random commands, so the
+    # walker stays one policy and cannot avoid the stairs. Goal: the landing (up) or the floor below (down); reaching it
+    # flips the goal to the other end. A fall on the stairs is soft (recover mode: get up and go on); falling down the
+    # stairs is a hard fall that ends the episode: while fallen, the ground under the body drops more than one step
+    # below where the fall began (also tumbling off an open side)
+    stairs_goal: bool = False  # set by make_env_cfg
+    stairs_goal_speed: float = 0.20  # [m/s] evaluation (tests, videos)
+    stairs_goal_speed_range: tuple = (0.12, 0.28)  # [m/s] training: per episode
+    stairs_goal_approach: tuple = (0.6, 0.8)  # [m] training: start this far before the first riser (evaluation: max)
+    stairs_goal_yaw_spread: float = 0.5  # [rad] training: start heading +- this around facing the goal
+    stairs_goal_eval_yaw_spread: float = 0.15  # [rad] evaluation
+    stairs_goal_dir: int = 0  # 0 = up or down (random; evaluation: alternating per block of rows), 1 = up, -1 = down
+    stairs_goal_past: float = 0.35  # [m] goal beyond the top riser (up) / before the first riser (down)
+    stairs_goal_reach_radius: float = 0.12  # [m]
+    stairs_goal_turn_first: float = 0.6  # [rad] heading error above which the dog turns in place before walking
+    stairs_goal_yaw_gain: float = 2.0  # turn rate per rad of heading error
+    stairs_goal_yaw_max: float = 0.6  # [rad/s]
+    stairs_goal_bonus: float = 5.0  # once per goal reached
+    stairs_hard_fall_penalty: float = 5.0  # once, on falling down the stairs (on top of fall_penalty)
+    stairs_goal_height_scale: float = 1.0  # base_height weight on the stairs goal tiles (< 1: crouching allowed)
+    # mid-climb starts (journal step 41, training only): this share of the stairs goal episodes starts in a random
+    # four-paw pose of a proven quasi-static stair plan for the tile (tools/dog/stairs_plan.py; comma-separated
+    # folders of plan JSON files), so the hard moments of a climb are practised directly
+    stairs_rsi_plans: str = ""
+    # one model, many skills (step 45): the stair plans as the teacher of the stairs-up expert, and its gate label.
+    # The plan zone = a stairs goal tile, going up, a plan for its rise and tread, the body between the plan's first and
+    # last keyframe, not fallen
+    plan_track_weight: float = 0.0  # per second in the zone: body height and pitch as the plan at this point, and the
+    # weight shift (body ahead of / behind the paws' centre) of the plan's keyframes with the same leg (front / rear) up
+    plan_shift_sigma: float = 0.02  # [m] width of plan_track's weight-shift term
+    plan_support_weight: float = 0.0  # per second in the zone with at least 3 paws down (the plan's crawl)
+    plan_track_plans: str = ""  # plan folders (comma-separated); "" = stairs_rsi_plans
+    expert_label_obs: bool = False  # observation group "expert_label": 1 in the plan zone (the gate's training label)
+    # observation group "expert_target" (step 45b): the plan's joint pose at the nearest keyframe as policy actions, and
+    # a mask (the standing legs' hips and knees and the neck, in the plan zone): the expert's copy target
+    expert_target_obs: bool = False
+    # the policy's last 3 inputs: one-hot walk / stairs up / stairs down from a perfect recognizer (one model, many skills, step 53)
+    skill_signal_obs: bool = False
+    # stalling on a descent (step 52): a cost per second while the body has not come at least stairs_stall_gain closer to
+    # the goal for stairs_stall_s (not fallen, going down, only on stairs with a descent plan in these folders: refusing
+    # the others is right). A flat cost of time would not do: goals do not end the episode, a hard fall does
+    stairs_stall_weight: float = 0.0
+    stairs_stall_s: float = 2.0
+    stairs_stall_gain: float = 0.02  # [m]
+    stairs_stall_plans: str = ""  # comma-separated folders; "" = stairs_rsi_plans
+    stairs_rsi_prob: float = 0.0
+    stairs_rsi_down_early: float = 0.0  # share of the mid-climb descents started in the first 40 % of the plan
+    # a curriculum level per direction on the stairs goal tiles (training only): up and down move separately
+    stairs_dir_curriculum: bool = False
+    # balance margin (journal step 42), the rule of the quasi-static stair plans: per second on the stairs goal tiles,
+    # how far the centre of gravity is inside the support polygon of the paws on the ground, as a share of the target
+    # (-1 .. 1; two paws or fewer down count negative)
+    stairs_margin_weight: float = 0.0
+    stairs_margin_target: float = 0.03  # [m]
     # terrain height scan (stairs test C, simulation-only "perfect sensor"): heights of a grid around the robot
     height_scanner: RayCasterCfg | None = None
     height_scan_offset: float = 0.0  # chassis standing height, subtracted so a flat floor reads ~0
@@ -404,7 +467,9 @@ def make_env_cfg(
     if task not in ("forward", "command", "goal", "jump"):
         raise ValueError(f"unknown task {task!r}, choose 'forward', 'command' or 'goal'")
     cfg.task = task
-    dog_terrain = terrain == "dog_rough"
+    dog_terrain = terrain in ("dog_rough", "dog_stairs", "dog_rough_stairs", "dog_rough_stairs_tilt", "dog_tilt")
+    stairs = {"dog_stairs": "only", "dog_rough_stairs": "mixed", "dog_rough_stairs_tilt": "mixed_tilt",
+              "dog_tilt": "tilt"}.get(terrain, "")
     if dog_terrain:
         terrain = "rough"  # same curriculum and evaluation, dog-sized course (terrain.DOG_ROUGH)
     if terrain not in ("flat", "rough", "obstacles", "obstacles_rough", "enclosure", "enclosure_pocket", "cup"):
@@ -473,7 +538,10 @@ def make_env_cfg(
 
         if task != "command":
             raise ValueError("rough terrain uses the command task (the curriculum is based on command tracking)")
-        cfg.terrain = rough_terrain_importer(types=terrain_types, dog=dog_terrain)
+        cfg.terrain = rough_terrain_importer(types=terrain_types, dog=dog_terrain, stairs=stairs)
+        if stairs:
+            cfg.stairs_goal = True
+            cfg.episode_length_s = 20.0  # time to walk up and turn back down
         # only the link prims of the robot (the USD also holds the Looks and joints scopes)
         cfg.contact_sensor = ContactSensorCfg(
             prim_path="{ENV_REGEX_NS}/Robot/(chassis|rear|[LR]\\d+_s\\d+)", history_length=3, update_period=0.0, track_air_time=True
@@ -665,7 +733,9 @@ def _map_sensor(cfg: EvoLocomotionEnvCfg, spec, kind: str) -> None:
 
 # tests and videos use the standard course and count falls the standard way (recover_test / flip_video / getup_test set
 # recover or getup themselves)
-TRAINING_ONLY = ("stair_tread_range", "stairs_square_yaw", "stairs_turn_scale", "recover", "topple_push")
+TRAINING_ONLY = ("stair_tread_range", "stairs_square_yaw", "stairs_turn_scale", "recover", "topple_push",
+                 "stairs_goal_speed_range", "stairs_goal_approach", "stairs_goal_yaw_spread", "stairs_rsi_prob",
+                 "stairs_rsi_down_early", "stairs_dir_curriculum")
 
 
 def apply_overrides(cfg: EvoLocomotionEnvCfg, overrides: dict | None) -> EvoLocomotionEnvCfg:

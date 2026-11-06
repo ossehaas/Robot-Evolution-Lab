@@ -1,0 +1,1 @@
+{"best": "teach_s1", "ok": false, "scores": {"walk_score": 0.37934425473213196, "fall_rate": 0.00390625, "getup": 0.992, "stairs_up": 0.43200000000000005}, "pass_mark": {"walk_score": 0.4, "fall_rate": 0.02, "getup": 0.95, "stairs_up": 0.37}}

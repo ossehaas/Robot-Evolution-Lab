@@ -1,6 +1,8 @@
 # NVIDIA Isaac Lab is its own git checkout (tag v3.0.0-EA), including the Python environment: rebuild it with
 # .env_init/readme.txt (the exact package versions are in .env_init/uv.lock)
 IsaacLab/
+# Isaac Lab 3.0.0 GA as a git worktree of IsaacLab/ with its own environment (lab3.cmd), tried next to EA
+IsaacLab-3.0.0/
 
 # runs/: the experiments are kept (batch scripts, settings, genomes, result.json, benchmark results, results.md) so
 # they can be re-run; heavy or regenerable output is not
@@ -44,6 +46,15 @@ runs/**/*.stl
 !runs/exp2_dog/17_recover_bc/bc_s2/model_final.pt
 !runs/exp2_dog/17_recover_bc/bc_s2/policy.pt
 !runs/exp2_dog/17_recover_bc/bc_s2/policy.onnx*
+# the base on the 4.5 mm sole (step 49), the down teacher (step 51) and the first one-model dogs (step 53)
+!runs/exp2_dog/29_long_sole/teach_s1/model_final.pt
+!runs/exp2_dog/29_long_sole/teach_s1/policy.pt
+!runs/exp2_dog/31_copy_plans/copy_s1/model_final.pt
+!runs/exp2_dog/31_copy_plans/copy_s1/policy.pt
+!runs/exp2_dog/33_one_model/input_s1/model_final.pt
+!runs/exp2_dog/33_one_model/input_s1/policy.pt
+!runs/exp2_dog/33_one_model/heads_s1/model_final.pt
+!runs/exp2_dog/33_one_model/heads_s1/policy.pt
 logs/
 *.log
 cpu_log.txt

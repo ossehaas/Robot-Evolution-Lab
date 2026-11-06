@@ -210,7 +210,7 @@ def render_ankle(mech, path, leg: str = "front_L", title: str = ""):
     _draw(axs[4], [_tris(sole, np.zeros(3), PALETTE["collar"], 0.02)], -90.0, -89.0)
     axs[4].set_title(f"sole disc from below: {DP.SOLE_ARMS} arms, pad (tread)", fontsize=10)
     fig.suptitle(title or (f"spring ankle {d.k_est / 1000:.2f} N*m/rad (blade {d.t:.2f} x {d.L:.1f} x {DP.SPRING_W:.0f} mm), "
-                           f"limit +-{d.limit:.2f} rad; sole {d.k_sole_est:.1f} N/mm, {DP.SOLE_TRAVEL} mm to the stop"), fontsize=12)
+                           f"limit +-{d.limit:.2f} rad; sole {d.k_sole_est:.1f} N/mm, {d.sole_stop or d.protrusion} mm to the stop"), fontsize=12)
     fig.savefig(path, facecolor="white")
     plt.close(fig)
 

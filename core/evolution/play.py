@@ -45,8 +45,12 @@ STRAIGHT = [
     (6.0, 0.15, 0.00, 0.0, "straight on 15 cm/s"),
     (6.0, 0.25, 0.00, 0.0, "straight on 25 cm/s"),
 ]
-# standing still (--drive stand): get-up videos
+# standing still (--drive stand): get-up videos; --drive stand_shove: 12 s with a sideways shove at 6 s (base skill B2)
 STAND = [(8.0, 0.00, 0.00, 0.0, "stand still")]
+STAND_SHOVE = [(6.0, 0.00, 0.00, 0.0, "stand still"), (6.0, 0.00, 0.00, 0.0, "shoved 0.3 m/s, then stand still")]
+STOP_GO = [(3.0, 0.25, 0.00, 0.0, "forward 25 cm/s"), (4.0, 0.00, 0.00, 0.0, "stop: stand still"),
+           (3.0, 0.25, 0.00, 0.0, "forward 25 cm/s"), (4.0, 0.00, 0.00, 0.0, "stop: stand still")]
+SHOVE_AT_S, SHOVE_M_S = 6.0, 0.3
 
 
 def tour_command(t: float):
@@ -104,6 +108,31 @@ def show_trail(base, step: int, every: int = 10) -> None:
     base._trail_markers.visualize(translations=torch.stack([p for t in base._trail for p in t]))
 
 
+def gate_video(path: Path, gates: list[float], fps: float) -> None:
+    """Draw the skill expert's gate (one model, many skills: how much the expert adds) as a bar on every frame, in
+    place."""
+    import cv2
+    from moviepy.editor import VideoFileClip
+
+    clip = VideoFileClip(str(path))
+
+    def annotate(get_frame, t):
+        frame = get_frame(t).copy()
+        g = gates[min(int(round(t * fps)), len(gates) - 1)]
+        x0, y0, w, h = 24, 70, 220, 18
+        cv2.rectangle(frame, (x0, y0), (x0 + w, y0 + h), (40, 40, 40), -1)
+        cv2.rectangle(frame, (x0, y0), (x0 + int(w * g), y0 + h), (255, 170, 0) if g > 0.5 else (120, 120, 120), -1)
+        text = f"stairs expert gate {g:.2f}"
+        cv2.putText(frame, text, (x0 + w + 12, y0 + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4, cv2.LINE_AA)
+        cv2.putText(frame, text, (x0 + w + 12, y0 + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1, cv2.LINE_AA)
+        return frame
+
+    tmp = path.with_name(path.stem + "_gate.mp4")
+    clip.fl(annotate).write_videofile(str(tmp), fps=fps, codec="libx264", audio=False, logger=None)
+    clip.close()
+    tmp.replace(path)
+
+
 def caption_video(path: Path, fps: float) -> Path:
     """Write a copy of the recorded tour with the active command printed on every frame."""
     import cv2
@@ -141,7 +170,7 @@ def main(argv=None) -> int:
     parser.add_argument("--physics", dest="evo_physics", choices=("physx", "newton"), default="physx")
     parser.add_argument("--servo_model", choices=("dc_motor", "implicit"), default="dc_motor")
     parser.add_argument("--task", choices=("forward", "command", "goal", "jump"), default=None, help="default: from result.json")
-    parser.add_argument("--terrain", choices=("flat", "rough", "obstacles", "obstacles_rough", "enclosure", "enclosure_pocket", "cup", "dog_rough"), default=None,
+    parser.add_argument("--terrain", choices=("flat", "rough", "obstacles", "obstacles_rough", "enclosure", "enclosure_pocket", "cup", "dog_rough", "dog_stairs", "dog_rough_stairs", "dog_rough_stairs_tilt", "dog_tilt"), default=None,
                         help="default: from result.json")
     parser.add_argument("--level", type=int, default=None, help="rough terrain: put every robot on this difficulty row")
     parser.add_argument(
@@ -155,10 +184,11 @@ def main(argv=None) -> int:
     parser.add_argument("--out_name", default=None, help="file name for the recorded video (default: clip_0000...)")
     parser.add_argument(
         "--drive",
-        choices=("keyboard", "tour", "straight", "stand", "random"),
+        choices=("keyboard", "tour", "straight", "stand", "stand_shove", "stop_go", "random", "goal"),
         default=None,
         help="command source for steerable robots (default: tour with --video, keyboard otherwise; straight = "
-             "only walking straight on)",
+             "only walking straight on; goal = the stairs goal course's navigation layer walks it to the goal "
+             "and back, --env_set stairs_goal_dir=1 / -1 starts it at the bottom / on the landing)",
     )
     parser.add_argument("--random", action="store_true", help="ignore the policy, send random servo targets")
     parser.add_argument("--still", action="store_true", help="no policy: hold the rest pose (does the body stand?)")
@@ -181,9 +211,14 @@ def main(argv=None) -> int:
     steer = args.task == "command"
     if args.drive is None:
         args.drive = "tour" if (steer and args.video) else ("keyboard" if steer else "random")
-    if args.drive in ("straight", "stand"):
-        TOUR[:] = STRAIGHT if args.drive == "straight" else STAND  # tour, captions and video length all follow TOUR
+    shove_at = None
+    if args.drive in ("straight", "stand", "stand_shove", "stop_go"):
+        # tour, captions and video length all follow TOUR
+        TOUR[:] = {"straight": STRAIGHT, "stand": STAND, "stand_shove": STAND_SHOVE, "stop_go": STOP_GO}[args.drive]
+        shove_at = SHOVE_AT_S if args.drive == "stand_shove" else None
         args.drive = "tour"
+    if args.video_length is None and args.drive == "goal":
+        args.video_length = 1500  # 30 s: up (or down) and back
     if args.video_length is None:
         args.video_length = int(round(sum(seg[0] for seg in TOUR) * 50)) if (steer and args.drive == "tour") else 400
         if args.task == "goal":
@@ -241,6 +276,8 @@ def main(argv=None) -> int:
     if steer:
         env_cfg.reset_yaw_range = 0.0  # start facing +x, the camera's reference direction
         env_cfg.viewer.eye = (-0.35, -0.55, 0.60)  # higher chase view so turns are easy to follow
+    if args.drive == "goal":
+        env_cfg.viewer.eye = (0.15, -0.95, 0.45)  # from the side: the staircase in profile
     if args.eye is not None:
         env_cfg.viewer.eye = tuple(args.eye)
     if args.heading_hold is not None:
@@ -278,11 +315,22 @@ def main(argv=None) -> int:
             def policy(obs):
                 return 2.0 * torch.rand(env.num_envs, env.num_actions, device=device) - 1.0
 
+        elif result.get("method") == "skill_model":  # one model, many skills: no PPO checkpoint (core/evolution/distill_skills.py)
+            actor = torch.jit.load(str(args.run_dir / "policy.pt"), map_location=device).eval()
+
+            def policy(obs):
+                return actor(obs["policy"])
+
         else:
             agent_cfg = handle_deprecated_rsl_rl_cfg(apply_memory(EvoPPORunnerCfg(), result.get("memory")),
                                                      metadata.version("rsl-rl-lib"))
             agent_cfg.device = device
-            runner = OnPolicyRunner(env, agent_cfg.to_dict(), log_dir=None, device=agent_cfg.device)
+            agent_dict = agent_cfg.to_dict()
+            if result.get("expert_base"):  # one model, many skills: base + expert + gate (core/evolution/experts.py)
+                agent_dict["actor"]["class_name"] = "core.evolution.experts:ExpertActor"
+                agent_dict["actor"]["expert_dims"] = [int(v) for v in result["expert_dims"].split(",")]
+                agent_dict["algorithm"]["class_name"] = "core.evolution.experts:ExpertPPO"
+            runner = OnPolicyRunner(env, agent_dict, log_dir=None, device=agent_cfg.device)
             runner.load(str(args.checkpoint or args.run_dir / "model_final.pt"))
             policy = runner.get_inference_policy(device=device)
 
@@ -294,10 +342,12 @@ def main(argv=None) -> int:
                 Se2KeyboardCfg(v_x_sensitivity=0.25, v_y_sensitivity=0.25, omega_z_sensitivity=1.0, sim_device=device)
             )
             print(keyboard)
-        if steer and args.drive != "random":
+        if args.drive == "goal":
+            base.eval_mode = True  # evaluation start: approach, speed and heading as in the tests
+        elif steer and args.drive != "random":
             base.command_override = torch.zeros(3, device=device)
 
-        if args.terrain in ("rough", "dog_rough", "obstacles", "obstacles_rough", "cup"):
+        if args.terrain in ("rough", "dog_rough", "dog_stairs", "dog_rough_stairs", "dog_rough_stairs_tilt", "dog_tilt", "obstacles", "obstacles_rough", "cup"):
             base.spread_over_terrain_levels()
             t = base.terrain
             if args.level is not None:
@@ -314,10 +364,23 @@ def main(argv=None) -> int:
             t.env_origins[:] = t.terrain_origins[t.terrain_levels, t.terrain_types]
         obs, _ = env.reset()
         step, last_caption = 0, None
+        expert_actor = policy if hasattr(policy, "gate") else None  # an expert model: film its gate (robot 0)
+        gates = [] if expert_actor is not None else None
         while base.sim.is_playing() or step == 0:
             if steer and args.drive == "tour":
                 cmd, caption = tour_command(step * base.step_dt)
                 base.command_override = torch.tensor(cmd, device=device)
+                if shove_at is not None and step == int(round(shove_at / base.step_dt)):
+                    # a sideways shove (to the robot's left), as in tools/dog/tilt_test.py --shove
+                    from isaaclab.utils.math import quat_apply
+
+                    d = base.robot.data
+                    left = quat_apply(d.root_quat_w.torch, torch.tensor([0.0, 1.0, 0.0], device=device).expand(env.num_envs, 3))
+                    left[:, 2] = 0.0
+                    left = left / torch.linalg.norm(left, dim=-1, keepdim=True).clamp(min=1e-6)
+                    vel = torch.cat((d.root_lin_vel_w.torch, d.root_ang_vel_w.torch), -1).clone()
+                    vel[:, :3] += SHOVE_M_S * left
+                    base.robot.write_root_velocity_to_sim_index(root_velocity=vel, env_ids=torch.arange(env.num_envs, device=device))
                 if caption != last_caption:
                     # heading [deg, + = left] and speed of robot 0 when a segment starts: drift shows in the log
                     from isaaclab.utils.math import quat_apply
@@ -335,9 +398,11 @@ def main(argv=None) -> int:
                 obs, _, dones, _ = env.step(policy(obs))
                 if hasattr(policy, "reset"):
                     policy.reset(dones)
+                if gates is not None and expert_actor.last_gate is not None:
+                    gates.append(float(expert_actor.last_gate[0]))
             if steer:
                 base.show_command_arrows()
-            if args.task == "goal":
+            if args.task == "goal" or args.drive == "goal":
                 show_goals(base)
             if args.terrain.startswith("enclosure") or args.terrain == "cup":
                 show_trail(base, step)
@@ -356,6 +421,8 @@ def main(argv=None) -> int:
             if clips:
                 final = args.run_dir / "videos" / args.out_name
                 clips[-1].replace(final)
+                if gates:
+                    gate_video(final, gates, fps=round(1.0 / step_dt))
                 print(f"video: {final}")
         if args.video and steer and args.drive == "tour":
             clips = sorted((args.run_dir / "videos" / "play").glob("*.mp4"), key=lambda p: p.stat().st_mtime)

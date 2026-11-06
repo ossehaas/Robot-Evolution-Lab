@@ -1,0 +1,1 @@
+{"run": "runs/exp2_dog/17_recover_bc/bc_s2", "scenario": "flat", "physics": "physx", "fall_rate": 0.0, "walk_score": 0.6061835289001465, "lin_vel_error_m_s": 0.05292222276329994, "yaw_rate_error_rad_s": 0.2719378173351288, "cost_of_transport": 2.4711878299713135, "mechanical_power_w": 12.400423049926758}

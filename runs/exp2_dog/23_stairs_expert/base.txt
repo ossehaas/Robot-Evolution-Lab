@@ -1,0 +1,1 @@
+zero_s1 (gait_clock_idle=zero)

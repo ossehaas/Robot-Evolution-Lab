@@ -80,7 +80,8 @@ def write_usd(spec: RobotSpec, path: str | Path) -> Path:
     looks = Sdf.Path("/Robot/Looks")
     UsdGeom.Scope.Define(stage, looks)
     render_mats: dict[tuple, UsdShade.Material] = {}
-    physics_mats = {k: _physics_material(stage, looks, k) for k in C.MATERIALS}
+    used = {col.material for link in spec.links for col in link.collisions}
+    physics_mats = {k: _physics_material(stage, looks, k) for k in C.MATERIALS if k in ("pla", "tpu") or k in used}
     for key, (stiffness, damping) in getattr(spec, "contact_compliance", {}).items():
         # PhysX compliant contact (a soft material such as a TPU paw): spring + damper instead of a rigid contact
         prim = physics_mats[key].GetPrim()

@@ -58,6 +58,30 @@ again: finished downloads are cached.
 Note: `uv sync` makes the environment match the lockfile exactly. Anything installed by hand with
 `uv pip install` is removed by the next `uv sync`; add packages as extras instead.
 
+One package of our own is not in Isaac Lab's lockfile: manifold3d (the CAD code, core/morphology/cad.py). Install
+it after every `uv sync`, or genomes do not load ("No module named 'manifold3d'"):
+
+```
+uv pip install --python .venv\Scripts\python.exe manifold3d==3.5.4
+```
+
+## Isaac Lab 3.0.0 GA next to EA (2026-10-30)
+
+`IsaacLab-3.0.0\` is a git worktree of `IsaacLab\` at tag `v3.0.0` (local branch `evolution-v3.0.0`) with its own
+environment (Isaac Sim 6.2.0.0, Newton 1.6.1, warp 1.17.0, rsl-rl-lib 5.5.1, torch 2.11.0+cu130); `lab3.cmd` /
+`lab3.sh` run it. Built with the same `uv sync` extras plus manifold3d, as above:
+
+```powershell
+cd <repository folder>\IsaacLab
+git fetch --tags
+git worktree add -b evolution-v3.0.0 ..\IsaacLab-3.0.0 v3.0.0
+cd ..\IsaacLab-3.0.0
+uv sync --extra isaacsim --extra rsl-rl --extra skrl --extra video
+uv pip install --python .venv\Scripts\python.exe manifold3d==3.5.4
+```
+
+The comparison with EA (PhysX and Newton): runs/exp2_dog/24_isaaclab_ga.
+
 ## Verify
 
 ```bat

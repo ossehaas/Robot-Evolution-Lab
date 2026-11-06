@@ -18,7 +18,12 @@ from tensordict import TensorDict
 
 EXPRESSION = ("neck_j0", "head_j1", "tail_j0")
 CONFIG: dict = {}  # walker / getup: TorchScript policies; walker_scale, student_scale; obs_joint_names, obs_history,
-# scan_points; lr, epochs, minibatches
+# scan_points; lr, epochs, minibatches; free_envs (optional bool per robot: never copies the walker, e.g. on the
+# stairs goal tiles, so RL may change the stair technique there; the get-up teacher still applies); free_idle (no
+# walker copying while the command is "stand still": RL learns to stand still, base skill B1); free_walk (no walker
+# copying at all: only the get-up teacher, when the walker learned on another paw); plan_copy (weight > 0: in the plan
+# zone also copy the plan's pose of the standing legs, observation group "expert_target", in epochs of its own: these
+# samples are too few to count among the walker's)
 
 
 class TwoTeachers:
@@ -36,7 +41,13 @@ class TwoTeachers:
         self.leg_pos = torch.tensor([i for i, j in enumerate(names) if j not in EXPRESSION], device=device)
         self.leg_last = last.view(hist, n)[:, self.leg_pos.cpu()].flatten().to(device)
         self.command = torch.cat([torch.arange(k * frame + frame - 3, k * frame + frame) for k in range(hist)]).to(device)
+        self.newest_command = self.command[-3:]
         self.gravity_z = (hist - 1) * frame + 2  # newest frame: gravity z (-1 when upright)
+
+    @torch.no_grad()
+    def idle(self, obs: torch.Tensor) -> torch.Tensor:
+        """Samples whose newest command is "stand still" (scaled commands all ~0)."""
+        return obs[:, self.newest_command].abs().amax(dim=-1) < 0.02
 
     @torch.no_grad()
     def __call__(self, obs: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
@@ -71,8 +82,22 @@ class GatedBCPPO(PPO):
         if self.teachers is None or not any(p.requires_grad for p in self.actor.parameters()):
             return super().update()  # also during the critic warm-up (actor frozen)
         obs = self.storage.observations["policy"].reshape(-1, self.storage.observations["policy"].shape[-1]).clone()
+        plan_w = CONFIG.get("plan_copy", 0.0)
+        if plan_w > 0:
+            plan = self.storage.observations["expert_target"]
+            plan_target, plan_mask = plan.reshape(-1, plan.shape[-1]).clone().chunk(2, dim=-1)
         losses = super().update()  # PPO first (it clears the storage), then copying on the same observations
         target, use_getup, use_walker = self.teachers(obs)
+        free = CONFIG.get("free_envs")  # (num_envs,) robots that do not copy the walker (samples are step-major)
+        if free is not None:
+            use_walker = use_walker & ~free.repeat(obs.shape[0] // free.numel())
+        if CONFIG.get("free_walk"):
+            use_walker = torch.zeros_like(use_walker)
+        if CONFIG.get("free_idle"):
+            use_walker = use_walker & ~self.teachers.idle(obs)
+        if plan_w > 0:  # a tilted dog copies the get-up teacher
+            in_plan = (plan_mask.sum(dim=-1) > 0) & ~use_getup
+            losses.update(self._copy_plan(obs[in_plan], plan_target[in_plan], plan_mask[in_plan], plan_w))
         keep = use_getup | use_walker
         obs, target = obs[keep], target[keep]
         m = obs.shape[0]
@@ -95,3 +120,23 @@ class GatedBCPPO(PPO):
         losses["bc_share_getup"] = float(use_getup.float().mean())
         losses["bc_share_walker"] = float(use_walker.float().mean())
         return losses
+
+    def _copy_plan(self, obs: torch.Tensor, target: torch.Tensor, mask: torch.Tensor, weight: float) -> dict[str, float]:
+        """The plan's pose as a demonstration, only the masked joints."""
+        m = obs.shape[0]
+        total = 0.0
+        if m >= self.bc_minibatches:
+            batch = m // self.bc_minibatches
+            for _ in range(self.bc_epochs):
+                perm = torch.randperm(m, device=obs.device)
+                for b in range(self.bc_minibatches):
+                    idx = perm[b * batch : (b + 1) * batch]
+                    pred = self.actor(TensorDict({"policy": obs[idx]}, batch_size=[len(idx)]))
+                    loss = ((pred - target[idx]) ** 2 * mask[idx]).sum() / mask[idx].sum().clamp(min=1.0)
+                    self.bc_optimizer.zero_grad()
+                    (weight * loss).backward()
+                    torch.nn.utils.clip_grad_norm_(self.actor.parameters(), self.max_grad_norm)
+                    self.bc_optimizer.step()
+                    total += float(loss)
+            total /= self.bc_epochs * self.bc_minibatches
+        return {"bc_plan": total, "bc_share_plan": m / max(self.storage.num_envs * self.storage.num_transitions_per_env, 1)}

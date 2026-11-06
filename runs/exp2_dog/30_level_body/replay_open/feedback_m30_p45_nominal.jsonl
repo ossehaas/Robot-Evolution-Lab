@@ -1,0 +1,8 @@
+{"plan": "up_r2_t12.json", "dir": "up", "rise": 0.02, "tread": 0.12, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.168, "max_pitch_error_deg": 85.1, "seconds": 79.2}
+{"plan": "up_r2_t15.json", "dir": "up", "rise": 0.02, "tread": 0.15, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.16, "max_pitch_error_deg": 76.4, "seconds": 88.2}
+{"plan": "up_r2_t25.json", "dir": "up", "rise": 0.02, "tread": 0.25, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.122, "max_pitch_error_deg": 84.3, "seconds": 136.1}
+{"plan": "up_r2_t9.json", "dir": "up", "rise": 0.02, "tread": 0.09, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.129, "max_pitch_error_deg": 85.9, "seconds": 59.6}
+{"plan": "up_r3_t12.json", "dir": "up", "rise": 0.03, "tread": 0.12, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.235, "max_pitch_error_deg": 75.4, "seconds": 80.1}
+{"plan": "up_r3_t15.json", "dir": "up", "rise": 0.03, "tread": 0.15, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.218, "max_pitch_error_deg": 74.7, "seconds": 77.6}
+{"plan": "up_r3_t25.json", "dir": "up", "rise": 0.03, "tread": 0.25, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.216, "max_pitch_error_deg": 89.1, "seconds": 136.1}
+{"plan": "up_r4_t25.json", "dir": "up", "rise": 0.04, "tread": 0.25, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.265, "max_pitch_error_deg": 79.0, "seconds": 145.4}

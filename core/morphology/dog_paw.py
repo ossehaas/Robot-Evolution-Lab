@@ -18,6 +18,9 @@ at every leg (toes always forward, mirrored in y for the right legs).
                   90 deg arc arms, a central pad with a domed tread that sticks out ``SOLE_TRAVEL`` below the paw's
                   rim. Vertical stiffness from the arms (bending + torsion of curved beams, k ~ t^3). After
                   SOLE_TRAVEL of travel the paw's rim lands on the floor (bump stop).
+    stop pin      with a sole sticking out further (genome legs.paw_protrusion): a PLA pin standing in a hole in the
+                  pad; after legs.sole_stop mm it lands on the spring's bottom block, long before the arms' strain
+                  gets too high. Printed apart (the sole prints arms down); trapped between pad and block, no glue.
 
 A round hollow paw printed sole-down cannot be this soft: it needs a printable flat of r >= 6 mm, and a shell on such a
 flat is 35-55 N/mm at 1.2-1.6 mm wall (axisymmetric FE, tools/dog/ankle_fe.py). Hence the separate sole spring.
@@ -79,6 +82,8 @@ SOLE_SEAT = 1.4  # 45 deg conical seat between rim and paw
 SOLE_GROOVE_R = SOLE_RIM_R[1] + 0.15
 SOLE_CAVITY_R = SOLE_RIM_R[0] + 0.65
 SOLE_TREAD_R = 20.0  # domed tread of the pad
+STOP_PIN_R = 3.0
+STOP_PIN_SEAT = 4.0  # depth of the pin's hole in the pad (more than the travel: the pin cannot fall out)
 # FE calibration of the sole (tools/dog/ankle_fe.py, 3D hex, rim held, pad pushed up, tread free to slide; sticking
 # tread +3 %): k = SOLE_K_REF * (t_arm / SOLE_T_REF)^SOLE_K_EXP [N/mm] (bending + torsion of short curved arms: between
 # t^2 and t^3); peak strain per mm of pad travel = SOLE_EPS[0] + SOLE_EPS[1] * (t_arm - 3.5)
@@ -103,6 +108,8 @@ class AnkleDesign:
     t_sole: float  # sole arm thickness [mm]
     paw_r: float
     notes: tuple = ()
+    protrusion: float = SOLE_TRAVEL  # pad below the paw's rim
+    sole_stop: float = 0.0  # pad travel to the stop pin (0: no pin)
 
     # derived
     @property
@@ -183,7 +190,10 @@ def design(genome, paw_r: float) -> AnkleDesign:
     kc = float(getattr(genome, "paw_contact_stiffness", 0.0)) / 1000.0  # N/m -> N/mm
     ts = sole_t(kc) if kc > 0 else SOLE_T_REF * 1.25  # rigid contact in the simulation: a stiff sole
     ts = min(max(ts, 2.5), SOLE_RIM_T)
-    return AnkleDesign(k, limit, h * paw_r, t, L, kc, ts, paw_r, tuple(notes))
+    p, stop = float(genome.legs.paw_protrusion), float(genome.legs.sole_stop)
+    if stop > 0 and stop >= p:
+        notes.append(f"sole stop {stop} mm not below the protrusion {p} mm: the paw's rim lands first")
+    return AnkleDesign(k, limit, h * paw_r, t, L, kc, ts, paw_r, tuple(notes), p, stop)
 
 
 # ---------------------------------------------------------------------- 2D helpers
@@ -315,12 +325,20 @@ def sole_solid(d: AnkleDesign) -> Manifold:
     zb = -d.paw_r
     pad = cad.cyl(SOLE_PAD_R, zb + 1.0, zs)
     tread = cad.sphere((0.0, 0.0, zb + SOLE_TREAD_R), SOLE_TREAD_R, 96) ^ cad.cyl(SOLE_PAD_R, zb - 1.0, zb + 1.5)
-    return cad.union([arms, rim, pad, tread]) - cham
+    sole = cad.union([arms, rim, pad, tread]) - cham
+    if d.sole_stop > 0:
+        sole = sole - cad.cyl(STOP_PIN_R + FIT, zs - STOP_PIN_SEAT, zs + 1.0)
+    return sole
+
+
+def stop_pin(d: AnkleDesign) -> Manifold:
+    """Pin standing in the pad, sole_stop mm below the spring's bottom block (paw frame, sole at rest)."""
+    return cad.cyl(STOP_PIN_R, sole_seat_z(d) - STOP_PIN_SEAT, d.z_block_bot - SPRING_BH - d.sole_stop)
 
 
 def sole_seat_z(d: AnkleDesign) -> float:
     """Top of the sole disc (= the paw's seat)."""
-    return -d.paw_r + SOLE_TRAVEL + SOLE_LIP_T + SOLE_RIM_T
+    return -d.paw_r + d.protrusion + SOLE_LIP_T + SOLE_RIM_T
 
 
 # ---------------------------------------------------------------------- paw housing
@@ -329,7 +347,7 @@ def sole_seat_z(d: AnkleDesign) -> float:
 def paw_outer(d: AnkleDesign) -> Manifold:
     r = d.paw_r
     (cx, cy, cz), (ax, ay, az) = PAW_ELLIPSOID
-    z_rim = -r + SOLE_TRAVEL
+    z_rim = -r + d.protrusion
     ell = cad.ellipsoid((cx, cy, cz), (ax * r, ay * r, az * r))
     bx, hx, hy, hb = PAW_BASE
     base = cad.extrude(CrossSection.circle(1.0, 96).scale((hx, hy)), z_rim + 0.8, z_rim + hb).translate((bx, 0.0, 0.0))
@@ -360,7 +378,7 @@ def paw_housing(d: AnkleDesign) -> Manifold:
     prof = cad.poly2d([(-60.0, 60.0 * tp), (0.0, 0.0), (60.0, 60.0 * tp), (60.0, 80.0), (-60.0, 80.0)])
     paw = paw - _extrude_y(prof, -60.0, 60.0).translate((0.0, 0.0, d.zp))
     # sole: opening (lip), groove for the rim, conical seat, cavity with a 45 deg roof (opens into the pocket)
-    z_rim = -r + SOLE_TRAVEL
+    z_rim = -r + d.protrusion
     zs = sole_seat_z(d)
     zg = z_rim + SOLE_LIP_T
     paw = paw - cad.cyl(SOLE_LIP_R, z_rim - 1.0, zg + 0.01)

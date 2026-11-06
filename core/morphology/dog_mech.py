@@ -40,6 +40,10 @@ from . import components as C
 from . import dog_paw as DP
 from . import sts3215 as SV
 
+PAW_SOLE_R = 9.0  # [mm] simulated TPU sole of a PLA paw: a sphere round the sole disc's pad (pad 5.5 mm, domed tread)
+PAW_BEVEL_EDGE = 1.0  # [mm] collider radius of the edge of a bevelled base
+PAW_RING_H = 1.5  # [mm] the TPU base ring of a "ring" paw reaches this far above the flat base (PAW_BASE, 3 mm high)
+
 WALL = 2.0  # body and head shells
 LEG_WALL = 2.5  # leg shells
 CLEAR = 0.4  # clearance between a part and a servo case
@@ -603,6 +607,8 @@ class DogMechBuilder:
 
         # ---------------- spring ankle + soft paw (TPU), in the paw frame; placed per leg with the toes forward
         out["ankle"] = dict(spring=DP.spring_solid(ad), paw=DP.paw_housing(ad), sole=DP.sole_solid(ad))
+        if ad.sole_stop > 0:
+            out["ankle"]["stop_pin"] = DP.stop_pin(ad)
         out["paw_center"] = Fp
         out["hw_paw"] = [("M3x30 socket head screw", "s3", 2, "ankle spring to paw (through the paw)"),
                          ("M3 nyloc nut", "s3", 2, "ankle spring to paw (in the inboard hex recesses)")]
@@ -682,11 +688,25 @@ class DogMechBuilder:
                               f"TPU 95A, 100 % infill (solid); print lying on its side; blade {ad.t:.2f} x {ad.L:.1f} mm "
                               f"= {ad.k_est / 1000:.2f} N*m/rad (tune: README)",
                               infill=1.0, split_z=float(center[2] + ad.zp), link_below=lk["s3"])
-                self.add_part(f"paw_{suffix}", lk["s3"], "tpu", "paw", pf(ank["paw"]), (0, 0, 1),
-                              "TPU 95A, 3 walls, 15 % infill; print standing on its rim (sole opening down)")
+                housing = self.g.legs.paw_housing
+                ring_mm = DP.PAW_BASE[3] + PAW_RING_H
+                note = {"pla": "PLA (hard, smooth: a paw against a riser slides up), 3 walls, 15 % infill",
+                        # one print, the material changes at a layer: the TPU ring (the flat base and the lip the sole
+                        # snaps past) is the bottom of the print, the PLA shell is printed onto it (PLA fuses well
+                        # onto TPU: no joint, no glue)
+                        "ring": f"TPU 95A for the first {ring_mm:.1f} mm (the base ring), then pause and change to PLA "
+                                "for the rest (the hard shell); 3 walls, 15 % infill; 45 C bed"
+                        }.get(housing, "TPU 95A, 3 walls, 15 % infill")
+                self.add_part(f"paw_{suffix}", lk["s3"], "pla" if housing in ("pla", "ring") else "tpu", "paw",
+                              pf(ank["paw"]), (0, 0, 1), note + "; print standing on its rim (sole opening down)")
                 self.add_part(f"sole_{suffix}", lk["s3"], "tpu", "paw", pf(ank["sole"]), (0, 0, -1),
                               f"TPU 95A, 100 % infill (solid); print flat, arms on the bed; arms {ad.t_sole:.2f} mm "
                               f"= {ad.k_sole_est:.1f} N/mm; snaps into the paw", infill=1.0)
+                if ad.sole_stop > 0:
+                    self.add_part(f"stop_pin_{suffix}", lk["s3"], "pla", "paw", pf(ank["stop_pin"]), (0, 0, 1),
+                                  f"PLA, 100 % infill; print standing; drop into the hole in the sole's pad before the sole "
+                                  f"snaps in; stops the pad after {ad.sole_stop:.1f} mm on the ankle spring's block",
+                                  visual=False, infill=1.0)
                 for jn, link, S, role, horn_link in (("j0", "chassis", master["S"]["abd"], "abduction", "s0"),
                                                      ("j1", "s0", master["S"]["hip"], "hip", "s1"),
                                                      ("j2", "s1", master["S"]["knee"], "knee", "s1")):
@@ -720,7 +740,41 @@ class DogMechBuilder:
                 # shin capsule down to the socket (its bottom sits ~2 mm above the pivot), paw sphere on the paw link
                 sock_c = center + np.array([0.0, 0.0, ad.zp + 2.0 + 14.0])
                 m.collisions.append((lk["s2"], "capsule", *self._capsule(M @ kp([Kk[0], yc, Kk[2]]), sock_c, 14.0), "pla"))
-                m.collisions.append((lk["s3"], "sphere", cad.translation(center), (self.paw_r,), "tpu"))
+                if self.g.legs.paw_housing != "tpu":
+                    # the printed shape: TPU sole (a sphere whose bottom is the old paw sphere's: the first sphere of
+                    # the paw link is the env's sole reference), the flat base (dog_paw.PAW_BASE, 1.5 mm above the
+                    # sole) as two rails along x plus PAW_RING_H mm above it, and the shell above the ring as a
+                    # capsule along x (toes 27 mm ahead of the centre)
+                    base_mat, shell_mat = {"tpu_shaped": ("tpu_rigid", "tpu_rigid"), "ring": ("tpu_rigid", "pla"),
+                                           "pla": ("pla", "pla")}[self.g.legs.paw_housing]
+                    rs = PAW_SOLE_R
+                    m.collisions.append((lk["s3"], "sphere", cad.translation(center + np.array([0.0, 0.0, rs - self.paw_r])),
+                                         (rs,), "tpu"))
+                    if self.g.legs.sole_stop > 0:  # the stop pin: the rigid sphere reaches the floor after that much compression
+                        m.collisions.append((lk["s3"], "sphere", cad.translation(center + np.array([0.0, 0.0, rs - self.paw_r + self.g.legs.sole_stop])),
+                                             (rs,), "tpu_rigid"))
+                    z_rim = -self.paw_r + self.g.legs.paw_protrusion
+                    bx, hx, hy, hb = DP.PAW_BASE
+                    rb = (hb + PAW_RING_H) / 2
+                    if self.g.legs.paw_bevel:  # what is left of the base's edge: a ring just outside the sole's groove
+                        rho = DP.SOLE_GROOVE_R + 0.2 - PAW_BEVEL_EDGE
+                        for i in range(12):
+                            a = i * math.pi / 6
+                            m.collisions.append((lk["s3"], "sphere", cad.translation(center + np.array([rho * math.cos(a), rho * math.sin(a), z_rim + PAW_BEVEL_EDGE])),
+                                                 (PAW_BEVEL_EDGE,), base_mat))
+                    else:
+                        for yb in (-(hy - rb), hy - rb):
+                            m.collisions.append((lk["s3"], "capsule", *self._capsule(center + np.array([bx - hx, yb, z_rim + rb]),
+                                                                                     center + np.array([bx + hx, yb, z_rim + rb]),
+                                                                                     rb), base_mat))
+                    (ex, _, _), (ax, _, _) = DP.PAW_ELLIPSOID
+                    rc = self.paw_r - DP.SOLE_TRAVEL
+                    zc = z_rim + 2 * rb + rc  # the shell's bottom on top of the ring
+                    m.collisions.append((lk["s3"], "capsule", *self._capsule(center + np.array([ex - ax * self.paw_r, 0.0, zc]),
+                                                                             center + np.array([ex + ax * self.paw_r, 0.0, zc]),
+                                                                             rc), shell_mat))
+                else:
+                    m.collisions.append((lk["s3"], "sphere", cad.translation(center), (self.paw_r,), "tpu"))
 
     @staticmethod
     def _capsule(p0, p1, r):

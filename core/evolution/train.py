@@ -31,11 +31,14 @@ def build_robot_files(genome_path: Path, robot_dir: Path) -> Path:
     """Build the robot in a separate process: the standalone USD library must not load next to Isaac Sim's."""
     usd = next(robot_dir.glob("*.usda"), None) if robot_dir.exists() else None
     if usd is None:
-        subprocess.run(
-            [sys.executable, "-m", "core.morphology", "build", str(genome_path), "--out", str(robot_dir)],
-            cwd=REPO,
-            check=True,
-        )
+        cmd = [sys.executable, "-m", "core.morphology", "build", str(genome_path), "--out", str(robot_dir)]
+        for attempt in range(3):  # the build crashed once at random (access violation, 2026-10-30): try again
+            code = subprocess.run(cmd, cwd=REPO).returncode
+            if code == 0:
+                break
+            print(f"[build_robot_files] build failed (exit code {code}), attempt {attempt + 1} of 3", flush=True)
+        else:
+            raise subprocess.CalledProcessError(code, cmd)
         usd = next(robot_dir.glob("*.usda"))
     return usd
 
@@ -47,7 +50,7 @@ def parse_args(argv=None):
     parser.add_argument("--genome", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--task", choices=("forward", "command", "goal", "jump"), default="forward")
-    parser.add_argument("--terrain", choices=("flat", "rough", "obstacles", "obstacles_rough", "enclosure", "enclosure_pocket", "cup", "dog_rough"), default="flat",
+    parser.add_argument("--terrain", choices=("flat", "rough", "obstacles", "obstacles_rough", "enclosure", "enclosure_pocket", "cup", "dog_rough", "dog_stairs", "dog_rough_stairs", "dog_rough_stairs_tilt", "dog_tilt"), default="flat",
                         help="rough requires --task command, obstacles requires --task goal")
     parser.add_argument("--terrain_types", default=None,
                         help="rough terrain: comma-separated subset, e.g. stairs_climb,stairs_descend (a specialist)")
@@ -86,6 +89,26 @@ def parse_args(argv=None):
                         help="with --bc_getup: keep copying these teachers during RL, chosen by posture "
                              "(core/evolution/gated_bc.py)")
     parser.add_argument("--bc_getup", type=Path, default=None)
+    parser.add_argument("--bc_free_stairs", action="store_true",
+                        help="with --bc_walker: robots on the stairs goal tiles do not copy the walker (RL may change "
+                             "the stair technique there); the get-up teacher still applies")
+    parser.add_argument("--bc_free_walk", action="store_true",
+                        help="with --bc_walker: never copy the walker, only the get-up teacher")
+    parser.add_argument("--bc_free_idle", action="store_true",
+                        help="with --bc_walker: no walker copying while the command is 'stand still' (RL learns to "
+                             "stand still, base skill B1)")
+    parser.add_argument("--bc_plan_copy", type=float, default=0.0,
+                        help="with --bc_walker: weight of copying the stair plan's pose of the standing legs in the plan "
+                             "zone (needs plan_track_plans or stairs_rsi_plans)")
+    parser.add_argument("--expert_base", type=Path, default=None,
+                        help="one model, many skills (core/evolution/experts.py): this run is the frozen base, a skill "
+                             "expert and a gate are trained on top (warm start from its model_final.pt; the gate learns "
+                             "the environment's expert_label)")
+    parser.add_argument("--expert_dims", default="128,64", help="with --expert_base: hidden layers of the expert")
+    parser.add_argument("--expert_quiet", type=float, default=1.0,
+                        help="with --expert_base: weight of the pull of the expert's correction to zero outside its label")
+    parser.add_argument("--expert_copy", type=float, default=0.0,
+                        help="with --expert_base: weight of copying the plan's joint pose in the zone (expert_target)")
     parser.add_argument("--critic_warmup", type=int, default=0,
                         help="with --init_checkpoint: first train only the critic for this many iterations (actor frozen)")
     parser.add_argument("--env_override", action="append", default=[],
@@ -439,6 +462,24 @@ def main(argv=None) -> int:
         setattr(env_cfg, key, parsed)
         overrides[key] = parsed
 
+    if args.expert_base is not None:
+        if args.bc_walker is not None:
+            raise SystemExit("--expert_base and --bc_walker do not go together (the base is frozen)")
+        env_cfg.expert_label_obs = True
+        overrides["expert_label_obs"] = True
+        from core.evolution import experts
+
+        experts.CONFIG.update(quiet_weight=args.expert_quiet, copy_weight=args.expert_copy)
+        if args.expert_copy > 0:
+            env_cfg.expert_target_obs = True
+            overrides["expert_target_obs"] = True
+        if args.init_checkpoint is None:
+            args.init_checkpoint = args.expert_base / "model_final.pt"
+
+    if args.bc_plan_copy > 0:
+        env_cfg.expert_target_obs = True
+        overrides["expert_target_obs"] = True
+
     from isaaclab.app import launch_simulation
 
     started = time.time()
@@ -483,9 +524,19 @@ def main(argv=None) -> int:
                 getup=torch.jit.load(str(args.bc_getup / "policy.pt"), map_location=dev).eval(),
                 walker_scale=float(walker_res.get("env_overrides", {}).get("action_scale", 0.5)),
                 student_scale=float(env_cfg.action_scale), obs_joint_names=list(env.unwrapped.obs_joint_names),
-                obs_history=env_cfg.obs_history, scan_points=env_cfg.height_scan_points)
+                obs_history=env_cfg.obs_history, scan_points=env_cfg.height_scan_points,
+                free_envs=env.unwrapped.stairs_goal_on().clone()
+                if args.bc_free_stairs and env.unwrapped._sg_col is not None else None,
+                free_idle=args.bc_free_idle,
+                free_walk=args.bc_free_walk,
+                plan_copy=args.bc_plan_copy)
             agent_dict["algorithm"]["class_name"] = "core.evolution.gated_bc:GatedBCPPO"
             print(f"[evolution] gated behaviour cloning: walker {args.bc_walker.name}, get-up {args.bc_getup.name}")
+        if args.expert_base is not None:
+            agent_dict["actor"]["class_name"] = "core.evolution.experts:ExpertActor"
+            agent_dict["actor"]["expert_dims"] = [int(v) for v in args.expert_dims.split(",")]
+            agent_dict["algorithm"]["class_name"] = "core.evolution.experts:ExpertPPO"
+            print(f"[evolution] skill expert on the frozen base {args.expert_base.name} (expert {args.expert_dims})")
         runner = OnPolicyRunner(env, agent_dict, log_dir=str(args.out), device=agent_cfg.device)
         if args.init_checkpoint is not None and args.init_checkpoint.exists():
             print(f"[evolution] warm start from {args.init_checkpoint}")
@@ -506,6 +557,8 @@ def main(argv=None) -> int:
             runner.learn(num_learning_iterations=args.critic_warmup, init_at_random_ep_len=True)
             for p in actor.parameters():
                 p.requires_grad_(True)
+            if hasattr(actor, "freeze_base"):
+                actor.freeze_base()  # the expert's base stays frozen
             # the adaptive learning rate drifted up while the actor could not change: reset it
             runner.alg.learning_rate = agent_cfg.algorithm.learning_rate
             for group in runner.alg.optimizer.param_groups:
@@ -545,6 +598,14 @@ def main(argv=None) -> int:
             "terrain_arg": args.terrain,
             "critic_warmup": args.critic_warmup,
             "bc_teachers": [str(args.bc_walker), str(args.bc_getup)] if args.bc_walker else None,
+            "bc_free_stairs": args.bc_free_stairs,
+            "bc_free_idle": args.bc_free_idle,
+            "bc_free_walk": args.bc_free_walk,
+            "bc_plan_copy": args.bc_plan_copy,
+            "expert_base": str(args.expert_base) if args.expert_base else None,
+            "expert_dims": args.expert_dims if args.expert_base else None,
+            "expert_quiet": args.expert_quiet if args.expert_base else None,
+            "expert_copy": args.expert_copy if args.expert_base else None,
             "init_action_scale": args.init_action_scale,
             "memory": args.memory,
             "symmetry": args.symmetry,

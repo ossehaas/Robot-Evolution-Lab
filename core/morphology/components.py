@@ -108,7 +108,10 @@ class PrintMaterial:
 
 PLA = PrintMaterial("PLA", density=1240.0, infill=0.55, static_friction=0.45, dynamic_friction=0.35, restitution=0.1)
 TPU = PrintMaterial("TPU", density=1210.0, infill=0.8, static_friction=1.0, dynamic_friction=0.85, restitution=0.0)
-MATERIALS = {"pla": PLA, "tpu": TPU}
+# TPU grip on a stiff printed part (the paw's base ring): TPU friction, rigid contact (the compliant contact of "tpu"
+# models the sole spring)
+TPU_RIGID = PrintMaterial("TPU", density=1210.0, infill=0.8, static_friction=1.0, dynamic_friction=0.85, restitution=0.0)
+MATERIALS = {"pla": PLA, "tpu": TPU, "tpu_rigid": TPU_RIGID}
 
 
 @dataclass(frozen=True)

@@ -56,6 +56,16 @@ class DogLegs:
     # knee directions "<front>_<rear>": back_front = front knee backwards, rear knee forwards (as a real dog's elbow and
     # stifle; the default), back_back = all knees backwards (as Spot), front_back, front_front
     knees: str = "back_front"
+    # paw housing (owner, 2026-10-31: a soft paw front sticks under a step edge): "tpu" = the old model, one TPU sphere;
+    # the others model the printed shape (TPU sole, flat base, shell with the toes 27 mm ahead) and differ in material:
+    # "tpu_shaped" all TPU (the paw as designed), "ring" a PLA shell on a low TPU base ring (hard front, grippy base),
+    # "pla" all PLA (grip from the sole disc only)
+    paw_housing: str = "tpu"
+    # printed-shape paws (journal step 48), so far colliders only (the CAD follows for the chosen design): how far the
+    # sole sticks out below the flat base [mm], and the base bevelled 25 deg up from just outside the sole's lip
+    paw_protrusion: float = 1.5
+    paw_bevel: bool = False
+    sole_stop: float = 0.0  # [mm] pad travel to the stop pin (dog_paw.stop_pin); 0 = no pin, the paw's rim is the stop
 
 
 @dataclass

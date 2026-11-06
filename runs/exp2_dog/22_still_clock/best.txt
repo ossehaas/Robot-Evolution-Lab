@@ -1,0 +1,1 @@
+{"hold": ["hold_s2", 0.195], "zero": ["zero_s1", 0.197], "start free_s2": -1.0}

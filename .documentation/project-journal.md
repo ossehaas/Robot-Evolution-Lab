@@ -1186,3 +1186,733 @@ end through a memory student (step 33-35: the student matched its teacher).
     up again 10/10 (1.9 s). `videos/tour_flat.mp4`: original / step 38 polish / bc_s2.
   - The anchor did what it should: nothing was forgotten (walking, climbing, getting up), and getting up after shoves
     is now near-certain. Catching itself without falling did not improve beyond the original walker.
+
+### Step 40: Stairs as a Goal Task, and the Climbing-Limit Table
+**Status**: 2026-10-25, done (`runs/exp2_dog/18_stairs_goal/`, tables in `results.md`)
+- Goal: how high and how steep can dog v1 (`17_recover_bc/bc_s2`) climb up and down without too many problems, and
+  where is the sweet spot. Step 35/36 showed that falls alone mislead (few falls = "did not try"), so here the dog has
+  to get to the other end of the stairs, and what it achieves is measured.
+- Course (`terrain.DOG_STAIRS`, `straight_stairs`): one straight staircase per 3 x 3 m tile, 60 cm wide, 5 risers to a
+  landing (end wall behind it, no drop). Rows = rise 1-10 cm (exact per row, no random part); columns = treads 25 /
+  20 / 15 / 12 / 9 cm, each with open sides and with walls (10 columns): slopes from 2 deg (1 on 25) to 48 deg (10 on
+  9). `tools/dog/test_stairs_course.py` (no simulator): the mesh's top surface equals the environment's step formula
+  everywhere, every start and goal spot lies flat at the right height, the generators build (63 checks, all ok).
+- Task (`stairs_goal`, terrains `dog_stairs` and `dog_rough_stairs` = the dog course + the 10 stairs columns): the dog
+  starts 0.6-0.8 m in front of the first riser (up) or on the landing (down), facing the goal (+-0.5 rad in training,
+  +-0.15 in tests); goal 35 cm beyond the top riser or before the first. A navigation layer turns the goal into the
+  walking command (turn in place if more than 35 deg off, else walk at it at 20 cm/s, slowing down for the last 25 cm),
+  so the walker stays one policy and cannot avoid the stairs. Reaching the goal flips it to the other end (training
+  goes up and down). No heading hold and no topple shoves on these tiles.
+- Falls (owner: falling is not a hard fail as long as it does not fall down the stairs): recover mode, a fall on the
+  stairs is soft (small penalty, get up and go on); hard fail = while fallen, the ground under the body is more than
+  one step lower than where the fall began (tumbling down, also off an open side): the episode ends.
+- Standing height on these tiles is measured above the mean of the steps under the front and rear hips (not the tile
+  origin, which would read 50 cm too high on the landing; this also fixes the get-up height in recover mode there).
+- Test (`tools/dog/stairs_goal_test.py`): 2000 dogs x 2 rounds of 30 s, every tile both ways (40 runs per rise, tread
+  and direction). Per cell: reached, clean (reached without any fall), any fall, fell down the stairs, stayed down,
+  median time, steps made good. Limit = highest rise up to which every rise is done clean by >= 90 %; sweet spot =
+  highest rise done clean by >= 98 % at most 1.3x slower than 1 cm steps.
+- Training (`train.py --terrain dog_rough_stairs`): from dog v1 with its recipe and the gated behaviour cloning of step
+  39, 2000 it, seeds 1 and 2; curriculum over the rise (up after a goal without falling down the stairs); no style
+  reward on the stairs tiles. Variants: anchor (the walker teacher copied everywhere while upright) and free (no walker
+  copying on the stairs tiles, `--bc_free_stairs`, and standing height weight 0.3 there: crouching allowed; the get-up
+  teacher still applies). Then the stairs goal test, walking benchmark, shove and get-up tests (nothing forgotten), and
+  videos (`play.py --drive goal`, `compare_video.py --drive goal --terrain dog_stairs`): dog v1 / best anchor / best
+  free, up and down at the sweet spot and at the limit, up beyond the limit.
+- Batch: smoke test first (stairs test on 200 dogs must reach the goal on 1-2 cm stairs both ways in >= 60 %; 4
+  iterations of training on the mixed course; a short goal video), then zero-shot dog v1 and the original walker, the
+  four trainings, tests, videos, `results.md`.
+- Not in this batch (next levers if the free variant still fails high steps): the stair terms of step 35 (foothold,
+  lift first, stumble, terrain-aware lift) on the stairs goal tiles.
+- Run 2026-10-25 09:01-15:45 (smoke ok). Two hiccups: the limits were stored as floats, so 3 of the 5 videos were
+  skipped (`--level 3.0`); and free_s2's get-up test failed once at start-up ("no ffmpeg exe", not reproduced). Both
+  redone afterwards (limits now integers; the video step skips videos that exist).
+- Results: limit = highest rise [cm] up to which every rise is done clean (reached, no fall) by >= 90 % (2000 dogs x 2
+  rounds, 40 per cell):
+
+| dog | up, treads 25 / 20 / 15 / 12 / 9 cm | down, treads 25 / 20 / 15 / 12 / 9 cm | mean clean share |
+|---|---|---|---|
+| dog v1 (zero-shot) | 2 / 2 / 2 / 3 / 2 | 2 / 2 / 2 / 1 / 1 | 0.29 |
+| original walker (zero-shot) | 3 / 2 / 4 / 2 / 2 | 2 / 2 / 2 / 1 / 1 | - |
+| anchor s1 / s2 | 3 / 2-3 / 3 / 3 / 2 | 2 / 2 / 1-2 / 1 / 1 | 0.31 / 0.31 |
+| free s1 / s2 | 5 / 4 / 3-4 / 3 / 2 | 3 / 2-3 / 2 / 1 / 1 | 0.35 / 0.38 |
+
+  - Climbing up is limited by the rise: the best dog (free_s2) climbs 1-4 cm clean in 98-100 % on treads of 15 cm and
+    more (up to 15 deg), 5 cm only on 25 cm treads (98 %); at 5-6 cm most get there with falls (6 cm: 16 % reach the
+    landing), 7 cm and more practically never. Up, the problems are (soft) falls; falling down the stairs stays rare
+    (0-6 %). Steep stairs (9 cm treads) are hard at any rise above 2-3 cm.
+  - Going down is the weak point, and it is not falling: dog v1 at 3 cm reaches the bottom in only 28 % with 0 % falls,
+    it stops or creeps (median times up to 28 s of 30). free_s2 is better (3 cm: 66 %, 4 cm: 38 %) but still mostly
+    times out. As in step 36 ("nobody really goes down"): the walkers never learned to step down a staircase on purpose.
+  - free > anchor in both seeds; anchor is hardly better than dog v1: copying the walker on the stairs holds the stair
+    technique back. Freeing the stairs tiles (and allowing a crouch) was the useful change.
+  - Walls made it harder, not easier, mostly for dog v1 (up 4 cm: 84 % clean with open sides, 32 % with walls; free_s2
+    80 / 72 %). Cause not known yet (the scan sees the wall tops at the sides; touching a wall counts as contact).
+  - Nothing forgotten: walking benchmark (forward 0.8-1.4 % falls, walk score 0.44-0.46; course 0.7-1.2 %; pyramid
+    stairs 3.1-3.8 steps up on rows 6-9; ~12.7 W), shoves (stays down at most 8 % at 1.5 m/s) and getting up (99.6-100 %
+    from every start) as dog v1.
+  - Sweet spot (clean >= 98 % at most 1.3x slower than 1 cm steps; tread 15 cm): free_s2 up 3 cm, down 2 cm.
+  - Videos (tread 15 cm, open sides; dog v1 / anchor_s2 / free_s2): `videos/up_r3_t15.mp4` (sweet spot),
+    `up_r4_t15.mp4` (limit), `up_r6_t15.mp4` (beyond: all three get the front paws up the first steps but never the rear
+    legs, they stay stuck there for 20 s; dog v1 rears up and goes over backwards at 8 s), `down_r2_t15.mp4` (all three
+    down within ~6 s, turn and go back up).
+  - Against the expectation of step 35 (~6 cm, 25-30 deg): the legs reach ~4-5 cm up at moderate slopes; down only
+    ~2-3 cm. The table answers "how high": up to 4 cm steps with treads of 15 cm or more it climbs reliably; descending
+    needs work first.
+- Next: teach the descent (a stairs-down specialist phase / more down episodes, the step 35 stair terms on the stairs
+  goal tiles, the neck as a counterweight), then the "can I climb this?" rule on the height map from this table.
+
+
+### Step 41: Physically Possible, Then Learned (the plans as trainer)
+**Status**: 2026-10-26, batch done (`runs/exp2_dog/19_stairs_proof/`, tables in `results.md`); descent follow-up running
+- Owner (screenshot of a dog stuck with its rear paws behind the first step of the steepest stairs): is that the
+  robot's physical limit or a lack of exploration? Collect proof of what can be done, then use it as a trainer;
+  later tasks will be more complex, so this should become a general way to teach the dog hard skills.
+- How training explores (answered): PPO with a Gaussian policy, independent noise on every joint at 50 Hz with a
+  learned std per joint (no epsilon schedule; PPO lowers it as the policy gets sure, a small entropy bonus 0.004 keeps
+  it from collapsing). From scratch 0.6, here inherited 0.15-0.16 (in units of the action range) for all 2000
+  iterations of step 40. White noise through slow servos rarely produces a coordinated "lift high, reach, place".
+  The rewards also did not ask for it (lift reward capped at 4 cm, strong action-rate penalty).
+- 1 The proof (`tools/dog/stairs_plan.py`, CPU, no simulator): a quasi-static crawl, one leg at a time (lateral
+  sequence), body shifted on four paws between steps; every pose checked: reach within 95 % of the hip/knee range,
+  no part within 3 mm of the terrain (swinging paw 1 cm), footholds on treads (1.5 cm from the edge, clear of the
+  riser), centre of gravity >= 1.5 cm inside the support polygon, hip/knee torque <= 80 % of the simulation's
+  2.35 N*m; the neck is a free counterweight. Kinematics and collisions are exact in the side view (all leg joints
+  pitch about the same axis, abduction 0); balance uses the real paw spacing. Search: a grid of body poses (x, height,
+  pitch, neck) x footholds per step, a beam of the most promising partial climbs. Sufficient proof only: a plan =
+  possible (slowly); no plan = not proven. Two search bugs found on the way (forcing the right legs onto the left
+  legs' footholds; a fixed step budget too small for long stairs; a rounding error in the goal check).
+- Result (x = plan; w = only with a wider search; F = only with the full joint range and 5 mm swing clearance):
+  up: 1-5 cm on every tread (9-25 cm; 5 cm on 15 cm needed the wider search), 6 cm only F on 25 cm treads, 7 cm none.
+  down: 1-3 cm on every tread, 4 cm on 12-25 cm, 5 cm on 20-25 cm, 6 cm none. Why 6 cm fails: with the front paws on
+  the first step, no rear-leg foothold can be reached (the paw must rise 6 cm + clearance and reach forward; pitching
+  nose-up lowers the rear hips). The legs, not the margins, set the limit (100 % range and 5 mm clearance only add
+  6 cm on the longest treads).
+- Against the trained dogs (step 40): free_s2 is clean in 84 % of the possible cells going up and 73 % going down,
+  and in 2-4 % of the cells without a plan. Large gaps where it is possible: up 5 cm on 12 cm treads (0 %, plan
+  exists), 4-5 cm on 9 cm (0-5 %), down 4 cm on 12-15 cm (8-40 %), down 2-3 cm on 9 cm (18-38 %).
+- 2 Proof in physics (`tools/dog/stairs_replay.py`): plans played in the simulator with the real servo model, timed
+  so no joint turns faster than 3 rad/s (servo 4.7 rad/s; near a stretched leg a small paw move needs a big knee move).
+  Open loop (planned joint angles): 3 cm / 15 cm followed the plan within millimetres and ~1 deg for 18 s, then drift
+  (body 2 cm low, 10 deg flatter, 2-10 cm behind) put a paw wrong and it tipped. Feedback (standing paws taken where
+  they really touched down, the body put in its planned pose relative to them) fell earlier: paws land 1-2 cm off
+  their footholds (servo lag), about the plans' balance margin (1.5-2.6 cm), and the dog rears backwards when a front
+  leg lifts. Lesson: a proof for real execution needs larger margins (or a controller that re-plans the body over the
+  real support); the static poses themselves are sound (next point).
+- 3 The plans as trainer (mid-climb starts, `stairs_rsi_plans` / `stairs_rsi_prob`): a share of the stairs goal
+  episodes starts in a random four-paw pose of the plan for the tile (body pose + joint angles, the held command set
+  to the pose). `tools/dog/rsi_check.py`: 278 random plan poses on their stairs, paws 1 mm from the tread, 99 % still
+  upright after holding the pose for 1 s. A bug found by this check: the tread lookup compared float32 treads with the
+  exact list, so every staircase got the 25 cm plan (paws off by whole steps); fixed (nearest tread).
+- Training from free_s2 (its recipe; dog course + stairs goal tiles; walker not copied on the stairs; crouch allowed),
+  2000 it: rsi (half of the stairs episodes mid-climb) seeds 1, 2; rsi_terms (+ the step 35 stair terms on the stairs
+  tiles: lift target from the step ahead, lift before pushing forward, no toe against a riser, no paw on an edge)
+  seeds 1, 2; cont (same training without mid-climb starts: is it the trainer or just more training?). Each dog tested
+  right after its training (stairs goal test, walking benchmark, shoves, getting up). Replay videos of four plans,
+  comparison videos on possible stairs (up 5 cm on 15 and 9 cm treads, down 4 cm on 15, down 3 cm on 9).
+- Interim (night of 2026-10-25/26):
+  - Replays (all 46 plans, open loop): nominal 3 plans climbed without a fall (down 1 and 2 cm on 9 cm treads, down
+    4 cm on 15 cm: `videos/replay_down_r4_t15.mp4`, a careful paw-by-paw descent of 79 s); with the randomization at
+    least one of 4 dogs climbed cleanly in 15 plans (among them up 5 cm on 15 cm, up 4 cm on 9 cm, down 4 cm on 15 cm).
+    So those cells are proven in physics too; played blind the crawl usually drifts and tips (most fall). The feedback
+    replay climbed none (see above).
+  - rsi_s1 (mid-climb starts): about the start dog (clean on possible stairs up 85 % vs 84 %, down 67 % vs 73 %);
+    small gains on hard climbs (3 cm on 9 cm treads 85 -> 95 %, 4 cm on 12 cm 80 -> 90 %, 5 cm on 20 cm 78 -> 90 %),
+    the steepest possible climbs (4-5 cm on 9 cm, 5 cm on 12 cm) still 0 %.
+  - rsi_terms_s1 (+ stair terms): worse (up 80 %, down 56 %): the penalties on the stairs again teach avoiding them
+    (as in step 35).
+  - Descents fail by refusing, not by falling: on hard possible descents the dogs make almost no steps (4 cm on 9 cm:
+    0.05 of 5 steps, 0 % falls) and stand at the top edge. Suspect: one curriculum level per staircase for both
+    directions, so where climbing up fails the dogs are moved to lower rows and high descents are hardly trained.
+  - Follow-up queued after the batch (`followup.py`, desc_s1, one seed): rsi + a curriculum per direction
+    (`stairs_dir_curriculum`) + half of the mid-climb descents in the first 40 % of the plan (`stairs_rsi_down_early`);
+    smoke-tested (separate up/down levels logged). Slip on the way: a dry-run of this patch was meant for copies but
+    went into the real env files while the batch ran; both options default to off and the code path is unchanged
+    with them off (compiled and checked), so the batch runs are not affected.
+- Results of the batch (2026-10-26 08:10; stairs goal test, clean share on the physically possible stairs / where no
+  plan exists; 40 runs per cell):
+
+| dog | up, possible | down, possible | no plan (up / down) | mean clean (all cells) |
+|---|---|---|---|---|
+| dog v1 (bc_s2) | 76 % | 49 % | 0 / 0 % | 0.292 |
+| start: free_s2 (step 40) | 84 % | 73 % | 4 / 2 % | 0.378 |
+| cont_s1 (control, +2000 it without mid-climb starts) | 85 % | 70 % | 3 / 2 % | 0.373 |
+| rsi s1 / s2 (mid-climb starts) | 85 / 85 % | 67 / 67 % | 3-5 / 1-2 % | 0.366 / 0.370 |
+| rsi_terms s1 / s2 (+ stair terms) | 80 / 82 % | 56 / 54 % | 3 / 0-1 % | 0.328 / 0.327 |
+
+  - Mid-climb starts did not move the overall numbers: the same as the control and the start dog, within noise.
+    Small, consistent gain on one hard climb: 4 cm on 12 cm treads 90 / 98 % (control 80 %, start 80 %). The
+    steepest possible climbs stay at 0-8 % in every dog (4-5 cm on 9 cm treads, 5 cm on 12 cm).
+  - The stair terms are reliably worse (both seeds), mostly going down (54-56 % vs 70 %): penalties on the stairs make
+    the dogs avoid them. Not to be used again in this form.
+  - Nothing forgotten in any dog: walking benchmark 0.3-1.3 % falls (walk score 0.43-0.45, ~12.7 W), shoves like
+    free_s2, getting up 100 % from every start.
+  - Videos (`videos/compare_*.mp4`, start / control / best rsi / best rsi_terms): down 4 cm on 15 cm treads, the
+    start dog and rsi_s2 walk down to the goal in 13-20 s; the control and rsi_terms turn sideways at the top edge and
+    dodge the step (the refusal seen in the numbers).
+  - What it means: the plans prove what the body can do and give valid starting poses, but starting mid-climb is not
+    enough to learn the hard moves; the missing piece is the motion itself (the policy never produces the high rear-leg
+    lift or the first step down on its own) and the incentive (descending: refusing costs little). Next candidates: use
+    the plan's motion as a style/imitation target on the stairs tiles (like the real-dog recording on flat ground), more
+    exploration at the critical moments, and the descent fixes of the follow-up.
+
+
+### Step 42: Balance First, Then the Descent
+**Status**: 2026-10-27, done (`runs/exp2_dog/20_balance_and_style/batch.py`, ran 2026-10-26 19:35 - 02:50)
+- Owner (watching step 41's videos): the single plan replays show a strategy (the body moves back, then forward as a
+  leg steps), the trained dogs never do; replay_down_r4_t15 slow but controlled and done ("very nice"); replay_up_r3_t15
+  ends nose-down on its head with the rear paws in the air; replay_up_r4_t9 looks very good until it flips onto its
+  back; replay_up_r5_t15 slow but steady, slips and recovers twice, then flips backwards at the last step and falls
+  all the way down. Going down the dogs halt more: mixed signals between keeping balance and the move down? Perfect
+  the proof and bring it to the training dog. Side ideas: stand still while stable (until it senses instability: less
+  power), and a tilting plateau to learn at what tilt it can still stand (less "afraid" going down).
+- Answer on the strategy: the plans keep the centre of gravity inside the paws on the ground by shifting the body
+  before a leg lifts (a statically stable walk). Random 50 Hz joint noise through slow servos practically never finds a
+  deliberate weight shift + high step, and the walker's style and anchor pull towards its trot. The backward flips are
+  physically real near the tipping angle on steep stairs; the plans' 1.5 cm margin is about the servo placement error.
+- Tilt limits on paper (`tools/dog/tilt_limits.py`, CPU): CoG 1.5 cm ahead of the body centre (the head), 17.5 cm
+  high, paws 16 x 19 cm. Standing pose tips at 20 deg facing downhill (!), 28 deg nose up, 29 deg sideways; the best
+  posture the legs allow (body shifted uphill up to 10 cm, crouched to 8-12 cm, neck as counterweight) reaches 57-66
+  deg, beyond where the paws slide (45 deg at mu 1.0, 35 at 0.7, 27 at 0.5). Descending stairs is 15-29 deg nose down:
+  in its walking posture the dog is at or past the tipping limit on the steeper ones, and only a lean-back / crouch
+  makes them safe. That fits the refusals: going down in the normal posture is genuinely risky.
+- New:
+  - `tools/dog/tilt_test.py` + `terrain.TILT_COURSE` (plates tilted 0-45 deg, downhill nose down / diagonal / sideways
+    / nose up; placement checked offline): standing for 12 s per tilt and direction (fell / slid), power and joint
+    motion while standing; `--hold` = servos holding the standing pose (the bare body)
+  - `tools/dog/descent_terms.py`: the training reward terms per phase of a descent (landing / at the edge / on the
+    stairs / refusing at the edge), to find the conflicting signals with evidence
+  - balance-margin reward (`stairs_margin_weight`, `stairs_margin_target`, `support_margin()`): on the stairs tiles,
+    how far the centre of gravity (all bodies, vertical projection) is inside the support polygon of the paws on the
+    ground, as a share of 3 cm (two paws or fewer count negative); the plans' rule as a reward instead of copying
+    their (very slow, ~1 cm/s) motion, which would fight the walking command. Unit-checked offline on hand cases
+  - stair plans with a 3 cm balance margin (`plans_m30`, CPU, `stairs_plan.py --stability 0.03`)
+  - step 41's descent follow-up (desc: a curriculum per direction + mid-climb descents at the first steps down) was cut
+    off by a session restart (no result); it is part of this batch
+- Batch: smoke tests; descent terms for free_s2 / rsi_s2 / cont_s1; tilt test (bare body, dog v1, free_s2); replay of
+  the stricter plans (nominal, randomized, 2 videos); training from free_s2: desc s1/s2 and margin (desc + margin
+  reward 2.0/s) s1/s2, each tested (stairs goal, benchmark, shoves, getting up, tilt, descent terms); comparison videos.
+- Stricter proof (3 cm balance margin, `plans_m30`, 29 plans): up 1-3 cm on 12-25 cm treads (1 cm also on 9 cm),
+  4 cm on 25 / 20 / 12 cm treads; down 1-2 cm on every tread, 3 cm on 15-25 cm; nothing at 5 cm up or 4 cm down. With
+  a margin larger than the servo placement error, roughly 3 cm both ways (4 cm up) remains; 4-5 cm descents need the
+  thin 1.5 cm margin, which fits the tipping replays near the limit. Bug on the way: the first `--stability 0.03` run
+  silently used 1.5 cm (a default argument read when the function was defined); fixed, rerun, the invalid output kept
+  as `plans_m30_invalid_margin15`.
+- **Result** (2026-10-27, batch ran 19:35-02:50, no failures; `runs/exp2_dog/20_balance_and_style/results.md`):
+  - Why descents are refused (`descent_terms.jsonl`, 60 dogs per cell, 5 descents): no term punishes going down.
+    Every phase pays well (landing ~9.5/s, at the edge ~7.3/s, on the stairs ~8.4/s); at the edge the dog only loses
+    tracking (track_lin 3.6 -> 2.0, while refusing 0.2) and progress (0.7 -> 0.4). The costs (upright, energy, action
+    rate, abduction) stay small everywhere. So it is not "balance against the move" inside the reward: it is learned
+    caution (a fall on the way down costs the hard-fall penalty and the time lying down) plus the posture being at the
+    tipping limit. The dogs spend most of a descent at the edge (free_s2: 2635 s at the edge vs 858 s on the stairs).
+    Biggest single term everywhere: **trot +3.0/s**, also while hesitating at the edge. It pays for diagonal pairs of
+    paws, the opposite of the plans' slow 3-paw walk; it is the reward that holds the gait in place.
+  - Tilting plateau (`tilt.jsonl`, 10 dogs per cell): the bare body (servos holding the standing pose) matches the
+    paper: nose down falls from 15 deg (40 %) / 20 deg (all), diagonal 20, nose up 20-25, sideways 25-30. The trained
+    dogs (dog v1, free_s2 and the new ones) fall at about the same tilts (25 deg every direction, nose down partly at
+    20): they do not use posture (lean back, crouch) to stand steeper. They never stand still on the flat (90-100 %
+    "slid" = stepping about, ~6 cm in 10 s) at 1.5-2.0 W mechanical servo power and ~3.5 rad/s summed joint speed;
+    on a 10 deg nose-down slope they stand still more often (60-100 %). The stand-still side tour needs its own reward.
+  - Stricter plans (3 cm margin) replayed open loop: nominal 0 of 29 climbed, randomized 8 of 29 (down_r1_t12 100 %,
+    up_r2_t15 100 %, up_r3_t15 75 %, others 25-50 %). Even 1 cm plans fall over (pitch errors 70-100 deg), as in step
+    41 (nominal 3 of 46): open-loop replay drifts and is chaotic (whether a dog makes it depends on tiny differences),
+    so it is not a sharp test of which margin is better. The plans prove what the legs and balance allow; executing
+    them needs feedback that works (still open).
+  - Training (from free_s2, 2000 it, stairs goal test 40 dogs per cell, open sides):
+
+    | dog | up, possible | down, possible | limits up (treads 25-9) | limits down | mean clean |
+    |---|---|---|---|---|---|
+    | free_s2 (start) | 84 % | 73 % | 5/4/4/3/2 | 3/3/2/1/1 | 0.378 |
+    | desc_s1 / s2 | 82 / 84 % | 63 / 64 % | 4/3/3/3/3, 5/4/3/3/3 | 3/2/2/1/1 | 0.351 / 0.354 |
+    | margin_s1 / s2 | 82 / 82 % | 73 / 69 % | 4/3/4/3/2, 4/4/4/3/2 | 3/2/2/1/1, 2/2/2/1/1 | 0.370 / 0.365 |
+
+    desc (curriculum per direction + early mid-climb descents) is **worse** on descents (-10 points, both seeds).
+    margin is as good as the start dog and better than desc on the hard descents (r4 t12 28 % for s1 vs 8 %, r4 t15
+    57 % for s2 vs 40 %, r5 t20 42 % for s2 vs 35 %), but not better overall. The margin reward did move the gait a bit
+    (on the stairs -0.6/s instead of about -1.4/s for free_s2: margin about -1 cm instead of -2 cm; at the edge they
+    stand with 3+ paws, +0.1 to +0.3/s), but the dogs still walk the stairs mostly on two paws: the trot term (3/s)
+    outweighs it (at most 2/s).
+  - Nothing forgotten: walking falls 0.2-2.2 %, walk score 0.43-0.45, 12.5-12.7 W (start 12.9 W); shoves the same;
+    getting up 100 % from every pose.
+  - Videos: `videos/compare_{down_r4_t15,down_r3_t9,up_r5_t15,up_r4_t9}.mp4` (start / desc_s2 / margin_s1),
+    `videos/replay_{up_r4_t12,down_r3_t15}.mp4` (3 cm plans, open loop).
+- Lessons: (1) the refusal is not a reward conflict but caution plus a posture at its limit; (2) a per-direction
+  curriculum with early descents makes descents worse (more early failures to learn caution from?); (3) a balance
+  reward cannot change the gait while a style term pays more for the old gait: next lever is the trot term on the
+  stairs tiles (e.g. the existing `gait=walk_trot`, a 4-beat walk below 0.25 m/s, which is the stairs goal speed);
+  (4) open-loop plan replay is not a reliable judge; (5) standing still needs to be asked for (a stand-still reward).
+- Owner (2026-10-27, after the videos): free_s2 is the best one. Conclusion: this is the most the current recipe gets
+  out of the dog on stairs (going up it is at or beyond the plans with a safe 3 cm margin; going down it is 1 cm short
+  on 15/12/9 cm treads); one lever left (the trot term, a 4-beat walk on the stairs) before freezing the limit table.
+
+### Step 43: Base Skills, Stand Still and Stay Balanced on a Tilt
+**Status**: 2026-10-28, done; B1 and B2 still fail (`runs/exp2_dog/21_base_skills/results.md`)
+- Owner: before more stairs, a base set any future robot must pass ("if this is not possible there is a flaw in the
+  design we can detect early"): stand up straight and balanced, stay still once balanced until it detects
+  imbalance (tilted plateau), get up after a fall. Written down with pass criteria in `.documentation/base-skills.md`:
+  design checks A1-A4 (CPU: interference, static tilt limit, servo torque margin, printable) and learned basics
+  B1-B8 (stand still, tilt + shove, get up, shove while walking, walk/turn/stop, small unevenness, robust to
+  delay/mass/servo spread, safe when blind).
+- `tools/base/design_check.py` (A1-A4): dog v1 passes all. A1: the only overlaps are its front and rear leg of one
+  side meeting from 52 deg of hip swing towards each other (known since step 21; the simulation has self-collision
+  and the leg clash penalty for it), so A1 now separates "legs meet" from real flaws. A2: 20.4 / 28.4 / 28.7 deg. A3:
+  standing needs 12 % of the usable torque (2.35 N m), on three paws 27 % (a front leg lifted). A4: largest part the
+  bowl, 200 x 110 x 76 mm.
+- Dog v1 / free_s2 fail B1 and B2 (step 42: never still, ~2 W, falls at 25 deg like the bare body).
+- New:
+  - training terrain `dog_rough_stairs_tilt`: the course + stairs goal columns + 3 columns of tilted pads (1.2 m pad on
+    a pedestal in the middle of the tile, 0-30 deg by row, so the neighbours meet a block, not a pit); on the pads the
+    dog starts standing on the pad perpendicular to it, facing a random way, told to stand still; curriculum: steeper
+    after a whole episode without a fall; `ground_height()` measures along the pad's normal; style judge off on the
+    pads. Offline checks `tools/dog/test_tilt_pads.py` (all pass: the mesh is the plane the environment assumes, the
+    start rotation, the height); GPU smoke `tools/dog/tilt_pad_check.py`
+  - `--bc_free_idle` (gated BC): no copying of the walking teacher while the command is "stand still" (suspected to
+    hold the stepping on the spot); `stand_still_upright_only` (the stand-still penalty not while fallen, so a
+    stronger weight cannot hinder getting up)
+  - `tools/dog/tilt_test.py`: share of the time still (summed joint speed < 0.5 rad/s), time to settle, and
+    `--shove 0.3` at 6 s (falls after it, time to be still again)
+  - videos: terrain `dog_tilt` (the test plates) and `--drive stand_shove` (12 s standing, sideways shove at 6 s) in
+    play.py / compare_video.py; `tilt_reset_yaw_random=False` keeps the dog facing +x
+- Batch: smoke (tilt test with shove, pad placement, training with pads, a video on a plate); measurements (free_s2
+  calm + shoved, the walking teacher, the bare body shoved); training from free_s2, 2000 it, seeds 1 and 2: still
+  (`--bc_free_idle`, stand_still_weight 0.3 -> 1.0, stand commands 10 -> 25 %) and tilt (still + the pads); tests
+  (tilt calm + shoved, stairs goal, benchmark, shoves, get-up); videos start / best still / best tilt on the flat and
+  on 20-25 deg plates with a shove, and down 4 cm stairs; `results.md` with pass / fail per base skill.
+- Results (all smoke checks passed, 4 trainings of 2000 it):
+  - No dog is ever still: 0 % of the time below 0.5 rad/s, on the flat and on every plate, for the start dog, the
+    walking teacher and all four new dogs. The summed joint speed while standing did not change (start 3.8 rad/s,
+    still_s1/s2 3.9, tilt_s1/s2 3.5-3.8 on the flat; the walking teacher 7.5). Only the power dropped for the tilt dogs
+    (0.8 W vs 2.0 W on the flat). The servos holding the pose (no policy) are still 98 % of the time, so the
+    stepping comes from the policy.
+  - Tilt: no gain. All dogs stand to 15 deg and fall at 20-25 deg, as before; tilt_s2 falls more at 20 deg (30-60 %).
+    The tilt curriculum reached level ~1.7 of 9 (about 8 deg).
+  - Nothing forgotten for still_s1/s2: stairs goal 0.36-0.38 (start 0.38), walking 0.42-0.44 score, ~1 % falls,
+    shoves the same, get-up 100 %. The tilt dogs lost "get up from standing" (31-46 % within 8 s; on the side and
+    back still 100 %); in the video they stand lower and tucked in, so they probably miss the standing-height bar.
+  - The settings did arrive: walker copying share 0.50 -> 0.38 (copying off while standing), stand-still penalty
+    about -16 per episode (0.8/s).
+- Cause (likely): the gait clock keeps ticking while standing (the phase runs at the lowest gait frequency when the
+  command is zero), and the policy sees sin/cos of it every step. After thousands of iterations of walking to that
+  clock, a penalty of 0.8/s does not undo it. The trot term is not the cause: while standing it pays only for four
+  paws down.
+- Lesson: "stand still" needs a still input. Next: freeze the clock while the command is "stand" (an observation
+  change, so a longer continued training, or from the teachers), then the same tests.
+
+### Step 44: The Gait Clock Stops While Standing
+**Status**: 2026-10-31, done (run 4); B1 and B2 still fail, but the dog is nearly motionless with the clock held
+(`runs/exp2_dog/22_still_clock/results.md`)
+- Run 1 (2026-10-29): smoke passed. free_s2 without training, clock stopped (tilt, plates <= 15 deg): still 20 % with
+  hold, 10 % with zero (step 43: 0 %), shoved the same, no falls; get-up with hold unchanged (100 / 99.6 / 100 / 100 %).
+  So the ticking clock was part of the problem, not all of it. hold_s1 reached iteration 1528 of 3100, then the
+  restart killed it (kept as `hold_s1_interrupted`). The batch then ran on: the other three trainings died at
+  start-up during the shutdown, it wrote batch.done anyway, and step 45 started and died the same way. Fix: both
+  batches now stop when a training ends without result.json. Rerun: hold_s1 from the start, the rest as planned.
+- 2026-10-30: another session changed shared files (benchmark `--physics`, compare_video passes `--physics physx`,
+  a GA-only scene branch in the env, off on our EA install). Checked: everything compiles, the step 44/45 code is
+  intact. The smoke stage runs again on the rerun (old one in `smoke_run1`), now with a benchmark run in both smokes.
+- 2026-10-30 run 2: clock checks and tilt smoke passed; the robot build (`core.morphology build`, a separate USD
+  process) crashed once with an access violation before the smoke training. It could not be made to happen again (3 of 3
+  builds fine, identical files). `build_robot_files` now tries up to 3 times. Run 3 started.
+- Run 3: smoke passed (with the benchmark). hold_s1 ran at 5.8 s per iteration instead of 2.3: since the update
+  restart the GPU was stuck at its minimum clock (330 MHz, 7.8 W at 90 % load, no throttle reason). The Lenovo
+  Performance mode (Fn+Q, red) raised the power limit to 175 W but not the clock. The owner rebooted at iteration
+  ~2000 (kept as `hold_s1_interrupted2`). After the reboot: ~2400 MHz, 175 W under load. Run 4 from hold_s1
+  (1.6-2.1 s per iteration with the Lenovo Performance mode: faster than before the update).
+- Results (flat, standing 12 s): hold dogs still 33-42 %, move 0.1 cm in 10 s at 0.11-0.12 W and ~0.6 rad/s summed
+  joint speed (step 43: 0 %, 9 cm, 1.9 W, 3.8 rad/s); zero dogs still 7-14 %, ~0.3 cm, 0.3 W, ~1.2 rad/s. free_s2 with
+  the clock held and no training: 38 %, 0.1 cm, 0.15 W. So the clock was the cause of the stepping, the training added
+  nothing, and what is left is a tremor of ~3 deg/s per joint, just over the "still" limit (0.5 rad/s summed). On the
+  plates nothing changed (still 0-20 % at 5-15 deg, falls from 20 deg). Walking, shoves, stairs, getting up equal to
+  free_s2 (hold_s2 dropped upright 94 %). best.txt picked zero_s1 (base score 0.197 vs hold_s2 0.195: a tie) as step
+  45's base; by stillness hold is better and is the base from now on.
+- Lesson: an input that ticks is a command to move; hold it constant when the command is "stand". The tremor is the
+  next question for B1 (by eye in `compare_stand_flat.mp4`; on the STS3215 it may vanish in the deadband).
+- From step 43: no dog is ever still, and the likely cause is the gait clock that keeps ticking while the command is
+  "stand still". New setting `gait_clock_idle`: "run" (as before), "hold" (the clock stops: a constant input) or
+  "zero" (the clock input reads 0, 0). The clock only stops while upright and told to stand: while fallen it runs as
+  before, because the get-up teacher was trained with a running clock and getting up must not change.
+- New: `tools/dog/clock_check.py` (GPU smoke: the clock constant for standing dogs, running for walking ones),
+  `tilt_test.py --set` (any environment setting, recorded in the JSON line), a `stop_go` video drive (walk 25 cm/s,
+  stop, walk, stop).
+- Batch: smoke (clock check for run / hold / zero, tilt test with --set, a 4-iteration training, a stop_go video);
+  free_s2 without training with the clock stopped (tilt calm and shoved, get-up); training from free_s2 with step 43's
+  still recipe + hold or zero, 3000 it (a changed input, so longer), seeds 1 and 2; the same tests as step 43;
+  videos start / best hold / best zero: standing shoved on the flat and on 15 deg plates, stop_go, down 4 cm stairs.
+- Plan after this (owner, 2026-10-28): one end model with all skills. The base (this step's best dog) is frozen;
+  each new skill is a small expert that reads the base's features and adds a correction to its action; a gate,
+  trained with the situation as a label, picks from the sensors which expert adds how much. First proof: the stairs-up
+  expert with the forward lunge of the step 41 plans (`next-steps.md` section 0b, steps 45-47).
+
+### Step 45: One Model, Many Skills, the Stairs-Up Expert on a Frozen Base
+**Status**: 2026-10-31, done: the gate switches cleanly, the expert learned no lunge
+(`runs/exp2_dog/23_stairs_expert/results.md`)
+- The owner's lunge (videos `19_stairs_proof/videos/replay_up_r5_t15.mp4`, `replay_up_r4_t9.mp4`,
+  `replay_up_r3_t15.mp4`) is in the quasi-static plans, not in any trained dog: the replays drive the servos from the
+  plans, no policy. Read from the plans: a 4-beat crawl with a weight shift: before a rear leg steps the body moves
+  ~3 cm ahead of the paws' centre, before a front leg steps ~4.5 cm behind it; nose up 10-15 deg (25 on the steepest),
+  rising with the steps. So the trick depends on which leg is up, and the teacher must too.
+- The model (`core/evolution/experts.py`): one `policy.pt` = frozen base (weights and normalizer) + expert (MLP 128-64
+  on the observations and the base's three hidden layers, adds a correction to the base's action, last layer at zero:
+  it starts as the base) + gate (MLP 64-32, sigmoid, starts nearly shut). PPO trains the expert; the gate learns only
+  the label (binary cross-entropy); the expert is pulled to zero outside its label, so a gate that opens by mistake
+  changes little. Checked on the CPU with free_s2's checkpoint: identical to the base at the start, TorchScript export
+  identical, `gate_value` exported, reload exact; base 172k parameters, expert + gate 166k.
+- The label and the teacher (environment): the plan zone = a stairs goal tile, going up, a plan for its rise and
+  tread, the body between the plan's first and last keyframe, not fallen (observation group `expert_label`, never an
+  input of the actor). In the zone `plan_track` rewards the plan's height, nose-up pitch and weight shift at the
+  nearest keyframe with the same leg (front / rear) up (x alone is ambiguous by up to 5 cm because the body sways; x
+  and the leg <= 1.3 cm, checked on all plans), and `plan_support` 3 paws down. Pitch sign checked against the replay
+  and the mid-climb starts (plan pitch = nose up = -rotation about y).
+- New tools: `tools/dog/lunge_test.py` (stairs up: weight shift with a front / rear paw up against the plan, share of
+  3 paws down, nose up, climbed, gate before / in / after the zone; `--course`: share of the gate open on the walking
+  course); play.py builds expert models and draws the gate as a bar on the video.
+- Batch: base = step 44's best dog; smoke (lunge test on the base, a 4-iteration expert training that must log the plan
+  and gate terms, lunge test on it, a video with the gate bar); the base for reference (lunge, stairs goal); training
+  on the base's course, 2000 it, seeds 1 and 2: plan (teacher + 3 paws) and own (3 paws only: does the teacher
+  matter?), 50 % mid-climb starts; tests (lunge stairs + course, stairs goal, benchmark, shoves, get-up, tilt:
+  everything the base could must be unchanged); videos base / best plan / best own up the three replay stairs.
+- Results (base zero_s1, 4 dogs): the gate is 0.97-0.99 in the plan zone, 0.03-0.05 on the floor before it,
+  0.01-0.02 on the landing after it and open 0.2-0.3 % of the time on the walking course, learned from the sensors
+  alone. Everything the base could is unchanged (walking 0.4-1.4 % falls, score 0.45; shoves; get-up 100 %; tilt 19 %
+  still). But the expert does nothing: weight shift with a front paw up -1.2 to -1.6 cm (base -1.5, plan -4.8), with a
+  rear paw up -0.2 to -0.4 (base -0.3, plan +3.0), climbed 0.86-0.88 (base 0.86), stairs goal clean 0.379-0.382 (base
+  0.385); plan and own alike. The logged correction `expert_delta_on` stays ~0.01 all training.
+- Why (checked on the checkpoints): the expert's hidden layers do learn (weights 0.03 -> 0.12), its output layer
+  shrinks (0.018 -> 0.0125). The quiet loss (weight 1, own Adam at 1e-3, several epochs per iteration) pulls the
+  output to zero on the ~90 % of the samples outside the zone, while PPO's push comes only from the few zone samples
+  through a sparse reward. The expert cannot tell the zone apart as well as the gate, so the cheapest answer is to
+  stay silent everywhere. The quiet loss is not needed for the function: the gate already shuts the expert (0.02).
+- Lesson: switching is solved; teaching the skill is not. A reward on a small share of the time cannot outweigh a
+  regularizer on the rest, and a strong frozen base gives PPO little reason to change. Next: quiet loss off (or
+  weighted by the gate), and give the expert the plans as a demonstration to copy in the zone (the plan's joint
+  angles at the nearest keyframe, a copy loss like the walking and get-up teachers), not only a reward.
+
+### Step 46: A Hard Paw Front
+**Status**: 2026-10-31, done: the ring paw (PLA shell, TPU base ring) chosen; every dog needs retraining on the real paw shape (`runs/exp2_dog/25_hard_paw/results.md`)
+- The owner, watching step 45's `compare_up_r4_t9.mp4`: a paw that lands right against the next riser struggles to
+  lift, front and rear paws. Cause in the simulation: the paw is one 18 mm sphere with TPU grip (friction 1.0) all
+  round, so a paw pressed forward into the riser only slides up if it pulls up harder than it pushes forward. And the
+  printed paw is longer than that sphere: its toes reach 27 mm ahead of the paw centre, not 18.
+- Change (owner's idea): the paw housing printed in PLA (hard, smooth, friction 0.35-0.45), the TPU sole disc the
+  only grippy part (it sticks out 1.5 mm below the housing's rim; after 1.5 mm of travel the PLA rim is the bump
+  stop). No new CAD: genome `legs.paw_housing` = "pla" (default "tpu": old dogs unchanged, checked: identical USD).
+  Simulated: a TPU sole sphere (9 mm, the same sole height, the env's sole reference) + a PLA capsule over the housing
+  (radius 16.5 mm, from 19 mm behind to 27 mm ahead of the centre, rim 1.5 mm above the sole). Spawn height unchanged,
+  +1.3 g.
+- `tools/dog/lunge_test.py` now also counts stumble (share of paw-steps on the way up with a paw pushed sideways more
+  than twice as hard as it is pressed down) and stuck (such a stumble lasting > 0.3 s, per climb).
+- Test without training: hold_s2 and zero_s1 (step 44) with TPU and PLA paws: lunge / stuck, stairs goal, walking,
+  get-up, shoves, tilt (a hard rim may slip on the plates); videos TPU / PLA up 4 cm / 9 cm (the screenshot's stairs),
+  up 3 cm / 15 cm, down 4 cm / 15 cm.
+- Results (same policies, TPU -> PLA, hold_s2 / zero_s1): stuck paws per climb 0.40 -> 0.00 / 0.12 -> 0.00 (on 4-5 cm
+  rises with short treads up to 2.9 -> 0), stumbles -40 % / -22 %, climbed 0.80 -> 0.86 / 0.86 -> 0.86, stairs goal up
+  0.409 -> 0.425 / 0.431 -> 0.435. But: stairs down 0.309 -> 0.237 / 0.328 -> 0.279 (limits on 25 and 15 cm treads one
+  step lower), walk score 0.45 -> 0.36-0.37 forward and 0.43 -> 0.38 on the course (falls unchanged, power 12.7 ->
+  10.8 W), hold_s2 gets up worse (dropped upright 91 -> 79 %), shoves better (0.7 m/s stays up 64-68 -> 97-100 %: the
+  paws slide instead of tipping the dog).
+- Why: the printed housing has a flat elliptical base (PAW_BASE, about 26 x 21 mm) only 1.5 mm above the sole, so
+  with a few degrees of paw tilt or a firm step the base touches the floor; in PLA that contact is slippery. The old
+  sphere never modelled that base at all. So the front must be hard, the bottom must stay grippy.
+- Next: test the shape alone (new collider, all TPU: is the walk drop shape or friction?) and a PLA toe cap on a TPU
+  housing (front hard, base grippy); then train with the paw that wins (the policy has never seen the real paw shape).
+- Run 2 (owner: split the housing; a low split, so the lower front that slides past the step edge is hard too): the
+  printed shape modelled for every new paw: TPU sole sphere (compliant, the sole spring) + the flat base as two rails
+  along x (PAW_BASE 36 x 32 mm, 3 mm high, + PAW_RING_H 1.5 mm) + a shell capsule on top (toes 27 mm ahead). Material
+  `tpu_rigid` = TPU grip with a rigid contact (the housing is not the sole spring; written to the USD only when used,
+  so old dogs still build identical files). Paws: tpu (old sphere), tpu_shaped (all TPU), ring (PLA shell on a TPU
+  base ring), pla (all PLA); run 1 kept in `run1_full_pla/`. Same tests, two dogs, four-panel videos; ~2.5 h.
+- Results run 2 (hold_s2 / zero_s1; old sphere -> printed shape TPU / ring / all PLA):
+  - The shape itself costs the most: walk score 0.45 -> 0.30-0.32 forward, 0.43 -> 0.34-0.35 on the course for all
+    three real-shape paws (falls equal or lower), climbed 0.82 -> 0.69-0.73 / 0.86 -> 0.72-0.79, hold_s2 gets up from
+    standing 99 -> 80-85 %. The policies were trained on a sphere paw; the flat base and longer toes are new to them.
+  - Stuck paws: 0.38 / 0.10 per climb with the sphere -> 0.04-0.06 with the real shape (TPU or ring) -> 0 all PLA.
+    Part of the sticking was the sphere model; the ring removes the rest of it nearly as well as full PLA.
+  - All PLA slips: 100 % falls on 20 deg plates (others 0-35 %), worst down the stairs (0.214 / 0.259); best against
+    shoves (sliding instead of tipping). Ring vs printed TPU: equal or slightly better everywhere (climbed 0.72 / 0.78
+    vs 0.69 / 0.72, stairs down 0.260 / 0.318 vs 0.271 / 0.309, plates at 20 deg 5-32 % falls).
+- Lesson: the simulated paw was too simple; every policy so far learned on a sphere. Owner (2026-10-31): the ring paw; then 1-4: the ring paw, then
+  retrain the base with it (the walk drop is the policy meeting a new paw, not the paw being bad), then CAD the split
+  (PLA shell + TPU ring with a snap joint).
+
+### Step 47: The Base on the Ring Paw
+**Status**: 2026-11-01, done, did not pass: walk score 0.33 (mark 0.40); step 45b not started
+(`runs/exp2_dog/26_ring_base/results.md`)
+- Owner (2026-10-31): the ring paw, then 1 retrain the base on it, 2 test, 3 the print design of the split,
+  4 step 45b, as long as everything goes fine.
+- Training: hold_s2 trained on with the ring paw (genome `26_ring_base/genome_ring.json`), step 44's recipe (clock
+  held while standing, the walking and get-up teachers, stand-still terms), 3000 it, seeds 1 and 2. Smoke passed.
+- Tests as step 46 + stairs straight; references hold_s2 on the sphere paw and on the ring paw untrained. Pass mark
+  for going on (best.txt "ok"): walk score >= 0.40, falls <= 2 % forward, get-up >= 95 % in every start, stairs goal
+  up >= 0.37 (hold_s2 on the sphere paw: 0.45, 1 %, 92-100 %, 0.41).
+- Print design of the split (no CAD change): at 4.5 mm above the rim the split runs through the sole's snap groove
+  and only ~2 mm of wall is left at the sides, too thin for a snap or tongue joint between two parts. Instead one
+  print with a filament change: the paw prints standing on its rim, so the split is a layer: TPU 95A for the first
+  4.5 mm (flat base, lip), pause, PLA for the rest. PLA fuses well onto TPU: no joint, no glue; the sole snaps past
+  the TPU lip as designed. Written into the ring paw's print note; the simulated robot is unchanged (identical USD).
+- Results (ring_s1 / ring_s2 vs hold_s2 on the sphere paw / on the ring paw untrained): walk score forward 0.33 / 0.32
+  (0.45 / 0.30), course 0.35 / 0.34 (0.43 / 0.34); falls 0.8 / 0.4 %; speed error 0.10 m/s (sphere 0.08), cost of
+  transport 3.8 (sphere 2.6), 14.5 W (12.7). Getting up recovered (ring_s1 100 / 100 / 100 / 99 %, ring_s2 87 / 91 %
+  from standing / dropped), tilt plates better (20 deg: 12-18 % falls vs 32-35 %), shoves better than the sphere,
+  stuck paws 0.04-0.06 per climb; stairs goal 0.323 (sphere 0.361, ring untrained 0.327). So 3000 iterations
+  recovered get-up and balance but not the walking: the training's tracking stayed at 0.85 track_lin (hold_s2's own
+  training 1.2), speed error 0.18 vs 0.15.
+- Reading: the real paw shape costs speed and energy (cost of transport +50 % in every real-shape paw; all-PLA 3.0:
+  less drag), not the material. The flat base sits 1.5 mm above the sole and the sole spring gives ~0.6 mm at
+  standing load and 1.2-1.8 mm at walking peaks, so the base touches down in most steps and drags; the sphere rolled.
+  The walking teacher copied while upright is a sphere-paw dog, which may also hold the old gait in place.
+- Next (owner to decide): (a) paw design: the sole sticking out further (e.g. 3-4.5 mm instead of 1.5) or a rounded
+  base, tested on the same dogs without training (~1.5 h); (b) training without the sphere-paw walking teacher, or with
+  a walking teacher retrained on the ring paw.
+
+### Step 45b: Teaching the Stairs Expert
+**Status**: 2026-10-31, prepared (`runs/exp2_dog/27_stairs_expert_b/batch.py`, ~6 h); not started: step 47 did not pass
+- From step 45: the quiet loss kept the expert silent. Now on step 47's best ring-paw dog (frozen), quiet loss off
+  (`--expert_quiet 0`: the gate already shuts the expert outside the zone), and a demonstration: `--expert_copy 1.0`
+  pulls the whole action (base + gate x correction) in the zone to the plan's joint pose at the nearest keyframe (x and
+  the leg up; the standing legs' hips and knees and the neck; the swinging leg left out: its pose holds only before it
+  lifts). New: env `plan_target()` / observation group `expert_target` (target actions + mask), ExpertPPO copy loss
+  (logged `expert_copy`), train.py `--expert_quiet`, `--expert_copy` (recorded in result.json). Checked on the CPU:
+  compiles, the swing masking on the real plans and foot names.
+- Runs: copy (plan reward + copy loss) and noquiet (plan reward only, quiet off), seeds 1 and 2, 2000 it; step 45's
+  tests and videos with the gate bar.
+
+### Step 48: Testing Parts on Their Own
+**Status**: 2026-11-01, levels 0, 1 and 2 done: a longer sole brings part of the walk back, 4.5 mm the most; retraining and CAD wait for the owner's choice (`runs/exp2_dog/28_part_tests/level2/results.md`)
+- Owner's idea: test a part on its own against various tests, to find design flaws faster than a full dog run. Step 47
+  was the example: a night of GPU to find something the paw's geometry shows directly. A funnel, not a replacement:
+  (0) geometry from the CAD, seconds; (1) the part on a test stand in the simulator, fixed motions, minutes; (2) trained
+  dogs on the new part, ~1.5 h; (3) retraining, 4-5 h. Many designs in at the top, one or two at the bottom. A part test
+  shows what the part does, not whether a trained dog makes good use of it.
+- Level 0, `tools/parts/paw_geometry.py` (CPU, real paw and sole meshes, `runs/exp2_dog/28_part_tests/paw_geometry.md`):
+  at 0 / 0.6 / 1.2 mm of sole compression the current paw's housing touches the floor at 4.8 / 2.9 / 1.0 deg toe down,
+  5.8 / 3.5 / 1.1 heel down, 6.1 / 3.6 / 1.2 sideways, and flat at 1.5 mm (15 N). A stride turns the shin far more: 8 deg
+  with the paw 20 mm behind its rest place, 18 deg at 40 mm, +6.5 and +11 ahead. The ankle spring (1.5 N*m/rad, stiff
+  against the 0.22 N*m a trotting paw's load gives on the toe's lever) gives little of that back, so by the simple
+  static estimate the base edge carries 75-100 % of the load in most of the stance. This supports step 47's reading (the
+  base drags, cost of transport +50 %); the stand has to measure it.
+- Variants: P 3 / P 4.5 = the sole sticking out 3 / 4.5 mm; bevel = the base rising 25 deg from just outside the sole's
+  groove. Touch tilt at 1.2 mm toe down: now 1.0, bevel alone 1.3 (no help: the lip cannot move), P 3 5.8, P 3 + bevel
+  8.5, P 4.5 11.2, P 4.5 + bevel 17.3. Strain in the sole arms at a given force does not change with the protrusion
+  (14 % at 18 N); only the end of travel moves (23 % at 30 N, 35 % at 45 N; design value 10 %, set at the 1.5 mm stop).
+  Open: a longer pad may wobble sideways; check on a print.
+- The simulator's colliders of the current paw match the CAD within 0.3 deg. New in `DogLegs`: `paw_protrusion` (1.5),
+  `paw_bevel` (False): colliders only so far, the CAD follows for the chosen design; old dogs are unchanged.
+- Level 1, `tools/parts/paw_stand.py`: one paw on a stand (x and z sliders, driven shin, the ankle spring, paw and sole
+  as two bodies so a contact sensor separates what each carries), the dog's physics and materials, no policy. Tests:
+  roll (stance sweep +11 -> -18 deg under load: shin work, ankle vault, share on the housing), drag (grip and friction
+  at shin tilts), edge (pushed against a 4 cm riser and lifted, at most 30 N: lift per N of push, gets over or not), drop
+  (peak force, rebound). Designs: old ball, now, P 3, P 4.5, P 3 + bevel, P 4.5 + bevel
+  (`runs/exp2_dog/28_part_tests/batch.py smoke|full`, `summary.py`, stand.md). All six designs in under 10 minutes.
+- Smoke fixes: the drive's reported torque did not fit the moment balance (1.9 N*m where the ankle spring passes 0.16):
+  work now comes from the ankle spring's moment; steps in the sliders' speed targets showed up as 8-10 N of force: they
+  ramp over 0.2 s; "got over" counted too early: it now means the sole reached the top; a stiff contact's one-step spike
+  is no force reading: peak over 15 ms. Sanity: 12 N on a flat paw compresses the sole 1.23 mm (10 N/mm) and the sole
+  carries all 12 N.
+- Results, at 12 N (`stand.md`, videos `stand_stance.mp4`, `stand_edge.mp4`):
+
+  | | stance work [mJ] | rolls [mm] | load on the housing | vertical face: lift per N of push | last 6 mm |
+  |---|---|---|---|---|---|
+  | old ball | 17 | 19 | 0 % | 0.91 | 0 |
+  | now | 38 | 7 | 54 % | 0.40 | 1.06 |
+  | P 3 | 23 | 12 | 29 % | 0.40 | 1.06 |
+  | P 4.5 | 23 | 17 | 11 % | 0.40 | 1.08 |
+  | P 3 + bevel | 16 | 15 | 25 % | 0.40 | 1.25 |
+  | P 4.5 + bevel | 27 | 21 | 5 % | 0.40 | 1.27 |
+
+- The stand reproduces both earlier findings, in minutes and with the cause visible. Step 47: the ball rolls, the
+  current paw hardly does and takes 2.2 x the work (the dogs: cost of transport +50 %). Step 46: against the vertical
+  face the TPU ball needs 0.91 N of lift per N of push, the PLA shell 0.40 (friction 1.0 and 0.45). The first summary
+  table (peak lift over the whole climb) showed the opposite, because of a third finding, new: in the last 6 mm the TPU
+  ring rubs past the edge at about 1.0, where the ball has already rolled over it. Short, so step 46's stuck count (> 0.3
+  s) does not see it; whether it matters for the dog is open. Drop: the current paw bottoms on its housing (46 / 16 N in
+  one step), P 3 and up do not (2.5 mm of travel at 3 cm, 1.8 mm at 6 cm).
+- Limits: fixed motions, so no gait adapts to the design; the simulated sole is a 9 mm sphere with no stop of its own
+  (the real pad: 5.5 mm, dome R20); the x slider has only a small drag, unlike a body. The bevel's numbers are doubtful:
+  its edge is a ring of 12 small spheres, and at 20 deg the pull reaches 2.2 x the load and sliding friction 1.08 (above
+  the material's 0.85), probably that ring catching rather than the design.
+- Verdict on the method: worth it. Level 0-1 named the flaw and its size before any training, and ranked designs. Next
+  (owner's go): P 3 and P 4.5 on the trained dogs without training (level 2).
+- Random access violation in the CAD build seen again (in `keep_main`, neck; second run passed): the batch retries.
+- Level 2 (owner's go, `28_part_tests/level2/`): hold_s2 and zero_s1 from step 44, no training, step 46's tests, paws: current
+  (control), sole out 3 mm, sole out 4.5 mm; colliders only, no CAD yet. The PC rebooted during the videos; all tests were
+  done and the batch resumed where it stopped.
+- Results (hold_s2 / zero_s1; old ball from step 46 -> current -> 3 mm -> 4.5 mm):
+  - Walk score forward 0.45 / 0.45 -> 0.30 / 0.31 -> 0.33 / 0.34 -> 0.36 / 0.37; course 0.43 / 0.43 -> 0.34 / 0.34 ->
+    0.36 / 0.36 -> 0.39 / 0.39. Cost of transport 2.61 / 2.69 -> 3.83 / 3.88 -> 3.60 / 3.68 -> 3.45 / 3.49.
+  - Climbed 0.82 / 0.86 -> 0.73 / 0.77 -> 0.78 / 0.78 -> 0.81 / 0.84. Stairs goal up 0.415 / 0.430 -> 0.394 / 0.405 ->
+    0.403 / 0.416 -> 0.415 / 0.423; down 0.308 / 0.334 -> 0.266 / 0.319 -> 0.282 / 0.320 -> 0.305 / 0.352.
+  - Stuck per climb 0.38 / 0.10 -> 0.04 / 0.04 -> 0.04 / 0.07 -> 0.07 / 0.07. Falls, shoves and plates about equal; hold_s2
+    gets up from standing 85 -> 94 -> 96 %. zero_s1 shoved on 20 deg plates: 0 -> 0 -> 10 % falls, to watch.
+  - Control: the current paw repeats step 46 exactly (walk 0.30 / 0.34 and 0.31 / 0.34).
+- What the funnel learned: the stand had the direction right, but its work per step (23 mJ for both 3 and 4.5 mm) missed the
+  dogs' difference; the load on the housing (54 / 29 / 11 %) has their order. Use that one to rank. 4.5 mm still needs a
+  build answer: 35 % sole arm strain at the end of travel, so a stop inside the paw or stronger arms, and a check for
+  sideways wobble on a print. Videos: `level2/videos/` (walk and stop, up 4 cm / 9 cm, down 4 cm / 15 cm).
+
+### Step 49: The Base on the 4.5 mm Sole
+**Status**: 2026-11-02, done, did not pass: best walk score 0.38 (mark 0.40); dropping the walking teacher failed; step 45b not started (`runs/exp2_dog/29_long_sole/results.md`)
+- Owner (2026-11-01), after step 48: draw the 4.5 mm sole with a stop, test print later, retrain now, and look at dropping
+  the sphere-paw walking teacher.
+- CAD (`core/morphology/dog_paw.py`): genome `legs.paw_protrusion` now moves the housing's rim, groove and seat too (pad
+  stays 36 mm below the pivot, its stem 3 mm longer). `legs.sole_stop` = 2 mm: a separate PLA pin (6 mm wide, 9.85 mm long)
+  in a 4 mm deep hole in the pad lands on the ankle spring's bottom block. Separate because the sole prints arms down;
+  trapped between pad and block, no glue. Arm strain at the stop 15.6 % at 20 N (without a stop 35 %; design value 10 %:
+  check on the print). Checked (`tools/parts/paw_cad_check.py`, `29_long_sole/paw_section.png`): gap to the block 2.000 mm,
+  no overlaps at rest or at the stop. The old ring paw's USD is byte-identical.
+- Simulation: the stop is a rigid sphere (`tpu_rigid`, same radius) 2 mm behind the compliant sole, one per paw.
+- Training: `--bc_free_walk` (new) drops the walking teacher, the get-up teacher stays. hold_s2 trained on, step 47's recipe,
+  3000 it, seeds 1 and 2: teach (walking teacher) and free (none). First the untrained dog on this paw (start), for the
+  stop's own effect against step 48's hold_s2_p45. Tests, pass mark for step 45b as step 47. Smoke passed: teacher share
+  0.36 / 0.00, one stop sphere per paw in the USD.
+- Results (start = untrained; teach_s1 / teach_s2; free_s1 / free_s2):
+  - The stop costs nothing: start vs step 48's hold_s2_p45, walk 0.36 / 0.39 both, cost of transport 3.44 / 3.45, climbed 0.83 /
+    0.81, stairs up 0.412 / 0.415.
+  - Teach: walk score forward 0.38 / 0.37 (start 0.36, old ball 0.45, step 47's retrained current paw 0.33 / 0.32), course 0.39
+    / 0.39 (start 0.39), falls 0.4 / 0.5 %, cost of transport 3.29 / 3.43 (old ball 2.61), get-up worst case 99 / 98 %, stuck
+    0.04 / 0.02. Stairs up 0.432 / 0.403 (start 0.412), but down 0.255 / 0.270 (start 0.307). Plates at 20 deg: teach_s1 worse
+    (35 / 38 % falls calm / shoved), teach_s2 better (18 / 10 %), start 20 / 18 %.
+  - Free failed on both seeds: walk 0.15 / 0.16 with 21 / 10 % falls forward, 90 / 78 % on the course, climbed 0.00 / 0.01, get-up
+    0 % in every start, 100 % falls on plates up to 15 deg. Reward fell during training. The get-up teacher stayed and was
+    copied closely (bc loss 0.0016), so why get-up went is open; a guess: nothing teaches the upright part after it. The video
+    shows it lurching when told to stand and lying flat at the stairs.
+- Reading: most of the gain came from the sole itself, retraining added 0.01-0.02 forward and nothing on the course. Removing
+  the teacher outright does not work: it also holds the dog up. The pass mark (0.40) comes from the sphere paw, a simplified
+  model, not a printable paw, so it may not be reachable with the real shape.
+- Next (owner to decide): (a) one round with teach_s1 as the walking teacher, a teacher that learned on this paw, ~5 h for two
+  seeds; (b) accept teach_s1 as the base and go on to step 45b with a lower mark.
+
+- Owner (2026-11-02, watching the stairs videos): the dog does not balance its body going up; the front paws should reach less
+  high and the rear legs stretch more, or a move flips it onto its back. The tests agree: on 4 cm / 9 cm treads teach_s1 pitches
+  17.8 deg nose up and its body is 2.1 cm behind the paws while a rear paw is up (the plans want it ahead); climbed 0.1.
+
+### Step 50: A Level Body on the Stairs
+**Status**: 2026-11-03, done, the training did not teach it: the dog is unchanged (`runs/exp2_dog/30_level_body/results.md`)
+- Why: the owner's observation just above. Three steps agreed: planner with a limit on the nose-up pitch, replay without
+  training, then training.
+- 1 Planner (`plan_caps.py`, `plan_caps.md`, CPU, ~3.5 h): limits 5 / 10 / 15 / 20 deg and free, margins 1.5 and 3 cm, 20 stairs.
+  `stairs_plan.py` got `--max_pitch` and `--riser_gap`. The planner cannot use the real paw (the paw link is rigid to the shin,
+  no ankle spring, so the housing hits the floor): `genome_plans.json` is the same dog with the sphere paw and the same sole
+  height, riser gap 13.4 mm so the real toes fit. Stairs with a plan at margin 1.5 cm: free 18, 20 deg 18, 15 deg 17 (loses 5 /
+  15), 10 deg 16 (also 4 / 9), 5 deg 14 (also 4 / 15, 4 / 12). 5 / 12 and 5 / 9 have none at any limit. At margin 3 cm 8 of 20 at
+  any limit (5 deg: 7), all low or shallow. Steeper hardly buys balance: 4 / 9 margin 2.0 cm at 15 deg, 2.1 cm free. All plans
+  keep the body 2.5-4 cm ahead of the paws while a rear paw swings.
+- Reading: the nose height is not the main fault (teach_s1 on 4 / 9: 17.8 deg, near the 15 deg plans); the weight is, 2.1 cm
+  behind the paws where the plan has 3.1 ahead, about 5 cm off.
+- 2 Replay (`replay_open.py`, `replay_open.md`, videos `replay_open/*/videos/`). My first run (`replay/`) was in the tool's
+  default feedback mode and climbed 0 %: step 41 already found that feedback climbs nothing, its successes were open loop. Found
+  by a control with step 41's plans on today's code (`replay/control/`), so neither code nor plans at fault; those numbers mean
+  nothing for this question. Open loop, randomized dogs that climbed, mean over the stairs all limits share: margin 1.5 cm (14
+  stairs, 16 dogs each) 5 deg 44 %, 10 deg 45 %, 15 deg 48 %, free 50 %; margin 3 cm (7 stairs) 39 / 49 / 54 / 54 %. Per stairs
+  it scatters widely (2 / 12: 19 / 75 / 75 / 75; 5 / 25: 31 / 6 / 38 / 12). The nominal dog almost never climbs (as step 41).
+  Feedback at margin 3 cm: still 0 % everywhere, so the margin was not why feedback falls (step 41's guess refuted).
+- Reading: a flatter plan neither tips less nor more when played blind, within noise; 5-10 deg maybe a little worse. So limiting
+  the pitch costs little, but this test does not prove it helps. Limits: blind quasi-static crawl, sphere paw, no policy.
+- 3 Training: teach_s1 trained on, whole policy (step 45's expert on a frozen base learned nothing), step 49's recipe with the
+  walking teacher (freed on the stairs tiles), 3000 it, seeds 1 and 2. Reference: the 15 deg plans, the free plan only on 5 / 15.
+  plan_track 2.0, plan_support 1.0, half of the stairs episodes start mid-climb. New `plan_shift_sigma` (default 2 cm unchanged),
+  4 cm here: the dog is about 5 cm off, where 2 cm pays nothing. `rsi_check.py --dog`: real-paw teach_s1 in these plan poses, 106
+  mid-climb, paw gap mean 2.0 mm (p95 4.3), 100 % upright after 1 s. Tests as step 49 + lunge test against the capped plans.
+- Results (teach_s1 / level_s1 / level_s2, lunge test against the capped plans, 18 stairs): body ahead of the paws with a rear
+  paw up -0.4 / -0.6 / -0.3 cm (plans +2.5 to +3.9), on 4 / 9 -2.2 / -2.2 / -1.3 (plan +3.1); nose up 9.4 / 9.6 / 9.3 deg, on 4 / 9
+  19 / 18 / 18; 3 paws down 0.15 / 0.12 / 0.14; climbed 0.87 / 0.84 / 0.88, on 4 / 9 0.0 / 0.0 / 0.1. Stairs goal up 0.432 / 0.421 /
+  0.427, down 0.255 / 0.239 / 0.265. Walk forward 0.38 / 0.35 / 0.37, cost of transport 3.29 / 3.51 / 3.46, course 0.39 all, get-up
+  worst 0.99 / 1.00 / 0.98. The one gain, both seeds: stuck per climb 0.13 / 0.05 / 0.03.
+- Why (`level_s1.log`, end of training, per episode): plan_track 0.08, plan_support 0.01, against trot 2.9, style 0.5-2.0, action_rate
+  -5.1, feet_air_time -3.3. The reward is about 35 x smaller than trot. A sparse reward did not teach this on a frozen base (step 45)
+  nor on the whole policy.
+- Correction (2026-11-03): I told the owner trot works against the crawl and that trot and style should go off on the stairs. Wrong
+  for this dog: its recipe has gait "free", where the term is a flat +3/s while moving, whatever the paws do (the diagonal version
+  is gait "trot"), and style is already skipped on the stairs goal tiles (amp_skip_types). So switching them off teaches no crawl;
+  a flat 3/s is pay for being alive, which fits the owner's point about waiting, not the leg rhythm. Step 42's remark that it holds
+  the gait in place does not hold for gait "free" either.
+- A PC hang during the videos (owner rebooted): training and tests were done, the batch resumed and finished the videos.
+- Owner (2026-11-03, after the videos): going up looks better overall, but with one paw going up the leg on the lower step must
+  stretch to level the body; on 4 / 9 it does not and flips onto its back more than before. Going down it waits, like a grid world
+  with no cost of time; a higher cost of waiting should make it go down while it balances.
+- Checked: 4 / 9 up falls per episode 2.47 / 3.28 / 3.25, progress 1.73 / 1.33 / 1.12 steps of 5. 4 / 15 down reached 0.03 / 0 / 0, no
+  falls: refusal. Step 42 measured +7.3/s at the edge against +8.4/s on the stairs. The goal does not end the episode (the direction
+  flips) and a hard fall does: a flat cost of time would change nothing between dogs that survive and would make that fall pay. So a
+  cost only for stalling, only where a descent plan exists.
+
+### Step 51: The Standing Legs Copy the Plans
+**Status**: 2026-11-05, done, failed: the dogs stop climbing (`runs/exp2_dog/31_copy_plans/`, `results.md`, `videos/`)
+- From step 50 and the owner's observation: as step 50 from teach_s1, seeds 1 and 2, plus `--bc_plan_copy 1.0` (`gated_bc.py`): in the
+  plan zone the policy copies the plan's joint pose, in epochs of its own, as those samples are few among the walker's. `plan_target()`
+  now also leaves out the joints of a paw in the air: the plan's pose is for a standing leg, and the dog may swing another leg than
+  the plan (changes prepared step 45b too, which has no results yet).
+- `lunge_test.py`: rear_height_cm, the body above the standing rear paws' soles with one front paw up, against the plan: do the legs
+  on the lower step stretch?
+- Checked on the CPU (no simulator): the copy goes to the masked joints only, the mask drops paws in the air. Not yet in physics: the
+  batch's smoke test does that, on the go.
+- Results (teach_s1 / copy_s1 / copy_s2): stairs up 0.432 / 0.000 / 0.014, lunge test climbed 0.87 / 0.00 / 0.00, also on 2 cm steps.
+  In the lunge test no paw comes up on the stairs at all (no shift samples); the up video shows them standing frozen in front of the
+  stairs. Likely, not proven: all four paws down is a pose the copy target agrees with, so holding it is a fixed point, and with
+  the paws in the air left out nothing teaches lifting one. Copy loss fell only 0.04 -> 0.027. So the owner's question (does the leg
+  stretch, fewer flips on 4/9?) has no answer from this step.
+- Surprise, down (unexplained, the plan zone is up only): reached on 4/15 0.03 / 0.65 / 0.47, 3/15 0.30 / 0.95 / 0.80, 2/9 0.42 / 1.00 /
+  0.70, 5 steps made nearly everywhere; but with falls: 4/15 0.00 / 0.47 / 0.30, 5/15 0.00 / 0.97 / 0.78. Clean down 0.255 / 0.336 / 0.330.
+  So the refusal is not a matter of the body being unable. A lead: the walker's copy loss is 6 x higher here (0.0077 against 0.0012).
+- My bug: `plan_target()` crashed without plans (`_pt`), so benchmark, recover, get-up and tilt tests of copy_s1 and copy_s2 all failed
+  and the batch went on regardless; "nothing forgotten" has no row for them. Fixed, checked on the CPU; the tests not rerun (GPU, and the
+  dogs are not keepers). The smoke test runs training and the lunge test only, so it could not catch this.
+- Rerun on the owner's go (2026-11-06, `retest.py`), teach_s1 / copy_s1 / copy_s2: forward falls 0.4 / 9.7 / 8.6 % (walk score 0.38 / 0.29 / 0.30),
+  course falls 0.4 / 5.0 / 5.1 %, cost of transport 3.29 / 2.53 / 2.70, get-up worst 0.99 / 1.00 / 0.42. Copying the plans cost the walk:
+  forgetting, as the owner feared. copy_s1 serves only as the down teacher in step 53.
+
+### Step 52: Stalling Costs on a Descent
+**Status**: 2026-11-05, done: stalling is paid for, the dog still refuses (`runs/exp2_dog/32_no_stalling/`, `results.md`, `videos/`)
+- From the owner's grid-world point, with the catch above: `stairs_stall_weight` 6/s after 2 s without coming 2 cm closer to the goal
+  (`stairs_stall_s`, `stairs_stall_gain`), not while fallen, only on stairs with a descent plan, about the flat 3/s plus as much again.
+  `stairs_margin_weight` 2/s (step 42), mid-climb starts on half of the descents. Crouching is already allowed on the stairs. From
+  teach_s1, seeds 1 and 2; tests as step 50 + descent_terms. The first thing to read: more steps down without more falls?
+- Descent plans for this dog: `plans_down_m15` (`stairs_plan.py`, CPU, the sphere-paw genome as step 50): 19 of 25 descents have a
+  plan; none on 4/9, 4/12, 5/9, 5/12, 5/15, 5/20. Waiting stays free on those six: the videos of 4/12 and 5/20 say so and act as a
+  control.
+- Checked on the CPU: 2 s grace, a gain resets it, swaying 1 cm is no gain, no stalling when fallen, going up or without a plan.
+- Results (teach_s1 / nostall_s1 / nostall_s2): clean down 0.255 / 0.260 / 0.257. Reached 4/15 0.03 / 0.03 / 0.07 (steps 0.5 of 5), 3/15 0.30 / 0.42 /
+  0.47, 3/20 0.65 / 0.78 / 0.70, 2/9 0.42 / 0.45 / 0.60; 5/25 worse 0.40 / 0.38 / 0.28. No more falls. The two control stairs without a plan
+  are unchanged (4/12 0, 5/20 0.07 / 0.05 / 0). Up 0.432 / 0.407 / 0.416, 4/12 and 5/25 somewhat less; forward falls 0.4 / 0.3 / 1.0 %, cost of transport
+  3.29 / 3.56 / 3.49 (step 50's dogs also 3.5).
+- The penalty works as built: -2.6/s at the edge, -2.5/s refusing, -0.4/s on the stairs. Pay per second at the edge +1.85 / +1.51, on the
+  stairs +5.92 / +6.72: the gap widened from about 1 (step 42) to about 4-5, and the dog still stays. So the pay gap is not what holds it:
+  the owner's grid world is half right, the cost alone does not move it. Next to read: step 51's dog does go down. Why?
+- lunge_test's new number, step 50's question: body over the rear paws with a front paw up, dog against plan (cm): 2/25 19.2 / 17.0, 4/15 20.8 /
+  18.0, 4/9 22.2 / 19.3, 5/15 21.7 / 18.1. The dog stands 2-4 cm HIGHER than the plan there, so a too short rear leg does not show; the body being
+  too far back does (rear-up shift on 4/9 -2.4 cm, plan +3.1). Root height only, and pitch differs, so no proof against the owner's reading.
+
+### Step 53: One Model, Many Skills
+**Status**: 2026-11-06, done: walking, up and down fit in one model, with or without the signal; getting up from the side or back is lost (`runs/exp2_dog/33_one_model/`, `results.md`, `videos/`)
+- Owner, after step 51: walking, up and down should be ONE model, not three; a recognizer may be a separate system and only sends it
+  a signal. Does the signal help the model tell the skills apart? Once that works, fine-tune skills one by one. Also the owner's: mix old skills
+  in while training a new one (80 / 20), and different rewards per skill may give problems.
+- No rewards here, the student copies (`core/evolution/distill_skills.py`, DAgger as `distill_memory.py`): teach_s1 for walking, up and any tilted dog,
+  copy_s1 going down. A store per kind of sample (walk, up, down, tilted), equal shares in every mini-batch. The signal is `skill_signal_obs`, the policy's
+  last 3 inputs, for now a perfect recognizer from the simulator's truth. Three arms, seeds 1 and 2: none (no signal, the control), input (the signal
+  as an input), heads (and one output section per skill, so that fine-tuning one can leave the others alone).
+- The mark: up about 0.432 clean, down about 0.336, walking and getting up no worse than teach_s1. The teachers' flaws come along (copy_s1 falls a lot): passing
+  says the skills can be combined, not that they are good.
+- For later, at fine-tuning, not in this step: the owner's 80 / 20 as 80 % the new skill with rewards, 20 % copying from a frozen version (practising for reward
+  alone did not hold the climbing in step 51); the critic gets the signal or a value output per skill; rewards scaled alike; compare pay across each
+  hand-over, or the dog avoids a skill (the edge in steps 42 and 52).
+- Not covered yet: hand-overs have videos (the goal flips at the top and the bottom) but no number; copy_s1 is untested for walking and get-up (`retest.py`);
+  a real recognizer and its sensor.
+- The batch now stops when a test leaves no result, and its smoke runs every test tool and a video (step 51's crash passed its smoke).
+- Checked on the CPU (no simulator): the three arms, TorchScript export (caught a crash at the end of training), other skills' output sections untouched by one skill's
+  samples, normalization, store, kinds, teachers, the environment's signal. Toy with opposite actions for the same senses: loss 0.500 without a signal (it can only
+  average), 0.0006 input, 0.0002 heads: says the code works, not that the dog will. Not yet in physics: the smoke test does that, on the go.
+- Ran 2026-11-05/06 on the owner's go, smoke passed (all test files, video), each run 37 min. Final copy losses about 0.0012-0.0017 for every kind.
+- Results (none s1 / s2, input s1 / s2, heads s1 / s2; teachers teach_s1 up 0.432, copy_s1 down 0.336):
+  - Up clean 0.443 / 0.429, 0.435 / 0.423, 0.430 / 0.425: as teach_s1. Lunge test climbed 0.82-0.91 (teach_s1 0.88), same poses.
+  - Down clean 0.380 / 0.335, 0.395 / 0.386, 0.349 / 0.377: all at or above copy_s1, with fewer falls (4/15: reached 0.93 / 0.95 input against 0.65,
+    falls 0.17 against 0.47; 5/20 falls 0.10 / 0.15 input against 0.80). The student beats its down teacher: likely the averaging over many
+    teacher samples smooths copy_s1's errors, and walking samples from teach_s1 keep it steadier (not proven).
+  - Walk: forward falls 2.6 / 3.5 % none, 0.5 / 0.9 % input, 0.7 / 0.9 % heads (teach_s1 0.4 %); walk score 0.37-0.39 for all. Cost of
+    transport 2.99-3.31 (3.29).
+  - Get-up: standing and dropped upright 0.96-0.97 (0.99), on its side and on its back 0.00 for all six (teach_s1 1.00). Shove recovery
+    about as before. The cause: training never starts a dog lying down (teach_s1 learned that in `getup` episodes), so the tilted store only got
+    the student's own falls, 190k of 48M samples; it can't copy what it never sees. Not a signal question; next time: a share of envs with
+    getup starts (side / back).
+- Answer to the owner's question: one model holds the three skills; the signal did not separate up and down better here, because the
+  senses already do (the height scan shows stairs rising or falling ahead). Only on flat ground does the signal help: without it, forward falls
+  rise 4-8x. The heads add nothing over the input yet; their worth is for fine-tuning one skill while the others stay put (untested).
+  When would the signal matter more: skills the senses can't tell apart (the same ground, a different task, e.g. "sit" or "come here").

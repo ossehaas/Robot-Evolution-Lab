@@ -40,6 +40,8 @@ ap.add_argument("scenario", choices=SCENARIOS)
 ap.add_argument("--out", type=Path, required=True)
 ap.add_argument("--num_envs", type=int, default=1024)
 ap.add_argument("--heading_hold", type=float, default=2.0)
+ap.add_argument("--physics", dest="evo_physics", choices=("physx", "newton"), default="physx",
+                help="physics engine for the test (the dog may have been trained on the other one)")
 add_launcher_args(ap)
 args = ap.parse_args()
 args.headless = True
@@ -48,8 +50,10 @@ run, sc = args.run, args.scenario
 res = json.loads((run / "result.json").read_text())
 usd = build_robot_files((run / "genome.json").resolve(), run / "robot")
 spec = build_robot(Genome.load(run / "genome.json"))
-cfg = make_env_cfg(spec, str(usd.resolve()).replace("\\", "/"), args.num_envs, sc == "pushes", task="command",
-                   terrain="flat" if sc == "flat" else res.get("terrain_arg", "dog_rough"),
+course = res.get("terrain_arg", "dog_rough")
+course = "dog_rough" if course in ("dog_rough_stairs", "dog_rough_stairs_tilt") else course  # trained with the stairs goal tiles: the standard course
+cfg = make_env_cfg(spec, str(usd.resolve()).replace("\\", "/"), args.num_envs, sc == "pushes", physics=args.evo_physics, task="command",
+                   terrain="flat" if sc == "flat" else course,
                    sensors=res["sensors"], obs_history=res["obs_history"], height_scan=res.get("height_scan", False), terrain_map=res.get("terrain_map", ""))
 apply_overrides(cfg, {k: v for k, v in res.get("env_overrides", {}).items() if not k.startswith("amp_")})
 cfg.heading_hold_gain = args.heading_hold
@@ -92,7 +96,8 @@ with launch_simulation(cfg, args):
     env.close()
     keep = ("fall_rate", "walk_score", "lin_vel_error_m_s", "yaw_rate_error_rad_s", "cost_of_transport",
             "mechanical_power_w", "type_fall_rates", "level_fall_rates", "type_level_scores", "type_level_climb_m")
-    line = {"run": str(run).replace("\\", "/"), "scenario": sc, **{k: stats[k] for k in keep if k in stats}}
+    line = {"run": str(run).replace("\\", "/"), "scenario": sc, "physics": args.evo_physics,
+            **{k: stats[k] for k in keep if k in stats}}
     with open(args.out, "a", encoding="utf-8") as f:
         f.write(json.dumps(line) + "\n")
     print(f"[benchmark] {run.name} {sc}: falls {stats['fall_rate']:.1%}, walk {stats['walk_score']:.3f}, "

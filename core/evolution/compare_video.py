@@ -22,9 +22,10 @@ if str(REPO) not in sys.path:
 
 
 def record(run_dir: Path, terrain_type: str | None, level: int | None, name: str, eye=None,
-           heading_hold: float | None = None, terrain: str | None = None, drive: str = "tour") -> Path | None:
+           heading_hold: float | None = None, terrain: str | None = None, drive: str = "tour",
+           env_set: list[str] | None = None, physics: str = "physx") -> Path | None:
     cmd = [sys.executable, "-m", "core.evolution.play", "--run_dir", str(run_dir), "--video", "--num_envs", "1",
-           "--drive", drive, "--out_name", name]  # fmt: skip
+           "--drive", drive, "--out_name", name, "--physics", physics]  # fmt: skip
     if eye:
         cmd += ["--eye", *map(str, eye)]
     if heading_hold is not None:
@@ -35,6 +36,8 @@ def record(run_dir: Path, terrain_type: str | None, level: int | None, name: str
         cmd += ["--terrain_type", terrain_type]  # the terrain kind itself comes from the run's result.json
     if level is not None:
         cmd += ["--level", str(level)]
+    for item in env_set or []:
+        cmd += ["--env_set", item]
     log = run_dir / "compare_video.log"
     with open(log, "w", encoding="utf-8") as f:
         subprocess.run(cmd, cwd=REPO, stdout=f, stderr=subprocess.STDOUT)
@@ -76,7 +79,9 @@ def compose(clips: list[tuple[str, Path]], subtitle: str, out: Path) -> None:
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Side-by-side videos of trained robots on the same terrain.")
-    parser.add_argument("--run", action="append", required=True, help='"Label=run_dir" or "Label=run_dir@level" (repeatable, 1-6 runs; 4 = 2x2 grid, 5-6 = 2x3)')
+    parser.add_argument("--run", action="append", required=True, help='"Label=run_dir" or "Label=run_dir@level", '
+                        'optionally "+newton" at the end for that panel on the Newton engine (repeatable, 1-6 runs; '
+                        '4 = 2x2 grid, 5-6 = 2x3)')
     parser.add_argument("--terrain_type", default=None, help="rough terrain type, e.g. stairs_climb (omit for flat)")
     parser.add_argument("--level", type=int, default=5, help="difficulty row 0-9 on rough terrain")
     parser.add_argument("--subtitle", default=None)
@@ -84,19 +89,26 @@ def main(argv=None) -> int:
     parser.add_argument("--eye", type=float, nargs=3, default=None, help="camera position relative to the robot [m]")
     parser.add_argument("--heading_hold", type=float, default=None, help="keep the heading while walking straight (gain)")
     parser.add_argument("--terrain", default=None, help="terrain kind instead of the run's own (e.g. flat)")
-    parser.add_argument("--drive", choices=("tour", "straight"), default="tour",
-                        help="tour = forward, curves, turns, sidesteps, backwards; straight = only straight on")
+    parser.add_argument("--drive", choices=("tour", "straight", "goal", "stand", "stand_shove", "stop_go"), default="tour",
+                        help="tour = forward, curves, turns, sidesteps, backwards; straight = only straight on; goal = "
+                             "the stairs goal course (--terrain dog_stairs): to the goal and back; stand = 8 s "
+                             "standing still; stand_shove = 12 s standing, a sideways shove at 6 s")
+    parser.add_argument("--env_set", action="append", default=[], help="passed on to play.py, e.g. stairs_goal_dir=-1")
     args = parser.parse_args(argv)
 
     clips = []
     for k, spec in enumerate(args.run):
         text, run_dir = spec.split("=", 1)
-        level = args.level
+        level, physics = args.level, "physx"
+        for p in ("physx", "newton"):  # "Label=run_dir+newton": this panel on the Newton engine
+            if run_dir.endswith("+" + p):
+                run_dir, physics = run_dir[: -len(p) - 1], p
         if "@" in run_dir:  # "Label=run_dir@7": this panel on difficulty level 7
             run_dir, level = run_dir.rsplit("@", 1)
             level = int(level)
         name = f"cmp_{args.terrain_type or 'terrain'}_l{level}_{k}.mp4"
-        path = record(Path(run_dir), args.terrain_type, level, name, args.eye, args.heading_hold, args.terrain, args.drive)
+        path = record(Path(run_dir), args.terrain_type, level, name, args.eye, args.heading_hold, args.terrain, args.drive,
+                      args.env_set, physics)
         if path:
             clips.append((text, path))
             print(f"recorded {text}")

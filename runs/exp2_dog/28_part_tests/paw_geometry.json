@@ -1,0 +1,219 @@
+{
+ "genome": "runs/exp2_dog/26_ring_base/genome_ring.json",
+ "mass_kg": 2.45,
+ "sole_k": 10.0,
+ "ankle_k": 1.5,
+ "ankle_limit_deg": 22.9,
+ "paw_load_trot_N": 12.0,
+ "variants": [
+  {
+   "variant": "now (P 1.5)",
+   "protrusion": 1.5,
+   "bevel": false,
+   "touch_tilt": {
+    "toe down": {
+     "0.0": 4.8,
+     "0.6": 2.9,
+     "1.2": 1.0
+    },
+    "heel down": {
+     "0.0": 5.8,
+     "0.6": 3.5,
+     "1.2": 1.1
+    },
+    "side": {
+     "0.0": 6.1,
+     "0.6": 3.6,
+     "1.2": 1.2
+    }
+   },
+   "arm_strain_at_18N": 0.141,
+   "arm_strain_at_stop": 0.117,
+   "force_at_stop": 15.0
+  },
+  {
+   "variant": "P 3",
+   "protrusion": 3.0,
+   "bevel": false,
+   "touch_tilt": {
+    "toe down": {
+     "0.0": 10.1,
+     "0.6": 7.9,
+     "1.2": 5.8,
+     "1.8": 3.9
+    },
+    "heel down": {
+     "0.0": 12.6,
+     "0.6": 9.7,
+     "1.2": 7.1,
+     "1.8": 4.6
+    },
+    "side": {
+     "0.0": 13.1,
+     "0.6": 10.2,
+     "1.2": 7.4,
+     "1.8": 4.8
+    }
+   },
+   "arm_strain_at_18N": 0.141,
+   "arm_strain_at_stop": 0.234,
+   "force_at_stop": 29.9
+  },
+  {
+   "variant": "P 4.5",
+   "protrusion": 4.5,
+   "bevel": false,
+   "touch_tilt": {
+    "toe down": {
+     "0.0": 15.8,
+     "0.6": 13.4,
+     "1.2": 11.2,
+     "1.8": 9.0
+    },
+    "heel down": {
+     "0.0": 20.1,
+     "0.6": 17.1,
+     "1.2": 14.0,
+     "1.8": 11.2
+    },
+    "side": {
+     "0.0": 21.0,
+     "0.6": 17.9,
+     "1.2": 14.7,
+     "1.8": 11.6
+    }
+   },
+   "arm_strain_at_18N": 0.141,
+   "arm_strain_at_stop": 0.351,
+   "force_at_stop": 44.9
+  },
+  {
+   "variant": "bevel",
+   "protrusion": 1.5,
+   "bevel": true,
+   "touch_tilt": {
+    "toe down": {
+     "0.0": 6.9,
+     "0.6": 4.0,
+     "1.2": 1.3
+    },
+    "heel down": {
+     "0.0": 6.9,
+     "0.6": 4.0,
+     "1.2": 1.3
+    },
+    "side": {
+     "0.0": 6.9,
+     "0.6": 4.0,
+     "1.2": 1.3
+    }
+   },
+   "arm_strain_at_18N": 0.141,
+   "arm_strain_at_stop": 0.117,
+   "force_at_stop": 15.0
+  },
+  {
+   "variant": "P 3 + bevel",
+   "protrusion": 3.0,
+   "bevel": true,
+   "touch_tilt": {
+    "toe down": {
+     "0.0": 15.4,
+     "0.6": 11.8,
+     "1.2": 8.5,
+     "1.8": 5.4
+    },
+    "heel down": {
+     "0.0": 15.4,
+     "0.6": 11.8,
+     "1.2": 8.5,
+     "1.8": 5.4
+    },
+    "side": {
+     "0.0": 15.4,
+     "0.6": 11.8,
+     "1.2": 8.5,
+     "1.8": 5.4
+    }
+   },
+   "arm_strain_at_18N": 0.141,
+   "arm_strain_at_stop": 0.234,
+   "force_at_stop": 29.9
+  },
+  {
+   "variant": "P 4.5 + bevel",
+   "protrusion": 4.5,
+   "bevel": true,
+   "touch_tilt": {
+    "toe down": {
+     "0.0": 24.7,
+     "0.6": 21.1,
+     "1.2": 17.3,
+     "1.8": 13.5
+    },
+    "heel down": {
+     "0.0": 24.7,
+     "0.6": 21.1,
+     "1.2": 17.3,
+     "1.8": 13.5
+    },
+    "side": {
+     "0.0": 24.7,
+     "0.6": 21.1,
+     "1.2": 17.3,
+     "1.8": 13.5
+    }
+   },
+   "arm_strain_at_18N": 0.141,
+   "arm_strain_at_stop": 0.351,
+   "force_at_stop": 44.9
+  },
+  {
+   "variant": "simulator's colliders, now",
+   "protrusion": 1.5,
+   "bevel": false,
+   "touch_tilt": {
+    "toe down": {
+     "0.0": 5.1,
+     "0.6": 3.1,
+     "1.2": 1.0
+    },
+    "heel down": {
+     "0.0": 6.2,
+     "0.6": 3.7,
+     "1.2": 1.3
+    },
+    "side": {
+     "0.0": 6.4,
+     "0.6": 3.9,
+     "1.2": 1.3
+    }
+   },
+   "arm_strain_at_18N": 0.141,
+   "arm_strain_at_stop": 0.117,
+   "force_at_stop": 15.0
+  }
+ ],
+ "stride_tilt": {
+  "L0": {
+   "-60": -30.4,
+   "-40": -18.2,
+   "-20": -8.3,
+   "20": 6.5,
+   "40": 10.9,
+   "60": 12.2
+  },
+  "L1": {
+   "-60": -30.4,
+   "-40": -18.2,
+   "-20": -8.3,
+   "20": 6.5,
+   "40": 10.9,
+   "60": 12.2
+  }
+ },
+ "lever_m": {
+  "toe": 0.018699999999999998,
+  "heel": 0.0157
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "rise": 0.06,
+ "tread": 0.15,
+ "dir": "up",
+ "feasible": false,
+ "settings": {
+  "joint_share": 1.0,
+  "swing_clear_m": 0.005,
+  "stability_m": 0.015,
+  "torque_nm": 1.884,
+  "beam": 8,
+  "targets": 6,
+  "partner": true
+ },
+ "seconds": 240.5,
+ "slope_deg": 21.8
+}

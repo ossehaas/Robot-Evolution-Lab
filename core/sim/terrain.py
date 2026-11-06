@@ -117,10 +117,174 @@ DOG_ROUGH = TerrainGeneratorCfg(
 )
 
 
-def rough_terrain_importer(max_init_level: int = 2, types: list[str] | None = None, dog: bool = False) -> TerrainImporterCfg:
+# ---------------------------------------------------------------------------------------------------------------------
+# Stairs goal course (journal step 40): one straight staircase per tile, the dog walks from one end to the other (up
+# from the floor to the landing, or down from the landing). Rows = rise (1-10 cm), columns = tread x open sides / walls,
+# so the climbing-limit table can be read straight off the grid. Tile-local layout along x (3 m tile):
+#     0 .. first_riser          floor (the approach, ~0.8 m in front of the dog)
+#     first_riser ..            num_steps risers of `rise`, treads of `tread`; the last step is the landing
+#     .. landing_end            the landing, then an end wall (no drop at the far end)
+# The staircase is `width` wide, centred across the tile; open sides drop to the floor, or walls run along both sides.
+
+import numpy as np  # noqa: E402
+import trimesh  # noqa: E402
+from isaaclab.terrains.sub_terrain_cfg import SubTerrainBaseCfg  # noqa: E402
+from isaaclab.terrains.trimesh.utils import make_plane  # noqa: E402
+from isaaclab.utils import configclass  # noqa: E402
+
+STAIRS_RISES = tuple(round(0.01 * k, 3) for k in range(1, NUM_LEVELS + 1))  # [m] per row: 1 .. 10 cm
+STAIRS_TREADS = (0.25, 0.20, 0.15, 0.12, 0.09)  # [m] per column pair: ~2 deg (1/25) .. ~48 deg (10/9)
+
+
+def straight_stairs(difficulty: float, cfg):
+    """One straight staircase (see above); the row (difficulty) picks the rise exactly from cfg.rises."""
+    rises = cfg.rises
+    rise = rises[min(int(difficulty * len(rises)), len(rises) - 1)]
+    sx, sy = cfg.size
+    yc, n, t, x0 = sy / 2, cfg.num_steps, cfg.tread, cfg.first_riser
+    top = n * rise
+
+    def box(x_lo, x_hi, y_lo, y_hi, z_hi):
+        dims = (x_hi - x_lo, y_hi - y_lo, z_hi)
+        return trimesh.creation.box(dims, trimesh.transformations.translation_matrix(
+            ((x_lo + x_hi) / 2, (y_lo + y_hi) / 2, z_hi / 2)))
+
+    meshes = [make_plane((sx, sy), 0.0, center_zero=False)]
+    half = cfg.width / 2
+    for k in range(1, n + 1):  # step k stands k * rise high; the last one runs on as the landing
+        x_hi = x0 + k * t if k < n else cfg.landing_end
+        meshes.append(box(x0 + (k - 1) * t, x_hi, yc - half, yc + half, k * rise))
+    wall_top = top + cfg.wall_height
+    meshes.append(box(cfg.landing_end, sx, yc - half - cfg.wall_thickness, yc + half + cfg.wall_thickness, wall_top))
+    if cfg.walls:
+        for side in (-1, 1):
+            y_in = yc + side * half
+            y_out = y_in + side * cfg.wall_thickness
+            meshes.append(box(x0 - 0.3, cfg.landing_end, min(y_in, y_out), max(y_in, y_out), wall_top))
+    return meshes, np.array([sx / 2, sy / 2, 0.0])
+
+
+def straight_stairs_steps(local_xy, tread, cfg):
+    """Steps up of the ground at tile-local points (torch, (..., 2)) of straight_stairs tiles with these treads (0 =
+    floor, num_steps = landing; 0 beside the staircase). The environment's view of the geometry above."""
+    import torch
+
+    x, y = local_xy[..., 0], local_xy[..., 1]
+    k = (torch.floor((x - cfg.first_riser) / tread) + 1).clamp(0, cfg.num_steps)
+    on = (x >= cfg.first_riser) & (x < cfg.landing_end) & ((y - cfg.size[1] / 2).abs() <= cfg.width / 2)
+    return torch.where(on, k, torch.zeros_like(k))
+
+
+@configclass
+class MeshStraightStairsCfg(SubTerrainBaseCfg):
+    function = straight_stairs
+    tread: float = 0.15  # [m]
+    rises: tuple = STAIRS_RISES  # [m] rise per row (the generator must have len(rises) rows)
+    num_steps: int = 5  # risers up to the landing
+    first_riser: float = 1.1  # [m] from the tile's -x edge
+    landing_end: float = 2.9  # [m] the end wall starts here
+    width: float = 0.6  # [m]
+    walls: bool = False  # walls along both sides (else open sides)
+    wall_thickness: float = 0.04  # [m]
+    wall_height: float = 0.15  # [m] above the landing
+
+
+def _goal_stairs_types(proportion: float) -> dict:
+    return {f"goal_stairs_t{round(t * 100)}{'_walls' if walls else ''}":
+            MeshStraightStairsCfg(proportion=proportion, tread=t, walls=walls)
+            for t in STAIRS_TREADS for walls in (False, True)}
+
+
+# only the stairs goal tiles (tests): 10 columns (5 treads x open / walls), 10 rows (rise 1-10 cm)
+DOG_STAIRS = DOG_ROUGH.replace(num_cols=2 * len(STAIRS_TREADS), sub_terrains=_goal_stairs_types(1.0))
+# training: the dog course (its 12 columns, same layout) plus the 10 stairs goal columns
+DOG_ROUGH_STAIRS = DOG_ROUGH.replace(
+    num_cols=DOG_ROUGH.num_cols + 2 * len(STAIRS_TREADS),
+    sub_terrains={**{k: v.replace(proportion=v.proportion * DOG_ROUGH.num_cols / (DOG_ROUGH.num_cols + 2 * len(STAIRS_TREADS)))
+                     for k, v in DOG_ROUGH.sub_terrains.items()},
+                  **_goal_stairs_types(1.0 / (DOG_ROUGH.num_cols + 2 * len(STAIRS_TREADS)))},
+)
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Tilt test (journal step 42): one flat plate per tile, tilted about its centre; rows = tilt angle, columns = the
+# downhill direction relative to +x (the dog faces +x: 0 = nose down, 90 = left side low, 180 = nose up).
+
+TILT_ANGLES = tuple(float(a) for a in range(0, 50, 5))  # [deg] per row
+TILT_DIRECTIONS = (0.0, 45.0, 90.0, 180.0)  # [deg] downhill direction per column
+
+
+def tilted_plate(difficulty: float, cfg):
+    angle = cfg.angles[min(int(difficulty * len(cfg.angles)), len(cfg.angles) - 1)]
+    sx, sy = cfg.size
+    plate = trimesh.creation.box((sx - 0.1, sy - 0.1, 0.1), trimesh.transformations.translation_matrix((sx / 2, sy / 2, -0.05)))
+    phi = math.radians(cfg.direction)
+    axis = (-math.sin(phi), math.cos(phi), 0.0)  # rotating about it lowers the plate towards the downhill direction
+    plate.apply_transform(trimesh.transformations.rotation_matrix(math.radians(angle), axis, (sx / 2, sy / 2, 0.0)))
+    return [make_plane((sx, sy), -1.5, center_zero=False), plate], np.array([sx / 2, sy / 2, 0.0])
+
+
+@configclass
+class MeshTiltedPlateCfg(SubTerrainBaseCfg):
+    function = tilted_plate
+    angles: tuple = TILT_ANGLES
+    direction: float = 0.0  # [deg]
+
+
+TILT_COURSE = DOG_ROUGH.replace(
+    num_rows=len(TILT_ANGLES), num_cols=len(TILT_DIRECTIONS),
+    sub_terrains={f"tilt_{int(d)}": MeshTiltedPlateCfg(proportion=1.0, direction=d) for d in TILT_DIRECTIONS},
+)
+
+# Training on a tilt (base skill B2, journal step 43): a tilted pad in the middle of a flat tile, on a solid pedestal so
+# its low edge stays above the floor (dogs from the neighbouring tiles meet a block, not a pit). The dog stands on the
+# pad facing a random way (the downhill direction relative to the dog is random), told to stand still.
+TILT_TRAIN_ANGLES = (0.0, 4.0, 8.0, 12.0, 15.0, 18.0, 21.0, 24.0, 27.0, 30.0)  # [deg] per row
+
+
+def tilt_pad(difficulty: float, cfg):
+    angle = cfg.angles[min(int(difficulty * len(cfg.angles)), len(cfg.angles) - 1)]
+    sx, sy = cfg.size
+    plate = trimesh.creation.box((cfg.pad_size, cfg.pad_size, 0.05), trimesh.transformations.translation_matrix((sx / 2, sy / 2, -0.025)))
+    phi = math.radians(cfg.direction)
+    axis = (-math.sin(phi), math.cos(phi), 0.0)
+    plate.apply_transform(trimesh.transformations.rotation_matrix(math.radians(angle), axis, (sx / 2, sy / 2, 0.0)))
+    lift = -float(plate.vertices[:, 2].min())  # the low edge of the plate on the floor; the top centre is at `lift`
+    plate.apply_translation((0.0, 0.0, lift))
+    feet = plate.vertices.copy()
+    feet[:, 2] = 0.0
+    pad = trimesh.convex.convex_hull(np.vstack((plate.vertices, feet)))  # the plate with its pedestal
+    return [make_plane((sx, sy), 0.0, center_zero=False), pad], np.array([sx / 2, sy / 2, lift])
+
+
+@configclass
+class MeshTiltPadCfg(MeshTiltedPlateCfg):
+    function = tilt_pad
+    angles: tuple = TILT_TRAIN_ANGLES
+    pad_size: float = 1.2  # [m]
+
+
+TILT_PAD_COLS = 3
+# training: the dog course + the stairs goal columns + tilted pads
+_N_TILT_MIX = DOG_ROUGH.num_cols + 2 * len(STAIRS_TREADS) + TILT_PAD_COLS
+DOG_ROUGH_STAIRS_TILT = DOG_ROUGH.replace(
+    num_cols=_N_TILT_MIX,
+    sub_terrains={**{k: v.replace(proportion=v.proportion * DOG_ROUGH.num_cols / _N_TILT_MIX)
+                     for k, v in DOG_ROUGH.sub_terrains.items()},
+                  **_goal_stairs_types(1.0 / _N_TILT_MIX),
+                  "tilt_pad": MeshTiltPadCfg(proportion=TILT_PAD_COLS / _N_TILT_MIX)},
+)
+
+
+def rough_terrain_importer(max_init_level: int = 2, types: list[str] | None = None, dog: bool = False,
+                           stairs: str = "") -> TerrainImporterCfg:
     """Importer for the rough terrain (``dog``: the dog-sized version); ``types`` restricts it to some terrain types
-    (e.g. a stairs specialist)."""
+    (e.g. a stairs specialist). ``stairs``: "only" = the stairs goal course, "mixed" = the dog course plus it,
+    "mixed_tilt" = that plus tilted pads (base skill training), "tilt" = the tilt test plates (videos)."""
     generator = DOG_ROUGH if dog else SMALL_ROBOT_ROUGH
+    if stairs:
+        generator = {"only": DOG_STAIRS, "mixed": DOG_ROUGH_STAIRS, "mixed_tilt": DOG_ROUGH_STAIRS_TILT,
+                     "tilt": TILT_COURSE}[stairs]
     if types:
         unknown = set(types) - set(generator.sub_terrains)
         if unknown:

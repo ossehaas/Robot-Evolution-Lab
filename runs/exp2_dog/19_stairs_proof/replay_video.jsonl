@@ -1,0 +1,4 @@
+{"plan": "down_r4_t15.json", "dir": "down", "rise": 0.04, "tread": 0.15, "randomized": false, "climbed": 1.0, "fell": 0.0, "arrived": 1.0, "max_height_error_m": 0.011, "max_pitch_error_deg": 15.9, "seconds": 79.0}
+{"plan": "up_r3_t15.json", "dir": "up", "rise": 0.03, "tread": 0.15, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.136, "max_pitch_error_deg": 67.2, "seconds": 93.6}
+{"plan": "up_r5_t15.json", "dir": "up", "rise": 0.05, "tread": 0.15, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 1.0, "max_height_error_m": 0.183, "max_pitch_error_deg": 73.3, "seconds": 90.7}
+{"plan": "up_r4_t9.json", "dir": "up", "rise": 0.04, "tread": 0.09, "randomized": false, "climbed": 0.0, "fell": 1.0, "arrived": 0.0, "max_height_error_m": 0.251, "max_pitch_error_deg": 70.1, "seconds": 60.7}
