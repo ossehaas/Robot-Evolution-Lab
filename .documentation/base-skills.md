@@ -4,6 +4,8 @@ The entry exam for any future robot body. If a robot cannot pass these, the desi
 spending GPU hours on harder tasks (stairs, parcours, sensors). The list may change when a test turns out to be wrong
 or too strict; change it here and note why.
 
+The whole start of a new robot, around this exam: `new-robot-start.md`.
+
 Order matters: the design checks (A) cost seconds on the CPU and run first; the learned basics (B) need training.
 
 ## A. Design checks (CPU, no training)

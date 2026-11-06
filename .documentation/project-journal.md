@@ -15,7 +15,7 @@ The objective is to master the Sim-to-Real pipeline by designing, simulating, ev
 ## Log Entries
 
 ### Step 1: Environment Initialization & Physics Engine Stabilization
-**Status**: Completed
+**Status**: Completed (2026-05-15, dated afterwards from the files' times)
 **Objective**: Establish a stable Isaac Lab 3.0 workspace backed by Isaac Sim 6.0, capable of executing vectorized physics operations on the RTX 5080.
 
 **Execution Details**:
@@ -35,7 +35,7 @@ The objective is to master the Sim-to-Real pipeline by designing, simulating, ev
 > `test_sim.py` spawned shapes without rigid bodies or colliders, so it never exercised physics.
 
 ### Step 2: Mono-Repo Architecture Initialization
-**Status**: Completed
+**Status**: Completed (2026-05-17, dated afterwards from the files' times)
 **Objective**: Scaffold a rigid, scalable directory structure to separate shared machine learning logic from isolated robotic prototypes and open-source release candidates.
 
 **Execution Details**:
@@ -44,7 +44,7 @@ The objective is to master the Sim-to-Real pipeline by designing, simulating, ev
 - Generated `/releases/` to serve as the "Hall of Fame" for completed, verified robots packaged for open-source distribution.
 
 ### Step 3: First URDF Asset Definition (Simple Leg)
-**Status**: Completed
+**Status**: Completed (2026-05-18 - 2026-05-19, dated afterwards from the files' times)
 **Objective**: Define the digital twin of a 2-servo robotic leg using the Unified Robot Description Format (URDF).
 
 **Execution Details**:
@@ -972,7 +972,7 @@ it can reach, on the correct side of the wall?
 
 
 ### Step 35: Deliberate Stair Stepping
-**Status**: 2026-10-23, prepared (`runs/exp2_dog/13_stairs/batch.py`, ~10 h, runs when the owner frees RAM)
+**Status**: ran 2026-10-23 - 2026-10-24; 2026-10-23, prepared (`runs/exp2_dog/13_stairs/batch.py`, ~10 h, runs when the owner frees RAM)
 - Owner (videos of step 34): the dogs walk into the stairs without lifting the paws high enough; a step up should be
   a controlled move (three paws steady until the fourth stands on the tread and pushes up), a step down a placed
   move that helps the balance. Stairs are continuous climbing for this dog: ~16-20 cm paw span on 15 cm treads.
@@ -1050,7 +1050,7 @@ Training uses the perfect height scan from now on (accepted: it also sees under 
 end through a memory student (step 33-35: the student matched its teacher).
 
 ### Step 36: Getting Up, Being Pushed, and What Was Really Climbed
-**Status**: 2026-10-24, prepared (`runs/exp2_dog/14_getup/batch.py`, ~4 h, runs on the owner's go)
+**Status**: ran 2026-10-24; 2026-10-24, prepared (`runs/exp2_dog/14_getup/batch.py`, ~4 h, runs on the owner's go)
 - Climb measure (`evaluate`: `type_level_climb_m`, largest height change from the start per terrain type and row;
   kept by `benchmark.py` with `type_level_scores`): the stairs dogs are re-measured on stairs_straight.
 - Get-up mode (`getup`, `getup_*` settings): starts standing / dropped upright / on the side / on the back with the
@@ -1089,7 +1089,7 @@ end through a memory student (step 33-35: the student matched its teacher).
     its side or back.
 
 ### Step 37: Which Design Change Lets the Dog Get Up From Its Side?
-**Status**: 2026-10-24, prepared (`runs/exp2_dog/15_getup_design/batch.py`, ~5 h, runs on the owner's go)
+**Status**: ran 2026-10-24; 2026-10-24, prepared (`runs/exp2_dog/15_getup_design/batch.py`, ~5 h, runs on the owner's go)
 - Owner: apply changes and see what works. New: genome `legs.abduction_limit` (default 0.5 rad, `dog_mech.py` used a
   fixed 0.5), variants 29 / 50 / 80 deg (`genomes/abd*.json`); `policy_drives_expression` (neck, head and tail become
   policy actions instead of random motions); `self_collisions` (on for all step 37 runs, so a leg cannot pass through
@@ -1129,7 +1129,7 @@ end through a memory student (step 33-35: the student matched its teacher).
   kick (0.8-2.9 s; slowest at 108 deg). `runs/exp2_dog/15_getup_design/videos/flips_abd29_head.mp4` (+ .json).
 
 ### Step 38: Keep Balance, and Get Up After a Fall
-**Status**: 2026-10-24, running (`runs/exp2_dog/16_recover/batch.py`, ~3.5 h; the stairs goal task moves to step 39)
+**Status**: ran 2026-10-24; 2026-10-24, running (`runs/exp2_dog/16_recover/batch.py`, ~3.5 h; the stairs goal task moves to step 39)
 - Goal: one dog that walks, catches itself after a shove and, if it does go over, gets up and walks on.
 - New: recover mode (`recover`, `recover_*`: a fall does not end the episode unless the dog stays down 6 s; get-up
   rewards while fallen; a fall costs once; the style judge ignores fallen states), topple shoves (`topple_push`,
@@ -1166,7 +1166,7 @@ end through a memory student (step 33-35: the student matched its teacher).
   get-up dog while fallen and the walker while upright, RL on top), and far fewer topple shoves.
 
 ### Step 39: Balance Training With the Teachers as an Anchor
-**Status**: 2026-10-24, running (`runs/exp2_dog/17_recover_bc/batch.py`, ~4.5 h; the stairs goal task moves to step 40)
+**Status**: ran 2026-10-24 - 2026-10-25; 2026-10-24, running (`runs/exp2_dog/17_recover_bc/batch.py`, ~4.5 h; the stairs goal task moves to step 40)
 - `core/evolution/gated_bc.py`: PPO with gated behaviour cloning (Microduck's VelStand recipe). After each PPO update
   a few copying epochs on the same rollout: samples tilted > 35 deg copy the get-up dog (zero command), < 25 deg the
   original walker (actions rescaled 0.75 -> 1.0, neck/head/tail at rest), in between RL only; separate Adam (3e-4) on
